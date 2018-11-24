@@ -114,10 +114,14 @@ class Dotstudiopro_Subscription {
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-dotstudiopro-subscription-requests.php';
         
         /**
+         * The class responsible for defining all actions that occur in the admin.
+         */
+        require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-dotstudiopro-subscription-admin.php';
+        
+        /**
          * The class responsible for defining all actions that occur in the frontend.
          */
         require_once plugin_dir_path(dirname(__FILE__)) . 'frontend/class-dotstudiopro-subscription-front.php';
-        
 
         $this->loader = new Dotstudiopro_Subscription_Loader();
     }
@@ -147,33 +151,8 @@ class Dotstudiopro_Subscription {
      * @access   private
      */
     private function define_admin_hooks() {
-
-        /*$plugin_admin = new Dotstudiopro_Api_Admin($this->get_Dotstudiopro_Api(), $this->get_version());
-        $rest_api = new Dsp_REST_Api_Handler($this->get_Dotstudiopro_Api(), $this->get_version());
-        $posttype = new Dsp_Custom_Posttypes();
-
-        $this->loader->add_action('admin_menu', $plugin_admin, 'add_admin_menu');
-        $this->loader->add_action('admin_notices', $plugin_admin, 'show_admin_notice');
-        $this->loader->add_action('admin_init', $plugin_admin, 'settings_api_init');
-        $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
-        $this->loader->add_action('admin_post_validate_dotstudiopro_api', $plugin_admin, 'validate_dotstudiopro_api');
-        $this->loader->add_action('admin_post_nopriv_validate_dotstudiopro_api', $plugin_admin, 'validate_dotstudiopro_api');
-        $this->loader->add_action('wp_ajax_reset_token', $plugin_admin, 'reset_token');
-        $this->loader->add_action('wp_ajax_validate_dotstudiopro_api', $plugin_admin, 'validate_dotstudiopro_api');
-        $this->loader->add_action('init', $posttype, 'create_dotstudiopro_post_types');
-        $this->loader->add_action('add_meta_boxes', $posttype, 'create_custom_metabox');
-        //$this->loader->add_action('save_post', $posttype, 'category_metabox_save'); // Right now this action is not in use.
-        $this->loader->add_action('admin_head-edit.php', $posttype, 'add_button_to_custom_posttypes');
-        $this->loader->add_filter('manage_category_posts_columns', $posttype, 'dsp_category_table_head');
-        $this->loader->add_action('manage_category_posts_custom_column', $posttype, 'dsp_category_table_content', 10, 2);
-        $this->loader->add_action('wp_ajax_import_category_post_data', $posttype, 'import_category_post_data');
-        $this->loader->add_action('wp_ajax_import_channel_post_data', $posttype, 'import_channel_post_data');
-        $this->loader->add_action('admin_menu', $posttype, 'remove_submenus');
-        $this->loader->add_filter('manage_channel_posts_columns', $posttype, 'dsp_channel_table_head');
-        $this->loader->add_action('manage_channel_posts_custom_column', $posttype, 'dsp_channel_table_content', 10, 2);
-        $this->loader->add_action( 'rest_api_init', $rest_api, 'dsp_webhook_routes');
-        // Add settings link in Plugins page
-        $this->loader->add_filter( 'plugin_action_links', $plugin_admin, 'add_settings_link', 10, 2 );*/
+        $plugin_admin = new Dotstudiopro_Subscription_Admin($this->get_Dotstudiopro_Subscription(), $this->get_version());
+        $this->loader->add_filter( 'page_template', $plugin_admin, 'dsp_subscriptions_template_chooser', 11 );
     }
     
     /**
