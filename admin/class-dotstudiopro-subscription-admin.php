@@ -41,31 +41,30 @@ class Dotstudiopro_Subscription_Admin {
         $this->version = $version;
         $this->dotstudiopro_subscription = new Dotstudiopro_Subscription_Request();
     }
-    
-    public function dsp_subscription_template_chooser(){
+
+    public function dsp_subscription_template_chooser() {
         global $post;
 
         $pagename = $post->post_name;
-        
-        switch($pagename){
+
+        switch ($pagename) {
             
         }
-        
     }
-    
-    public function dsp_subscriptions_template_chooser( $template ) {
- 
-    global $post;
-    
-    $page_slug = $post->post_name;
 
-    if($page_slug == 'subscriptions'){
-        $template = locate_template( 'dsp_templates/subscriptions.tpl.php' );
+    public function dsp_subscriptions_template_chooser($template) {
 
-        if( empty($template) !== FALSE ){
-            $template = dirname( __DIR__ ) . '/dsp_templates/test.php';
+        global $post;
+
+        $page_slug = $post->post_name;
+
+        if ($page_slug == 'subscriptions') {
+            $template = locate_template(array('page-templates/packages.php'));
+            if (empty($template) !== FALSE) {
+                $template = plugin_dir_path(__DIR__) . 'dsp_subscription_template/packages.php';
+            }
         }
+        return $template;
     }
-    return $template;
-}
+
 }

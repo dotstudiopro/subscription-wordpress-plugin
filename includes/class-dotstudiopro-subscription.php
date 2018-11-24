@@ -106,7 +106,10 @@ class Dotstudiopro_Subscription {
          */
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-dotstudiopro-subscription-i18n.php';
         
-        require_once 'D:\wamp\www\ds_pro2\wp-content\plugins\wordpress-pluginv3\includes\class-dotstudiopro-external-api-requests.php';
+        /**
+         * Load the existing plugin wordpress-pluginv3
+         */
+        require_once plugin_dir_path(dirname(__DIR__)).'wordpress-pluginv3\includes\class-dotstudiopro-external-api-requests.php';
         
         /**
          * The class responsible for external API Request
@@ -152,7 +155,7 @@ class Dotstudiopro_Subscription {
      */
     private function define_admin_hooks() {
         $plugin_admin = new Dotstudiopro_Subscription_Admin($this->get_Dotstudiopro_Subscription(), $this->get_version());
-        $this->loader->add_filter( 'page_template', $plugin_admin, 'dsp_subscriptions_template_chooser', 11 );
+        $this->loader->add_filter('template_include', $plugin_admin, 'dsp_subscriptions_template_chooser');
     }
     
     /**
