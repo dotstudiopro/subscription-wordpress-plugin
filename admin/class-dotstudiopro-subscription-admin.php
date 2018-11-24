@@ -9,7 +9,7 @@
  * @package           Dotstudiopro_Subscription
  * @subpackage        Dotstudiopro_Subscription/admin
  */
-class Dotstudiopro_Subscription_Front {
+class Dotstudiopro_Subscription_Admin {
 
     /**
      * The ID of this plugin.
@@ -41,4 +41,31 @@ class Dotstudiopro_Subscription_Front {
         $this->version = $version;
         $this->dotstudiopro_subscription = new Dotstudiopro_Subscription_Request();
     }
+    
+    public function dsp_subscription_template_chooser(){
+        global $post;
+
+        $pagename = $post->post_name;
+        
+        switch($pagename){
+            
+        }
+        
+    }
+    
+    public function dsp_subscriptions_template_chooser( $template ) {
+ 
+    global $post;
+    
+    $page_slug = $post->post_name;
+
+    if($page_slug == 'subscriptions'){
+        $template = locate_template( 'dsp_templates/subscriptions.tpl.php' );
+
+        if( empty($template) !== FALSE ){
+            $template = dirname( __DIR__ ) . '/dsp_templates/test.php';
+        }
+    }
+    return $template;
+}
 }

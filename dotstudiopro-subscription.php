@@ -32,7 +32,8 @@ if (!defined('WPINC')) {
 if (!defined('DOTSTUDIOPRO_SUBSCRIPTION_BASENAME')) {
     define('DOTSTUDIOPRO_SUBSCRIPTION_BASENAME', plugin_basename(__FILE__));
 }
-
+if ( ! defined( 'DOTSTUDIOPRO_SUBSCRIPTION_BASE_DIR' ) )
+    define( 'DOTSTUDIOPRO_SUBSCRIPTION_BASE_DIR', dirname( DOTSTUDIOPRO_SUBSCRIPTION_BASENAME ) );
 /**
  * The code that runs during plugin activation.
  */
