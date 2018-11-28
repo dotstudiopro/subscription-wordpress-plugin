@@ -41,4 +41,16 @@ class Dotstudiopro_Subscription_Front {
         $this->version = $version;
         $this->dotstudiopro_subscription = new Dotstudiopro_Subscription_Request();
     }
+    
+    /**
+     * Register the stylesheets for the admin area.
+     *
+     * @since    1.0.0
+     */
+    public function enqueue_styles() { 
+        wp_enqueue_script('countries', plugin_dir_url(__FILE__) . 'assets/js/countries.js', array(), false, true);
+        wp_enqueue_script('jquery.payform', plugin_dir_url(__FILE__) . 'assets/js/jquery.payform.min.js', array(), false, true);
+        wp_enqueue_script('custom', plugin_dir_url(__FILE__) . 'assets/js/custom.js', array(), false, true);
+        wp_enqueue_style('subscription-style', plugin_dir_url(__FILE__) . 'assets/css/subscription-style.css', array(), $this->version, 'all');
+    }
 }

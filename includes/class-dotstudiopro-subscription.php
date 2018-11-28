@@ -160,7 +160,9 @@ class Dotstudiopro_Subscription {
      */
     private function define_admin_hooks() {
         $plugin_admin = new Dotstudiopro_Subscription_Admin($this->get_Dotstudiopro_Subscription(), $this->get_version());
+        $plugin_front = new Dotstudiopro_Subscription_Front($this->get_Dotstudiopro_Subscription(), $this->get_version());
         $this->loader->add_filter('template_include', $plugin_admin, 'dsp_subscriptions_template_chooser');
+        $this->loader->add_action('wp_enqueue_scripts', $plugin_front, 'enqueue_styles');
     }
 
     /**
