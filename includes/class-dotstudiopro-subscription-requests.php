@@ -5,7 +5,7 @@
  *
  * @link              https://www.dotstudiopro.com
  * @since             1.0.0
- * 
+ *
  * @package           Dotstudiopro_Api
  * @subpackage        Dotstudiopro_Api/includes
  */
@@ -18,9 +18,9 @@ if (class_exists('Dsp_External_Api_Request')) {
         }
 
         /**
-         * View information about subscription plans, and manage subscriptions 
+         * View information about subscription plans, and manage subscriptions
          * for customers.
-         * 
+         *
          * @since 1.0.0
          * @access public
          */
@@ -236,7 +236,7 @@ if (class_exists('Dsp_External_Api_Request')) {
                 'x-client-token' => $client_token
             );
 
-            return $this->api_request_post($path, null, $headers, null);
+            return $this->api_request_post($path, null, $headers, array('coupon' => $coupon));
         }
 
     }
