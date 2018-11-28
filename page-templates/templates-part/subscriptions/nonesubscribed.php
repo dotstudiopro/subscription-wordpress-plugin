@@ -43,12 +43,10 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
                         $price_period = $price . '<span class="period"> / ' . $interval . ' ' . $interval_unit . '</span>';
                     }
                     ?>
-
-                    <form  action="/credit-card/" id="form_<?php echo $subscription_id; ?>" method="POST">
-                        <input type="hidden"  name="subscription_id" value="<?php echo $subscription_id; ?>">
-                    </form>
-
-                    <div class="col-xs-12 col-lg-3">
+                    <div class="col-xs-12 col-lg-3 pr-3">
+                        <form  action="/payment/" id="form_<?php echo $subscription_id; ?>" method="POST">
+                            <input type="hidden"  name="subscription_id" value="<?php echo $subscription_id; ?>">
+                        </form>
                         <div class="card text-xs-center">
                             <div class="card-header">
                                 <h4 class="card-title"> 
