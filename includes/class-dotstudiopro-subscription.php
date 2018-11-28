@@ -105,26 +105,31 @@ class Dotstudiopro_Subscription {
          * of the plugin.
          */
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-dotstudiopro-subscription-i18n.php';
-        
+
         /**
          * Load the existing plugin wordpress-pluginv3
          */
-        require_once plugin_dir_path(dirname(__DIR__)).'wordpress-pluginv3\includes\class-dotstudiopro-external-api-requests.php';
-        
+        require_once plugin_dir_path(dirname(__DIR__)) . 'wordpress-pluginv3\includes\class-dotstudiopro-external-api-requests.php';
+
         /**
          * The class responsible for external API Request
          */
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-dotstudiopro-subscription-requests.php';
-        
+
         /**
          * The class responsible for defining all actions that occur in the admin.
          */
         require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-dotstudiopro-subscription-admin.php';
-        
+
         /**
          * The class responsible for defining all actions that occur in the frontend.
          */
         require_once plugin_dir_path(dirname(__FILE__)) . 'frontend/class-dotstudiopro-subscription-front.php';
+
+        /**
+         * The class responsible for load the template
+         */
+        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-template-loader.php';
 
         $this->loader = new Dotstudiopro_Subscription_Loader();
     }
@@ -157,17 +162,17 @@ class Dotstudiopro_Subscription {
         $plugin_admin = new Dotstudiopro_Subscription_Admin($this->get_Dotstudiopro_Subscription(), $this->get_version());
         $this->loader->add_filter('template_include', $plugin_admin, 'dsp_subscriptions_template_chooser');
     }
-    
+
     /**
      * Register all hooks related to frontend functionality of the plugin
      * 
      * @since 1.0.0
      * @access private
      */
-    private function define_frontend_hooks(){
+    private function define_frontend_hooks() {
         
     }
-    
+
     /**
      * Run the loader to execute all of the hooks with WordPress.
      *

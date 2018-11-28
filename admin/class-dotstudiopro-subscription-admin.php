@@ -57,12 +57,9 @@ class Dotstudiopro_Subscription_Admin {
         global $post;
 
         $page_slug = $post->post_name;
-
         if ($page_slug == 'subscriptions') {
-            $template = locate_template(array('page-templates/packages.php'));
-            if (empty($template) !== FALSE) {
-                $template = plugin_dir_path(__DIR__) . 'dsp_subscription_template/packages.php';
-            }
+            $template_class = new Subscription_Listing_Template();
+            $template = $template_class->locate_template('packages');
         }
         return $template;
     }
