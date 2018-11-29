@@ -193,6 +193,32 @@ if (class_exists('Dsp_External_Api_Request')) {
         }
 
         /**
+         * function to update subscription for users
+         * @since 1.0.0
+         * @param type $client_token
+         * @param type $subscription_id
+         * @return type
+         */
+        public function updateSubscription($client_token, $subscription_id) {
+
+            $token = $this->api_token_check();
+
+            if (!$token && !$client_token && !$subscription_id)
+                return array();
+
+            $path = 'subscriptions/users/subscribe_to/' . $subscription_id;
+
+            $headers = array(
+                'x-access-token' => $token,
+                'x-client-token' => $client_token
+            );
+
+            $query = array('platform' => 'web');
+
+            return $this->api_request_post($path, $query, $headers, null);
+        }
+
+        /**
          * Cancel subscription.
          * @since 1.0.0
          * @param type $client_token

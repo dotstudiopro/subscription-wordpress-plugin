@@ -172,6 +172,10 @@ class Dotstudiopro_Subscription {
      * @access private
      */
     private function define_frontend_hooks() {
+        $plugin_front = new Dotstudiopro_Subscription_Front($this->get_Dotstudiopro_Subscription(), $this->get_version());
+        $this->loader->add_action('wp_ajax_update_subscription', $plugin_front, 'update_subscription');
+        $this->loader->add_action('wp_ajax_cancle_subscription', $plugin_front, 'cancle_subscription');
+        
         
     }
 

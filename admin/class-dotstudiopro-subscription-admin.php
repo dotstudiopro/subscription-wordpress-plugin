@@ -65,6 +65,10 @@ class Dotstudiopro_Subscription_Admin {
             $template_class = new Subscription_Listing_Template();
             $template = $template_class->locate_template('payment');
         }
+        if ($page_slug == 'upgrade-subscription') {
+            $template_class = new Subscription_Listing_Template();
+            $template = $template_class->locate_template('upgrade-subscription');
+        }
         return $template;
     }
 
