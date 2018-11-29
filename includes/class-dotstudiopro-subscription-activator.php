@@ -5,7 +5,7 @@
  *
  * @link              https://www.dotstudiopro.com
  * @since             1.0.0
- * 
+ *
  * @package           Dotstudiopro_Subscription
  * @subpackage        Dotstudiopro_Subscription/includes
  */
@@ -33,7 +33,9 @@ class Dotstudiopro_Subscription_Activator {
 
         $dsp_subscription = new Dotstudiopro_Subscription();
         $dsp_subscription_admin = new Dotstudiopro_Subscription_Front($dsp_subscription->get_Dotstudiopro_Subscription(), $dsp_subscription->get_version());
-        if (!is_plugin_active(DOTSTUDIOPRO_API_BASENAME) and current_user_can('activate_plugins')) {
+        // Ensure we have defined the API basename and that the plugin is active, just to make sure that we don't end up with errors for the constant
+        // being undefined here
+        if (!defined('DOTSTUDIOPRO_API_BASENAME') || !is_plugin_active(DOTSTUDIOPRO_API_BASENAME) and current_user_can('activate_plugins')) {
             // Stop activation redirect and show error
             wp_die('Sorry, but this plugin requires the "dotstudioPRO API" plugin to be installed and active. <br><a href="' . admin_url('plugins.php') . '">&laquo; Return to Plugins</a>');
         }

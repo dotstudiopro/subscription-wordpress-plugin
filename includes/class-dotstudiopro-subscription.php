@@ -107,11 +107,6 @@ class Dotstudiopro_Subscription {
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-dotstudiopro-subscription-i18n.php';
 
         /**
-         * Load the existing plugin wordpress-pluginv3
-         */
-        require_once plugin_dir_path(dirname(__DIR__)) . 'wordpress-pluginv3\includes\class-dotstudiopro-external-api-requests.php';
-
-        /**
          * The class responsible for external API Request
          */
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-dotstudiopro-subscription-requests.php';
@@ -167,7 +162,7 @@ class Dotstudiopro_Subscription {
 
     /**
      * Register all hooks related to frontend functionality of the plugin
-     * 
+     *
      * @since 1.0.0
      * @access private
      */
@@ -175,8 +170,6 @@ class Dotstudiopro_Subscription {
         $plugin_front = new Dotstudiopro_Subscription_Front($this->get_Dotstudiopro_Subscription(), $this->get_version());
         $this->loader->add_action('wp_ajax_update_subscription', $plugin_front, 'update_subscription');
         $this->loader->add_action('wp_ajax_cancle_subscription', $plugin_front, 'cancle_subscription');
-        
-        
     }
 
     /**
