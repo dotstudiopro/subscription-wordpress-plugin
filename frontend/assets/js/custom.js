@@ -1,14 +1,141 @@
+var success_img = customVars.basedir + '/frontend/assets/images/true.png';
+var loader_gif = customVars.basedir + '/frontend/assets/images/Rolling.gif';
+var error_img = customVars.basedir + '/frontend/assets/images/false.png';
+var url = customVars.ajaxurl;
+
 (function ($) {
+    if ($('#card_number').length) {
+        var current_card = "";
+        $('#card_number').validateCreditCard(function (e) {
+            if (e.valid) {
+                $(this).addClass('valid');
+            } else {
+                $(this).removeClass('valid');
+            }
+            console.log(current_card);
+            console.log(typeof e.card_type);
+            console.log(e.card_type);
+            if (typeof e.card_type != 'undefined' && e.card_type != null && e.card_type.name != '') {
+                if (current_card != "" && current_card != e.card_type.name) {
+                    $(this).removeClass(current_card);
+                    $(this).addClass(e.card_type.name);
+                }
+                current_card = e.card_type.name
+                $(this).addClass(e.card_type.name);
+            } else if (e.card_type == null && current_card != "") {
+                $(this).removeClass(current_card);
+            }
 
-    var url = customVars.ajaxurl;
-    var loader_gif = customVars.basedir + '/frontend/assets/img/loader.gif';
+        });
+    }
 
-    if ($('#card_number').length)
-        $('#card_number').payform('formatCardNumber');
-    if ($('#expire_date').length)
-        $('#expire_date').payform('formatCardExpiry');
-    if ($('#cvv').length)
-        $('#cvv').payform('formatCardCVC');
+    /**
+     * Submit the form of the page on subscription list page  after selecting the package
+     */
+    $('.select_plan').each(function (index) {
+        $(this).on('click', function (e) {
+            e.preventDefault();
+            var form_id = $(this).data('subscriptionid');
+            $('form#form_' + form_id).submit();
+        });
+    });
+
+    /**
+     * Action to load login pop-up if user is not logged-in
+     */
+    $('.login-link').on('click', function (e) {
+        e.preventDefault();
+        $('#a0LoginButton').click();
+    });
+
+    /**
+     * AJAX action to validate the coupon
+     */
+    $('#validate_coupon').on('click', function (e) {
+        e.preventDefault();
+        $(this).prop('disabled', true);
+        var coupon = $('#coupon_code').val();
+        if (!coupon) {
+            $('.messages-notices').html('<p class="error">Please add coupon code</p>');
+            return;
+        }
+        var action = $(this).data('action');
+        var nonce = $(this).data('nonce');
+        $('.coupon-responce').show();
+        $('.coupon-responce').html('<img class="activation-img" src="' + loader_gif + '">');
+        var validate_token = $.post(
+                url,
+                {
+                    'action': action,
+                    'coupon': $('#coupon_code').val(),
+                    'nonce': nonce
+                }
+        );
+        validate_token.done(function (response) {
+            $(this).prop('disabled', false);
+            $('.coupon-responce').html('<img class="activation-img" src="' + success_img + '">');
+            $('.messages-notices').html('<p class="success">' + response.data.message + '</p>');
+        });
+
+        validate_token.fail(function (response) {
+            $(this).prop('disabled', false);
+            $('.coupon-responce').html('<img class="activation-img" src="' + error_img + '">');
+            $('.messages-notices').html('<p class="error">' + response.responseJSON.data.message + '</p>');
+        })
+    });
+
+    /**
+     *  AJAX action to submit the credit card details to subscribe the subscription
+     */
+    $('button#submit_cc').on('click', function (e) {
+        e.preventDefault();
+        var action = $(this).data('action');
+        var nonce = $('#nonce').val();
+        var formData = $('#form_payment').serialize();
+        customOverlay(true);
+        var submit_form = $.post(
+                url,
+                {
+                    'action': action,
+                    'formData': formData,
+                    'nonce': nonce
+                }
+        );
+        submit_form.done(function (response) {
+            console.log('done');
+            customOverlay(false);
+        });
+
+        submit_form.fail(function (response) {
+            console.log('error');
+            customOverlay(false);
+        })
+    });
+
+    /**
+     * Function to load overlay on clisk of "Subscribe" button on payment page
+     * @param {type} display
+     * @returns {undefined}
+     */
+    function customOverlay(display) {
+
+        var docHeight = $(document).height();
+        if (display)
+            $("body").append("<div id='overlay'></div>");
+        else
+            $("div#overlay").remove();
+        $("#overlay")
+                .height(docHeight)
+                .css({
+                    'opacity': 0.4,
+                    'position': 'absolute',
+                    'top': 0,
+                    'left': 0,
+                    'background-color': 'black',
+                    'width': '100%',
+                    'z-index': 5000
+                });
+    }
 
     /**
      * Display conformation pop-up on update subscription button click after that make ajax call on confirm button click
@@ -130,6 +257,5 @@
             }
         }
     });
-
 
 })(jQuery);

@@ -104,14 +104,14 @@ if (class_exists('Dsp_External_Api_Request')) {
          * @param type $billing_country
          * @return type
          */
-        public function createPaymentProfileandSubscribe($subscription_id, $client_token, $first_name, $last_name, $card_number, $exp_month, $exp_year, $cvv, $coupon = null, $billing_address, $billing_address_2 = null, $billing_city, $billing_state, $billing_zip, $billing_country) {
+        public function createPaymentProfileandSubscribe($client_token, $formData) {
 
             $token = $this->api_token_check();
 
-            if (!$token && !$client_token && !$subscription_id)
+            if (!$token && !$client_token && !$formData['subscription_id'])
                 return array();
 
-            $path = 'subscriptions/users/create/subscribe_to/' . $subscription_id;
+            $path = 'subscriptions/users/create/subscribe_to/' . $formData['subscription_id'];
 
             $headers = array(
                 'x-access-token' => $token,
@@ -121,19 +121,19 @@ if (class_exists('Dsp_External_Api_Request')) {
             $query = array('platform' => 'web');
 
             $body = array(
-                "first_name" => $first_name,
-                "last_name" => $last_name,
-                "card_number" => $card_number,
-                "exp_month" => $exp_month,
-                "exp_year" => $exp_year,
-                "cvv" => $cvv,
-                "coupon" => $coupon,
-                "billing_address" => $billing_address,
-                "billing_address_2" => $billing_address_2,
-                "billing_city" => $billing_city,
-                "billing_state" => $billing_state,
-                "billing_zip" => $billing_zip,
-                "billing_country" => $billing_country,
+                "first_name" => $formData['first_name'],
+                "last_name" => $formData['last_name'],
+                "card_number" => $formData['card_number'],
+                "exp_month" => $formData['exp_month'],
+                "exp_year" => $formData['exp_year'],
+                "cvv" => $formData['cvv'],
+                "coupon" => $formData['coupon'],
+                "billing_address" => $formData['billing_address'],
+                "billing_address_2" => $formData['billing_address_2'],
+                "billing_city" => $formData['billing_city'],
+                "billing_state" => $formData['billing_state'],
+                "billing_zip" => $formData['billing_zip'],
+                "billing_country" => $formData['billing_country'],
             );
 
             return $this->api_request_post($path, $query, $headers, $body);
@@ -261,8 +261,11 @@ if (class_exists('Dsp_External_Api_Request')) {
                 'x-access-token' => $token,
                 'x-client-token' => $client_token
             );
-
-            return $this->api_request_post($path, null, $headers, array('coupon' => $coupon));
+            
+            $body = array(
+                "coupon" => $coupon,
+            );
+            return $this->api_request_post($path, null, $headers, $body);
         }
 
     }

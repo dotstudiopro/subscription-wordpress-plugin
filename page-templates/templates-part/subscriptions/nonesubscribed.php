@@ -42,6 +42,7 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
                     } else {
                         $price_period = $price . '<span class="period"> / ' . $interval . ' ' . $interval_unit . '</span>';
                     }
+                    $button = !$client_token ? 'login-link' : 'select_plan';
                     ?>
                     <div class="col-xs-12 col-lg-3 pr-3">
                         <form  action="/payment/" id="form_<?php echo $subscription_id; ?>" method="POST">
@@ -58,14 +59,14 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
                                 <?php
                                 if (!empty($trial_array)):
                                     ?>
-                                    <a href="#" class="btn btn-gradient mt-2">Try Free for <?php echo $trial_array['interval'] . ' ' . $trial_array['interval_unit'] ?></a>
+                                    <a href="#" class="btn btn-primary subscribe-now mt-2 <?php echo $button; ?>" data-subscriptionid="<?php echo $subscription_id; ?>">Try Free for <?php echo $trial_array['interval'] . ' ' . $trial_array['interval_unit'] ?></a>
                                     <?php if (!empty($trial_array['trial_price'])): ?>
                                         <p class="trial_price">You need to pay $<?php echo $trial_array['trial_price'] ?> to activate trial period</p>
                                     <?php endif; ?>
                                     <?php
                                 else:
                                     ?>
-                                    <a href="#" class="btn btn-gradient mt-2">Subscribe now</a>
+                                    <a href="#" class="btn btn-primary subscribe-now mt-2 <?php echo $button; ?>" data-subscriptionid="<?php echo $subscription_id; ?>">Subscribe now</a>
                                 <?php
                                 endif;
                                 ?>
