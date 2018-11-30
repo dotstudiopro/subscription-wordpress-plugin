@@ -39,5 +39,21 @@ class Dotstudiopro_Subscription_Activator {
             // Stop activation redirect and show error
             wp_die('Sorry, but this plugin requires the "dotstudioPRO API" plugin to be installed and active. <br><a href="' . admin_url('plugins.php') . '">&laquo; Return to Plugins</a>');
         }
+        self::add_my_custom_pages('Packages', 'packages');
+        self::add_my_custom_pages('Credit Card', 'credit-card');
+        self::add_my_custom_pages('Payment Profile', 'payment-profile');
+        self::add_my_custom_pages('Thankyou', 'thankyou');
+    }
+    
+    public static function add_my_custom_pages($title, $slug, $desc = '', $status = 'publish', $author = 1, $type = 'page'){
+        $my_post = array(
+            'post_title'    => wp_strip_all_tags($title),
+            'post_content'  => $desc,
+            'post_status'   => $status,
+            'post_name'     => 'packages',
+            'post_author'   => $author,
+            'post_type'     => $type,
+        );
+        wp_insert_post( $my_post );
     }
 }

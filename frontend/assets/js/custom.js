@@ -12,9 +12,6 @@ var url = customVars.ajaxurl;
             } else {
                 $(this).removeClass('valid');
             }
-            console.log(current_card);
-            console.log(typeof e.card_type);
-            console.log(e.card_type);
             if (typeof e.card_type != 'undefined' && e.card_type != null && e.card_type.name != '') {
                 if (current_card != "" && current_card != e.card_type.name) {
                     $(this).removeClass(current_card);

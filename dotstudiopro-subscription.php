@@ -48,7 +48,7 @@ register_activation_hook(__FILE__, array('Dotstudiopro_Subscription_Activator', 
 require_once plugin_dir_path(__FILE__) . 'includes/class-dotstudiopro-subscription-deactivator.php';
 
 /** This action is documented in includes/class-dotstudiopro-api-deactivator.php */
-register_deactivation_hook(__FILE__, array('Dotstudiopro_Subscription_Activator', 'deactivate'));
+register_deactivation_hook(__FILE__, array('Dotstudiopro_Subscription_Deactivator', 'deactivate'));
 
 /**
  * The core plugin class that is used to define internationalization,
