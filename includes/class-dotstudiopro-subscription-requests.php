@@ -114,6 +114,7 @@ if (class_exists('Dsp_External_Api_Request')) {
             $path = 'subscriptions/users/create/subscribe_to/' . $formData['subscription_id'];
 
             $headers = array(
+                'content-type'  => 'application/json',
                 'x-access-token' => $token,
                 'x-client-token' => $client_token
             );
@@ -136,7 +137,7 @@ if (class_exists('Dsp_External_Api_Request')) {
                 "billing_country" => $formData['billing_country'],
             );
 
-            return $this->api_request_post($path, $query, $headers, $body);
+            return $this->api_request_post($path, $query, $headers, json_encode($body));
         }
 
         /**
@@ -258,14 +259,16 @@ if (class_exists('Dsp_External_Api_Request')) {
             $path = 'subscriptions/validate_coupon';
 
             $headers = array(
+                'content-type'  => 'application/json',
                 'x-access-token' => $token,
                 'x-client-token' => $client_token
+                    
             );
-            
+
             $body = array(
                 "coupon" => $coupon,
             );
-            return $this->api_request_post($path, null, $headers, $body);
+            return $this->api_request_post($path, null, $headers, json_encode($body));
         }
 
     }

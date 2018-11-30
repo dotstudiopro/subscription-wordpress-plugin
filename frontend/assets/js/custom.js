@@ -12,9 +12,6 @@ var url = customVars.ajaxurl;
             } else {
                 $(this).removeClass('valid');
             }
-            console.log(current_card);
-            console.log(typeof e.card_type);
-            console.log(e.card_type);
             if (typeof e.card_type != 'undefined' && e.card_type != null && e.card_type.name != '') {
                 if (current_card != "" && current_card != e.card_type.name) {
                     $(this).removeClass(current_card);
@@ -155,14 +152,12 @@ var url = customVars.ajaxurl;
                     var subscription_id = $('.update_subscription_id').val();
                     var action = $('#update_subscription_button').data('action');
                     var nonce = $('#update_subscription_button').data('nonce');
-                    var client_token = $('#update_subscription_button').data('client');
                     var update_subscription = $.post(
                             url,
                             {
                                 'action': action,
                                 'subscription_id': subscription_id,
-                                'nonce': nonce,
-                                'client_token': client_token
+                                'nonce': nonce
                             }
                     );
 
@@ -215,13 +210,11 @@ var url = customVars.ajaxurl;
                 action: function () {
                     var action = $('#cancel_subscription_button').data('action');
                     var nonce = $('#cancel_subscription_button').data('nonce');
-                    var client_token = $('#cancel_subscription_button').data('client');
                     var cancle_subscription = $.post(
                             url,
                             {
                                 'action': action,
-                                'nonce': nonce,
-                                'client_token': client_token
+                                'nonce': nonce
                             }
                     );
 

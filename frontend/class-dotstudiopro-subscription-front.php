@@ -116,9 +116,9 @@ class Dotstudiopro_Subscription_Front {
      * @since 1.0.0
      */
     public function update_subscription() {
-        if (wp_verify_nonce($_POST['nonce'], 'upadate_subscription_plan')) {
+        global $client_token;
+        if ($client_token && wp_verify_nonce($_POST['nonce'], 'upadate_subscription_plan')) {
             $subscription_id = ($_POST['subscription_id']) ? $_POST['subscription_id'] : '';
-            $client_token = ($_POST['client_token']) ? $_POST['client_token'] : '';
             $response = $this->dotstudiopro_subscription->updateSubscription($client_token, $subscription_id);
             if (is_wp_error($response)) {
                 $send_response = array('message' => 'Server Error : ' . $response->get_error_message());
@@ -141,8 +141,8 @@ class Dotstudiopro_Subscription_Front {
      * @since 1.0.0
      */
     public function cancle_subscription() {
-        if (wp_verify_nonce($_POST['nonce'], 'cancle_subscription_plan')) {
-            $client_token = ($_POST['client_token']) ? $_POST['client_token'] : '';
+        global $client_token;
+        if ($client_token && wp_verify_nonce($_POST['nonce'], 'cancle_subscription_plan')) {
             $response = $this->dotstudiopro_subscription->cancelSubscription($client_token);
             if (is_wp_error($response)) {
                 $send_response = array('message' => 'Server Error : ' . $response->get_error_message());
