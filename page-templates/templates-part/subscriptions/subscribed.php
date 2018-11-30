@@ -47,7 +47,7 @@ if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['
                     if ($platform != 'web') {
                         $update_subscription_information .= '<option value="' . $subscription_id . '">' . $name . ' $' . $price_period . '</option>';
                         if (empty($user_subscribe['subscriptions'][0]['subscription']['delayed_cancel_at']))
-                            $cancle_subscription_information .= '<button id="cancel_subscription_button" data-title="Cancle Subscription" data-nonce=' . wp_create_nonce('cancle_subscription_plan') . ' data-action="cancle_subscription" data-client=' . $client_token . ' class="vc_btn3-color-blue btn btn-danger">CANCEL SUBSCRIPTION</button>';
+                            $cancle_subscription_information .= '<button id="cancel_subscription_button" data-title="Cancle Subscription" data-nonce=' . wp_create_nonce('cancle_subscription_plan') . ' data-action="cancle_subscription" class="vc_btn3-color-blue btn btn-danger">CANCEL SUBSCRIPTION</button>';
                     }
                     else {
                         $platform_error .='<p>Your subscription was created through ' . $platform . ' so you will need to manage it on that platform.</p>';
@@ -75,7 +75,7 @@ if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <button data-title="Update Subscription" data-nonce='<?php echo wp_create_nonce('upadate_subscription_plan'); ?>' data-action='update_subscription' data-client='<?php echo $client_token; ?>' id="update_subscription_button" class="vc_btn3-color-blue btn btn-primary">UPGRADE</button>
+                                            <button data-title="Update Subscription" data-nonce='<?php echo wp_create_nonce('upadate_subscription_plan'); ?>' data-action='update_subscription' id="update_subscription_button" class="vc_btn3-color-blue btn btn-primary">UPGRADE</button>
                                         </div>
                                     </div>
                                 </div>
