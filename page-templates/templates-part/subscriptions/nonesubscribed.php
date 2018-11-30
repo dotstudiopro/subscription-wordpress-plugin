@@ -45,7 +45,7 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
                     $button = !$client_token ? 'login-link' : 'select_plan';
                     ?>
                     <div class="col-xs-12 col-lg-3 pr-3">
-                        <form  action="/payment/" id="form_<?php echo $subscription_id; ?>" method="POST">
+                        <form  action="/credit-card/" id="form_<?php echo $subscription_id; ?>" method="POST">
                             <input type="hidden"  name="subscription_id" value="<?php echo $subscription_id; ?>">
                         </form>
                         <div class="card text-xs-center">

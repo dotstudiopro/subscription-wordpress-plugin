@@ -50,7 +50,7 @@ class Dotstudiopro_Subscription_Activator {
             'post_title'    => wp_strip_all_tags($title),
             'post_content'  => $desc,
             'post_status'   => $status,
-            'post_name'     => 'packages',
+            'post_name'     => $slug,
             'post_author'   => $author,
             'post_type'     => $type,
         );

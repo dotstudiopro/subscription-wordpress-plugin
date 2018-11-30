@@ -60,7 +60,7 @@ var url = customVars.ajaxurl;
         var nonce = $(this).data('nonce');
         $('.coupon-responce').show();
         $('.coupon-responce').html('<img class="activation-img" src="' + loader_gif + '">');
-        var validate_token = $.post(
+        var validate_coupon = $.post(
                 url,
                 {
                     'action': action,
@@ -68,16 +68,16 @@ var url = customVars.ajaxurl;
                     'nonce': nonce
                 }
         );
-        validate_token.done(function (response) {
+        validate_coupon.done(function (response) {
             $(this).prop('disabled', false);
             $('.coupon-responce').html('<img class="activation-img" src="' + success_img + '">');
-            $('.messages-notices').html('<p class="success">' + response.data.message + '</p>');
+            $('.coupon-messages-notices').removeClass('error').addClass('success').html('<p>' + response.data.message + '</p>');
         });
 
-        validate_token.fail(function (response) {
+        validate_coupon.fail(function (response) {
             $(this).prop('disabled', false);
             $('.coupon-responce').html('<img class="activation-img" src="' + error_img + '">');
-            $('.messages-notices').html('<p class="error">' + response.responseJSON.data.message + '</p>');
+            $('.coupon-messages-notices').removeClass('success').addClass('error').html('<p>' + response.responseJSON.data.message + '</p>');
         })
     });
 
@@ -86,28 +86,43 @@ var url = customVars.ajaxurl;
      */
     $('button#submit_cc').on('click', function (e) {
         e.preventDefault();
-        var action = $(this).data('action');
-        var nonce = $('#nonce').val();
-        var formData = $('#form_payment').serialize();
-        customOverlay(true);
-        var submit_form = $.post(
+        var form = $('#form_payment')[0];
+        var validated = validatePaymentForm(e,form);
+        if (validated) {
+            customOverlay(true);
+            showSnacksBar(true);
+            var action = $(this).data('action');
+            var nonce = $('#nonce').val();
+            var formData = $('#form_payment').serialize();
+            $('#snackbar').html('Sending your request...');
+            var submit_form = $.post(
                 url,
                 {
                     'action': action,
                     'formData': formData,
                     'nonce': nonce
                 }
-        );
-        submit_form.done(function (response) {
-            console.log('done');
-            customOverlay(false);
-        });
+            );
+            submit_form.done(function (response) {
+                $('#snackbar').html('Payment Received...Please wait...');
+                $('.cc-messages-notices').removeClass('error').addClass('success').html('<p>Payment Received...Please wait...</p>');
+                window.location.href = $('#form_payment').attr('action');
+                var url = $('#form_payment').attr('action');
+                var form = $('<form action="' + url + '" method="post">' +
+                    '<input type="hidden" name="thankyou" value="' + nonce + '" />' +
+                '</form>');
+                $('body').append(form);
+                form.submit();
+            });
 
-        submit_form.fail(function (response) {
-            console.log('error');
-            customOverlay(false);
-        })
+            submit_form.fail(function (response) {
+                $('#snackbar').html('Something went wrong...');
+                $('.cc-messages-notices').removeClass('success').addClass('error').html('<p>' + response.responseJSON.data.message + '</p>')
+            })
+        }
+        setTimeout(function(){ customOverlay(false); showSnacksBar(false); }, 3000);
     });
+
 
     /**
      * Function to load overlay on clisk of "Subscribe" button on payment page
@@ -252,3 +267,26 @@ var url = customVars.ajaxurl;
     });
 
 })(jQuery);
+function validatePaymentForm(event, form)
+{
+      if (form.checkValidity() === false) {
+            var invalidFields = jQuery(form).find( ":invalid" ).each( function( index, node ) {
+                jQuery(node).nextAll("div.invalid-feedback").show();
+            });
+            event.preventDefault();
+            event.stopPropagation();
+            form.classList.add('invalid');
+            return false;
+        }
+        jQuery("div.invalid-feedback").hide();
+        form.classList.add('valid');
+        return true;
+        
+}
+function showSnacksBar(action) {
+    // Get the snackbar DIV
+    var x = document.getElementById("snackbar");
+    x.className = "show";
+    if(!action)
+        x.className = x.className.replace("show", "");
+}

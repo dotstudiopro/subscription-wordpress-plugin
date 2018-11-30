@@ -17,7 +17,18 @@ form #card_number {
 form #card_number.visa {
     background-position: 2px -163px, 508px -61px
 }
-
+.invalid .form-control:valid {
+    border-color: #28a745;
+}
+.invalid .form-control:invalid {
+    border-color: #dc3545;
+}
+.valid .form-control:valid {
+    border-color: #28a745;
+}
+.valid .form-control:invalid {
+    border-color: #dc3545;
+}
 form #card_number.visa_electron {
     background-position: 2px -205px, 508px -61px
 }
@@ -56,4 +67,68 @@ form #card_number.valid.discover {
 
 form #card_number.valid {
     background-position: 2px -121px, 508px -87px
+}
+.cc-messages-notices{
+    width: 100%;
+    border-radius: 10px;
+    padding: 5px;
+    text-align: center;
+}
+.coupon-messages-notices.error, .cc-messages-notices.error{
+    border: 2px solid #FF0000;
+    background: #f5abab;
+}
+.coupon-messages-notices{
+    width: 75%;
+    border-radius: 10px;
+    padding: 5px;
+    text-align: center;
+}
+.coupon-messages-notices.success, .cc-messages-notices.success{
+    border: 2px solid #28a745;
+    background: #d9f9da;
+}
+#snackbar {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    min-width: 250px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color: #333; /* Black background color */
+    color: #fff; /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 2px; /* Rounded borders */
+    padding: 16px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: 1; /* Add a z-index if needed */
+    left: 50%; /* Center the snackbar */
+    bottom: 30px; /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+    visibility: visible; /* Show the snackbar */
+    /* Add animation: Take 0.5 seconds to fade in and out the snackbar. 
+   However, delay the fade out process for 2.5 seconds */
+   -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+   animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
 }
