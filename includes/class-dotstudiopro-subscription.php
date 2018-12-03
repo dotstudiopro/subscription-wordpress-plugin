@@ -109,7 +109,7 @@ class Dotstudiopro_Subscription {
         /**
          * Load the existing plugin wordpress-pluginv3
          */
-        require_once plugin_dir_path(dirname(__DIR__)) . 'wordpress-pluginv3\includes\class-dotstudiopro-external-api-requests.php';
+        // require_once plugin_dir_path(dirname(__DIR__)) . 'wordpress-pluginv3\includes\class-dotstudiopro-external-api-requests.php'
 
         /**
          * The class responsible for external API Request
