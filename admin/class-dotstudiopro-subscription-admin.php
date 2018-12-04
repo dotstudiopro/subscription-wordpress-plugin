@@ -42,37 +42,35 @@ class Dotstudiopro_Subscription_Admin {
         $this->dotstudiopro_subscription = new Dotstudiopro_Subscription_Request();
     }
 
-    public function dsp_subscription_template_chooser() {
-        global $post;
-
-        $pagename = $post->post_name;
-
-        switch ($pagename) {
-            
-        }
-    }
-
+    /**
+     * Function to load dynamic templates based on the page slug
+     * 
+     * @global type $post
+     * @param type $template
+     * @return type
+     */
     public function dsp_subscriptions_template_chooser($template) {
 
         global $post;
-
-        $page_slug = $post->post_name;
-        if ($page_slug == 'packages') {
-            $template_class = new Subscription_Listing_Template();
-            $template = $template_class->locate_template('subscriptions');
-        }
-        if ($page_slug == 'credit-card') {
-            $template_class = new Subscription_Listing_Template();
-            $template = $template_class->locate_template('payment');
-        }
-        if ($page_slug == 'thankyou') {
-            $template_class = new Subscription_Listing_Template();
-            $template = $template_class->locate_template('thankyou');
-        }
-        if ($page_slug == 'payment-profile') {
-            $template_class = new Subscription_Listing_Template();
-            $template = $template_class->locate_template('payment-profile');
-        }
+        if($post):
+            $page_slug = $post->post_name;
+            if ($page_slug == 'packages') {
+                $template_class = new Subscription_Listing_Template();
+                $template = $template_class->locate_template('subscriptions');
+            }
+            if ($page_slug == 'credit-card') {
+                $template_class = new Subscription_Listing_Template();
+                $template = $template_class->locate_template('payment');
+            }
+            if ($page_slug == 'thankyou') {
+                $template_class = new Subscription_Listing_Template();
+                $template = $template_class->locate_template('thankyou');
+            }
+            if ($page_slug == 'payment-profile') {
+                $template_class = new Subscription_Listing_Template();
+                $template = $template_class->locate_template('payment-profile');
+            }
+        endif;
         return $template;
     }
 

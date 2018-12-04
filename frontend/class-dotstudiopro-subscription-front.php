@@ -110,6 +110,32 @@ class Dotstudiopro_Subscription_Front {
             wp_send_json_error($send_response, 500);
         }
     }
+    /**
+     * Function to create the user's payment profile for first time subscription
+     * 
+     * @global type $client_token
+     * @since 1.0.0
+     */
+    public function update_payment_profile() {
+        global $client_token;
+        if ($client_token && wp_verify_nonce($_POST['nonce'], 'update_payment')) {
+            parse_str($_POST['formData'], $formData);
+            $response = $this->dotstudiopro_subscription->updatePaymentProfile($client_token, $formData);
+            if (is_wp_error($response)) {
+                $send_response = array('message' => 'Server Error : ' . $response->get_error_message());
+                wp_send_json_error($send_response, 403);
+            } elseif (isset($response['success']) && $response['success'] == 1) {
+                $send_response = array('message' => 'Your payment profile has been updated.');
+                wp_send_json_success($send_response, 200);
+            } else {
+                $send_response = array('message' => 'Internal Server Error');
+                wp_send_json_error($send_response, 500);
+            }
+        } else {
+            $send_response = array('message' => 'Internal Server Error');
+            wp_send_json_error($send_response, 500);
+        }
+    }
 
     /**
      * Function to update subscription package

@@ -159,8 +159,8 @@ if (class_exists('Dsp_External_Api_Request')) {
          * @param type $billing_country
          * @return type
          */
-        public function updatePaymentProfile($client_token, $first_name, $last_name, $card_number, $exp_month, $exp_year, $cvv, $coupon = null, $billing_address, $billing_address_2 = null, $billing_city, $billing_state, $billing_zip, $billing_country) {
-
+        //public function updatePaymentProfile($client_token, $first_name, $last_name, $card_number, $exp_month, $exp_year, $cvv, $coupon = null, $billing_address, $billing_address_2 = null, $billing_city, $billing_state, $billing_zip, $billing_country) {
+        public function updatePaymentProfile($client_token, $formData) {
             $token = $this->api_token_check();
 
             if (!$token && !$client_token)
@@ -169,28 +169,27 @@ if (class_exists('Dsp_External_Api_Request')) {
             $path = 'subscriptions/payment/update';
 
             $headers = array(
+                'content-type'  => 'application/json',
                 'x-access-token' => $token,
                 'x-client-token' => $client_token
             );
 
 
             $body = array(
-                "first_name" => $first_name,
-                "last_name" => $last_name,
-                "card_number" => $card_number,
-                "exp_month" => $exp_month,
-                "exp_year" => $exp_year,
-                "cvv" => $cvv,
-                "coupon" => $coupon,
-                "billing_address" => $billing_address,
-                "billing_address_2" => $billing_address_2,
-                "billing_city" => $billing_city,
-                "billing_state" => $billing_state,
-                "billing_zip" => $billing_zip,
-                "billing_country" => $billing_country,
+                "first_name" => $formData['first_name'],
+                "last_name" => $formData['last_name'],
+                "billing_address" => $formData['billing_address'],
+                "billing_address_2" => $formData['billing_address_2'],
+                "billing_city" => $formData['billing_city'],
+                "billing_state" => $formData['billing_state'],
+                "billing_zip" => $formData['billing_zip'],
+                "billing_country" => $formData['billing_country'],
+                "card_number" => $formData['card_number'],
+                "exp_month" => $formData['exp_month'],
+                "exp_year" => $formData['exp_year'],
+                "cvv" => $formData['cvv'],
             );
-
-            return $this->api_request_put($path, null, $headers, $body);
+            return $this->api_request_put($path, null, $headers, json_encode($body));
         }
 
         /**

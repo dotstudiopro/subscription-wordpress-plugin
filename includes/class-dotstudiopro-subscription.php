@@ -176,6 +176,8 @@ class Dotstudiopro_Subscription {
         $this->loader->add_action('wp_ajax_nopriv_validate_couponcode', $plugin_front, 'validate_couponcode');
         $this->loader->add_action('wp_ajax_create_payment_profile', $plugin_front, 'create_payment_profile');
         $this->loader->add_action('wp_ajax_nopriv_create_payment_profile', $plugin_front, 'create_payment_profile');
+        $this->loader->add_action('wp_ajax_update_payment_profile', $plugin_front, 'update_payment_profile');
+        $this->loader->add_action('wp_ajax_nopriv_update_payment_profile', $plugin_front, 'update_payment_profile');
         $this->loader->add_action('wp_ajax_update_subscription', $plugin_front, 'update_subscription');
         $this->loader->add_action('wp_ajax_nopriv_update_subscription', $plugin_front, 'update_subscription');
         $this->loader->add_action('wp_ajax_cancle_subscription', $plugin_front, 'cancle_subscription');

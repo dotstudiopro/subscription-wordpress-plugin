@@ -1,7 +1,10 @@
 <?php
-get_header();
 global $client_token;
+if(!$client_token):
+    wp_redirect('/packages');
+endif;
 
+get_header();
 $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
 $subscriptions = $dsp_subscription_object->getCompanyProductSummary();
 
@@ -51,7 +54,7 @@ if ($client_token) {
                 </div>
                 <div class="credit-block container mb-5">
                     <p><?php echo $active_subscription; ?></p>
-                    <p><a class="btn btn-primary"  href="/subscriptions/">Manage your Subscriptions</a></p>
+                    <p><a class="btn btn-primary"  href="/packages">Manage your Subscriptions</a></p>
                 </div>
                 <?php
             } else {
@@ -186,7 +189,7 @@ if ($client_token) {
                                         <div class="form-group credit-group">
                                             <div class="form-group-small margin">
                                                 <label class="credit_card_label" for="cvv">CVV</label>
-                                                <input type="password" class="form-control credit_card_input" maxlength="3" id="cvv" name="cvv" required>
+                                                <input type="password" class="form-control credit_card_input" maxlength="4" id="cvv" name="cvv" required>
                                                 <div class="invalid-feedback">
                                                     Invalid CVV.
                                                 </div>

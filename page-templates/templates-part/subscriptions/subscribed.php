@@ -44,7 +44,7 @@ if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['
                         $active_subscription_information .= '<p>Current period ends at' . date('F j, Y, g:i a T', strtotime($user_subscribe['subscriptions'][0]['subscription']['current_period_ends_at'])) . '</p>';
                 }
                 else {
-                    if ($platform != 'web') {
+                    if ($platform == 'web') {
                         $update_subscription_information .= '<option value="' . $subscription_id . '">' . $name . ' $' . $price_period . '</option>';
                         if (empty($user_subscribe['subscriptions'][0]['subscription']['delayed_cancel_at']))
                             $cancle_subscription_information .= '<button id="cancel_subscription_button" data-title="Cancle Subscription" data-nonce=' . wp_create_nonce('cancle_subscription_plan') . ' data-action="cancle_subscription" class="vc_btn3-color-blue btn btn-danger">CANCEL SUBSCRIPTION</button>';
