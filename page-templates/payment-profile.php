@@ -25,12 +25,19 @@ if ($client_token) {
         $billing_address = !empty($user_subscribe['subscriptions'][0]['subscription']['credit_card']['billing_address']) ? $user_subscribe['subscriptions'][0]['subscription']['credit_card']['billing_address'] : '';
         $billing_address_2 = !empty($user_subscribe['subscriptions'][0]['subscription']['credit_card']['billing_address_2']) ? $user_subscribe['subscriptions'][0]['subscription']['credit_card']['billing_address_2'] : '';
         $card_type = !empty($user_subscribe['subscriptions'][0]['subscription']['credit_card']['card_type']) ? $user_subscribe['subscriptions'][0]['subscription']['credit_card']['card_type'] : '';
+        $plateform = !empty($user_subscribe['subscriptions'][0]['subscription']['platform']) ? $user_subscribe['subscriptions'][0]['subscription']['platform'] : '';
         ?>
         <div class="custom-container container pt-5 pb-5">
             <div class="row no-gutters">
                 <h3 class="page-title mb-5">Manage your payment details</h3>
             </div>
             <div class="credit-block container mb-5">
+                <?php if($plateform != 'web'){ ?>
+                <div class="row row-fluid">
+                    <p>As you do not have subscribed using the website plateform, so you can not update your payment details using the website. Please use the relavant plateform that you have used to subscribe the packages.</p>
+                    <p>For more information please visit <a href="/packages" title="Subscription Packages">Packages</a></p>
+                </div>
+                <?php } else { ?>
                 <form action="/thankyou/" class="w-100 needs-validation" novalidate name="payment" id="form_payment">
                     <input type="hidden" name="nonce" id="nonce" value="<?php echo wp_create_nonce('update_payment'); ?>">
                     <div class="row row-fluid">
@@ -191,6 +198,7 @@ if ($client_token) {
                         </div>
                     </div>
                 </form>
+                <?php } ?>
             </div>
         </div>
         <div id="snackbar"></div>
