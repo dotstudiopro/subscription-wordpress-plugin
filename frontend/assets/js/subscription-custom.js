@@ -104,6 +104,8 @@ var url = customVars.ajaxurl;
                 }
             );
             submit_form.done(function (response) {
+                customOverlay(false);
+                showSnacksBar(false);
                 $('#snackbar').html('Payment Received...Please wait...');
                 $('.cc-messages-notices').removeClass('error').addClass('success').html('<p>Payment Received...Please wait...</p>');
                 window.location.href = $('#form_payment').attr('action');
@@ -120,7 +122,7 @@ var url = customVars.ajaxurl;
                 $('.cc-messages-notices').removeClass('success').addClass('error').html('<p>' + response.responseJSON.data.message + '</p>')
             })
         }
-        setTimeout(function(){ customOverlay(false); showSnacksBar(false); }, 3000);
+        //setTimeout(function(){ customOverlay(false); showSnacksBar(false); }, 3000);
     });
     
     /**
