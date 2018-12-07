@@ -87,7 +87,7 @@ var url = customVars.ajaxurl;
     $('button#submit_cc').on('click', function (e) {
         e.preventDefault();
         var form = $('#form_payment')[0];
-        var validated = validatePaymentForm(e,form);
+        var validated = validatePaymentForm(e, form);
         if (validated) {
             customOverlay(true);
             showSnacksBar(true);
@@ -96,42 +96,41 @@ var url = customVars.ajaxurl;
             var formData = $('#form_payment').serialize();
             $('#snackbar').html('Sending your request...');
             var submit_form = $.post(
-                url,
-                {
-                    'action': action,
-                    'formData': formData,
-                    'nonce': nonce
-                }
+                    url,
+                    {
+                        'action': action,
+                        'formData': formData,
+                        'nonce': nonce
+                    }
             );
             submit_form.done(function (response) {
                 customOverlay(false);
                 showSnacksBar(false);
-                $('#snackbar').html('Payment Received...Please wait...');
                 $('.cc-messages-notices').removeClass('error').addClass('success').html('<p>Payment Received...Please wait...</p>');
                 window.location.href = $('#form_payment').attr('action');
                 var url = $('#form_payment').attr('action');
                 var form = $('<form action="' + url + '" method="post">' +
-                    '<input type="hidden" name="thankyou" value="' + nonce + '" />' +
-                '</form>');
+                        '<input type="hidden" name="thankyou" value="' + nonce + '" />' +
+                        '</form>');
                 $('body').append(form);
                 form.submit();
             });
 
             submit_form.fail(function (response) {
-                $('#snackbar').html('Something went wrong...');
+                customOverlay(false);
+                showSnacksBar(false);
                 $('.cc-messages-notices').removeClass('success').addClass('error').html('<p>' + response.responseJSON.data.message + '</p>')
             })
         }
-        //setTimeout(function(){ customOverlay(false); showSnacksBar(false); }, 3000);
     });
-    
+
     /**
      *  AJAX action to submit the credit card details to subscribe the subscription
      */
     $('button#update_cc').on('click', function (e) {
         e.preventDefault();
         var form = $('#form_payment')[0];
-        var validated = validatePaymentForm(e,form);
+        var validated = validatePaymentForm(e, form);
         if (validated) {
             customOverlay(true);
             showSnacksBar(true);
@@ -140,12 +139,12 @@ var url = customVars.ajaxurl;
             var formData = $('#form_payment').serialize();
             $('#snackbar').html('Sending your request...');
             var submit_form = $.post(
-                url,
-                {
-                    'action': action,
-                    'formData': formData,
-                    'nonce': nonce
-                }
+                    url,
+                    {
+                        'action': action,
+                        'formData': formData,
+                        'nonce': nonce
+                    }
             );
             submit_form.done(function (response) {
                 $('#snackbar').html('Your details are upto date...Please wait...');
@@ -153,8 +152,8 @@ var url = customVars.ajaxurl;
                 window.location.href = $('#form_payment').attr('action');
                 var url = $('#form_payment').attr('action');
                 var form = $('<form action="' + url + '" method="post">' +
-                    '<input type="hidden" name="payment-profile" value="' + nonce + '" />' +
-                '</form>');
+                        '<input type="hidden" name="payment-profile" value="' + nonce + '" />' +
+                        '</form>');
                 $('body').append(form);
                 form.submit();
             });
@@ -164,7 +163,10 @@ var url = customVars.ajaxurl;
                 $('.cc-messages-notices').removeClass('success').addClass('error').html('<p>' + response.responseJSON.data.message + '</p>')
             })
         }
-        setTimeout(function(){ customOverlay(false); showSnacksBar(false); }, 3000);
+        setTimeout(function () {
+            customOverlay(false);
+            showSnacksBar(false);
+        }, 3000);
     });
 
 
@@ -309,45 +311,29 @@ var url = customVars.ajaxurl;
             }
         }
     });
-    
-//    $('#checkbox_cc').click(function(){
-//        if($(this).prop("checked") == true){
-//            $('#card_number').prop('required', true);
-//            $('#exp_month').prop('required', true);
-//            $('#exp_year').prop('required', true);
-//            $('#cvv').prop('required', true);
-//            $('.credit_card_info').show();
-//        }
-//        else if($(this).prop("checked") == false){
-//            $('#card_number').prop('required', false);
-//            $('#exp_month').prop('required', false);
-//            $('#exp_year').prop('required', false);
-//            $('#cvv').prop('required', false);
-//            $('.credit_card_info').hide();
-//        }
-//    });
 
 })(jQuery);
+
 function validatePaymentForm(event, form)
 {
-      if (form.checkValidity() === false) {
-            var invalidFields = jQuery(form).find( ":invalid" ).each( function( index, node ) {
-                jQuery(node).nextAll("div.invalid-feedback").show();
+    if (form.checkValidity() === false) {
+        var invalidFields = jQuery(form).find(":invalid").each(function (index, node) {
+            jQuery(node).nextAll("div.invalid-feedback").show();
         });
         event.preventDefault();
         event.stopPropagation();
         form.classList.add('invalid');
         return false;
-    }    
+    }
     jQuery("div.invalid-feedback").hide();
     form.classList.add('valid');
     return true;
-        
+
 }
 function showSnacksBar(action) {
     // Get the snackbar DIV
     var x = document.getElementById("snackbar");
     x.className = "show";
-    if(!action)
+    if (!action)
         x.className = x.className.replace("show", "");
 }
