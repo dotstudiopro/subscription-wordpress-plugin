@@ -33,27 +33,29 @@ class Dotstudiopro_Subscription_Activator {
 
         $dsp_subscription = new Dotstudiopro_Subscription();
         $dsp_subscription_admin = new Dotstudiopro_Subscription_Front($dsp_subscription->get_Dotstudiopro_Subscription(), $dsp_subscription->get_version());
-        // Ensure we have defined the API basename and that the plugin is active, just to make sure that we don't end up with errors for the constant
-        // being undefined here
-        if (!defined('DOTSTUDIOPRO_API_BASENAME') || !is_plugin_active(DOTSTUDIOPRO_API_BASENAME) and current_user_can('activate_plugins')) {
-            // Stop activation redirect and show error
-            wp_die('Sorry, but this plugin requires the "dotstudioPRO API" plugin to be installed and active. <br><a href="' . admin_url('plugins.php') . '">&laquo; Return to Plugins</a>');
-        }
-        self::add_my_custom_pages('Packages', 'packages');
-        self::add_my_custom_pages('Credit Card', 'credit-card');
-        self::add_my_custom_pages('Payment Profile', 'payment-profile');
-        self::add_my_custom_pages('Thankyou', 'thankyou');
+
+        // create the page if not exists while plugin activated
+        if (get_option('packages') == NULL)
+            self::add_my_custom_pages('Packages', 'packages');
+        if (get_option('credit-card') == NULL)
+            self::add_my_custom_pages('Credit Card', 'credit-card');
+        if (get_option('payment-profile') == NULL)
+            self::add_my_custom_pages('Payment Profile', 'payment-profile');
+        if (get_option('thankyou') == NULL)
+            self::add_my_custom_pages('Thankyou', 'thankyou');
     }
-    
-    public static function add_my_custom_pages($title, $slug, $desc = '', $status = 'publish', $author = 1, $type = 'page'){
+
+    public static function add_my_custom_pages($title, $slug, $desc = '', $status = 'publish', $author = 1, $type = 'page') {
         $my_post = array(
-            'post_title'    => wp_strip_all_tags($title),
-            'post_content'  => $desc,
-            'post_status'   => $status,
-            'post_name'     => $slug,
-            'post_author'   => $author,
-            'post_type'     => $type,
+            'post_title' => wp_strip_all_tags($title),
+            'post_content' => $desc,
+            'post_status' => $status,
+            'post_name' => $slug,
+            'post_author' => $author,
+            'post_type' => $type,
         );
-        wp_insert_post( $my_post );
+        $page_id = wp_insert_post($my_post);
+        update_option($slug, $page_id);
     }
+
 }

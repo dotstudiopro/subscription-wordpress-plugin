@@ -31,5 +31,19 @@ class Dotstudiopro_Subscription_Deactivator {
         flush_rewrite_rules();
         //would want to use flush_rewrite_rules only but that does not work for some reason??
         delete_option('rewrite_rules');
+        //delete the pages which are created while plugin active
+        $delete_pages = array();
+        $delete_pages['packages'] = get_option('packages');
+        $delete_pages['credit-card'] = get_option('credit-card');
+        $delete_pages['payment-profile'] = get_option('payment-profile');
+        $delete_pages['thankyou'] = get_option('thankyou');
+
+        foreach ($delete_pages as $key => $delete_page):
+            if ($delete_page != NULL) {
+                wp_delete_post($delete_page, true);
+                delete_option($key);
+            }
+        endforeach;
     }
+
 }

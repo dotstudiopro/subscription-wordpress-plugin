@@ -26,14 +26,19 @@
 if (!defined('WPINC')) {
     die;
 }
+
+// we need to activate the dotstudioPRO API plugin first before installing this plugin.
+if (class_exists('Dotstudiopro_Api') == NULL and current_user_can('activate_plugins')) {
+    wp_die('Sorry, but this plugin requires the "dotstudioPRO API" plugin to be installed and active. <br><a href="' . admin_url('plugins.php') . '">&laquo; Return to Plugins</a>');
+}
 /**
  * Defining global variable for plugin basefile to use anywhere througnt the site
  */
 if (!defined('DOTSTUDIOPRO_SUBSCRIPTION_BASENAME')) {
     define('DOTSTUDIOPRO_SUBSCRIPTION_BASENAME', plugin_basename(__FILE__));
 }
-if ( ! defined( 'DOTSTUDIOPRO_SUBSCRIPTION_BASE_DIR' ) )
-    define( 'DOTSTUDIOPRO_SUBSCRIPTION_BASE_DIR', dirname( DOTSTUDIOPRO_SUBSCRIPTION_BASENAME ) );
+if (!defined('DOTSTUDIOPRO_SUBSCRIPTION_BASE_DIR'))
+    define('DOTSTUDIOPRO_SUBSCRIPTION_BASE_DIR', dirname(DOTSTUDIOPRO_SUBSCRIPTION_BASENAME));
 /**
  * The code that runs during plugin activation.
  */
