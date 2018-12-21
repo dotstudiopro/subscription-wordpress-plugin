@@ -204,5 +204,16 @@ if ($client_token) {
         <div id="snackbar"></div>
         <?php
     }
+    else{
+        ?>
+        <div class="custom-container container pt-5 pb-5">
+            <div class="row no-gutters">
+                <h3 class="page-title mb-5">Manage your payment details</h3>
+                <h4>As per our records we could not found any active subscriptions under your account, so you don't have any payment profile has been created yet.</h4>
+                <h4>Please <a href="/packages" title="Subscribe Now" >Subscribe Now</a></h4>
+            </div>
+        </div>
+        <?php
+    }
 }
 get_footer();
