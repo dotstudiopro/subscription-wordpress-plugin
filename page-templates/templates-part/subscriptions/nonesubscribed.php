@@ -12,7 +12,7 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
         <div class="row no-gutters">
             <h3 class="page-title">PLEASE SELECT YOUR PLAN</h3>
         </div>
-        <div class="row no-gutters pt-5">
+        <div class="row no-gutters pt-5 justify-content-md-center">
             <?php
             foreach ($subscriptions['data'] as $subscription):
 
@@ -35,31 +35,31 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
                     $interval_bottom = $interval_unit;
                     if ($interval == 12 && $interval_unit == 'month') {
                         $monthly_price = floor(($price * 100) / 12) / 100;
-                        $price_period = $monthly_price . '<span class="period"> / month ' . '</span>';
+                        $price_period = $monthly_price . '<span class="period"> /<br>month ' . '</span>';
                         $interval_bottom = "year";
                     } elseif ($interval == 1) {
-                        $price_period = $price . '<span class="period"> / ' . $interval_unit . '</span>';
+                        $price_period = $price . '<span class="period"> /<br>' . $interval_unit . '</span>';
                     } else {
-                        $price_period = $price . '<span class="period"> / ' . $interval . ' ' . $interval_unit . '</span>';
+                        $price_period = $price . '<span class="period"> /<br>' . $interval . ' ' . $interval_unit . '</span>';
                     }
                     $button = !$client_token ? 'login-link' : 'select_plan';
                     ?>
-                    <div class="col-xs-12 col-lg-3 pr-3">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 pr-3 pb-3">
                         <form  action="/credit-card/" id="form_<?php echo $subscription_id; ?>" method="POST">
                             <input type="hidden"  name="subscription_id" value="<?php echo $subscription_id; ?>">
                         </form>
                         <div class="card text-xs-center">
                             <div class="card-header">
-                                <h4 class="card-title"> 
+                                <h4 class="text-center mb-0 text-uppercase"> 
                                     <?php echo $name ?>
                                 </h4>
                             </div>
-                            <div class="card-block">
-                                <h5 class="display-4"><span class="currency">$</span><?php echo $price_period ?></h5>
+                            <div class="card-block text-center">
+                                <h5 class="display-4 mx-auto"><span class="currency">$</span><?php echo $price_period ?></h5>
                                 <?php
                                 if (!empty($trial_array)):
                                     ?>
-                                    <a href="#" class="btn btn-primary subscribe-now mt-2 <?php echo $button; ?>" data-subscriptionid="<?php echo $subscription_id; ?>">Try Free for <?php echo $trial_array['interval'] . ' ' . $trial_array['interval_unit'] ?></a>
+                                    <a href="#" class="mt-2 mb-2 select_plan btn btn-secondary btn-ds-secondary w-100 btn-lg <?php echo $button; ?>" data-subscriptionid="<?php echo $subscription_id; ?>">Try Free for <?php echo $trial_array['interval'] . ' ' . $trial_array['interval_unit'] ?></a>
                                     <?php if (!empty($trial_array['trial_price'])): ?>
                                         <p class="trial_price">You need to pay $<?php echo $trial_array['trial_price'] ?> to activate trial period</p>
                                     <?php endif; ?>

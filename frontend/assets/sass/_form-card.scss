@@ -1,0 +1,40 @@
+form #card_number {
+  background-image: url(../images/card.png), url(../images/images.png);
+  background-position: 2px -121px, 508px -61px;
+  background-size: 120px 366px, 120px 370px;
+  background-repeat: no-repeat;
+  padding-left: 54px;
+  &.visa {
+    background-position: 2px -163px, 508px -61px;
+  }
+  &.visa_electron {
+    background-position: 2px -205px, 508px -61px;
+  }
+  &.mastercard {
+    background-position: 2px -247px, 508px -61px;
+  }
+  &.maestro {
+    background-position: 2px -289px, 508px -61px;
+  }
+  &.discover {
+    background-position: 2px -331px, 508px -61px;
+  }
+  &.valid {
+    &.visa {
+      background-position: 2px -163px, 508px -87px;
+    }
+    &.visa_electron {
+      background-position: 2px -205px, 508px -87px;
+    }
+    &.mastercard {
+      background-position: 2px -247px, 508px -87px;
+    }
+    &.maestro {
+      background-position: 2px -289px, 508px -87px;
+    }
+    &.discover {
+      background-position: 2px -331px, 508px -87px;
+    }
+    background-position: 2px -121px, 508px -87px;
+  }
+}

@@ -1,0 +1,24 @@
+.form-group.required label:after {
+  content: "*";
+  color: $red;
+	padding-left: 2px;
+}
+
+.form-group{
+	@include media-breakpoint-down(sm) {
+		font-size: 1.5rem;
+	}
+}
+.credit-block .form-control{
+	@include media-breakpoint-down(sm) {
+		font-size: 1.5rem;
+		height: auto;
+		padding: 0.5rem .75rem;
+	}
+}
+
+.sm-mb-3 {
+	@include media-breakpoint-down(sm) {
+		margin-bottom: 1rem;
+	}
+}

@@ -63,7 +63,7 @@ if ($client_token) {
                     <div class="row no-gutters">
                         <h3 class="page-title mb-5">Make a Payment</h3>
                     </div>
-                    <div class="credit-block container mb-5">
+                    <div class="credit-block mb-5 container">
                         <form action="/thankyou/" class="w-100 needs-validation" novalidate name="payment" id="form_payment">
                             <div class="row row-fluid">
                                 <div class="form-group credit-group select w-100 ml-3 mr-3">
@@ -76,10 +76,10 @@ if ($client_token) {
                             <div class="row row-fluid">
                                 <div class="col-md-6 col-sm-6">
                                     <div class="wrapper">
-                                        <h4>Billing Info</h4>
+                                        <h4 class="mt-3 mb-3">Billing Info</h4>
                                         <div class="form-group credit-group">
-                                            <div class="row row-fluid">
-                                                <div class="col-md-6">
+                                            <div class="row form-group credit-group required">
+                                                <div class="col-md-6 sm-mb-3">
                                                     <label class="credit_card_label" for="first_name">First Name</label>
                                                     <input type="text" class="form-control credit_card_input" id="first_name" name="first_name" required>
                                                     <div class="invalid-feedback">
@@ -94,7 +94,7 @@ if ($client_token) {
                                                     </div>
                                                 </div>    
                                             </div>
-                                            <div class="form-group credit-group">
+                                            <div class="form-group credit-group required">
                                                 <label class="credit_card_label" for="billing_address">Address</label>
                                                 <input type="text" class="form-control credit_card_input" id="billing_address" name="billing_address" required>
                                                 <div class="invalid-feedback">
@@ -105,8 +105,8 @@ if ($client_token) {
                                                 <label class="credit_card_label">Address 2</label>
                                                 <input type="text" class="form-control credit_card_input" id="billing_address_2" name="billing_address_2" >
                                             </div>
-                                            <div class="row row-fluid">
-                                                <div class="col-md-6">
+                                            <div class="row form-group credit-group required">
+                                                <div class="col-md-6 sm-mb-3">
                                                     <label class="credit_card_label" for="billing_city">City</label>
                                                     <input type="text" class="form-control credit_card_input" id="billing_city" name="billing_city" required>
                                                     <div class="invalid-feedback">
@@ -130,7 +130,7 @@ if ($client_token) {
                                                     Please select country
                                                 </div>
                                             </div>
-                                            <div class="form-group credit-group">
+                                            <div class="form-group credit-group required">
                                                 <label class="credit_card_label" for="billing_state">State / Region</label>
                                                 <select class="form-control credit_card_input" id="billing_state" name="billing_state" data-value="shortcode" required></select>
                                                 <div class="invalid-feedback">
@@ -142,8 +142,8 @@ if ($client_token) {
                                 </div>
                                 <div class="col-md-6 col-sm-6">
                                     <div class="wrapper">
-                                        <h4>Credit Card Info</h4>
-                                        <div class="form-group credit-group">
+                                        <h4 class="mt-3 mb-3">Credit Card Info</h4>
+                                        <div class="form-group credit-group required">
                                             <div class="form-group-medium">
                                                 <label class="credit_card_label" for="card_number">Card Number</label>
                                                 <input type="text" class="form-control credit_card_input" id="card_number" name="card_number" maxlength="19" required>
@@ -152,9 +152,9 @@ if ($client_token) {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group credit-group">
+                                        <div class="form-group credit-group required">
                                             <div class="row row-fluid">
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 sm-mb-3">
                                                     <label class="credit_card_label" for="exp_month">Expiry month</label>
                                                     <select name="exp_month" id="exp_month" class="form-control credit_card_input" required>
                                                         <option value>Select Month</option>
@@ -186,7 +186,7 @@ if ($client_token) {
                                                 </div>    
                                             </div>
                                         </div>
-                                        <div class="form-group credit-group">
+                                        <div class="form-group credit-group required">
                                             <div class="form-group-small margin">
                                                 <label class="credit_card_label" for="cvv">CVV</label>
                                                 <input type="password" class="form-control credit_card_input" maxlength="4" id="cvv" name="cvv" required>
@@ -198,12 +198,12 @@ if ($client_token) {
                                         <div class="form-group credit-group">
                                             <label class="credit_card_label">Coupon Code</label>
                                             <div class="row">
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-6 sm-mb-3">
                                                     <input type="text" class="form-control credit_card_input" id="coupon_code" name="coupon_code">
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div id="coupon_wrapper" class="pull-left">
-                                                        <a class="btn btn-primary" id="validate_coupon" href="#" data-action="validate_couponcode" data-nonce="<?php echo wp_create_nonce('validate_couponcode'); ?>">Validate Coupon</a>
+                                                        <a class="btn btn-secondary btn-ds-secondary" id="validate_coupon" href="#" data-action="validate_couponcode" data-nonce="<?php echo wp_create_nonce('validate_couponcode'); ?>">Validate Coupon</a>
                                                     </div>
                                                     <div class="coupon-responce pull-left p-2" style="display:none"></div>
                                                 </div>
@@ -214,8 +214,8 @@ if ($client_token) {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row row-fluid w-100">
-                                    <button type="submit" id="submit_cc" class=" btn btn-primary button-submit" data-action="create_payment_profile">Start your subscription</button>
+                                <div class="mx-auto">
+                                    <button type="submit" id="submit_cc" class="btn btn-secondary btn-ds-secondary" data-action="create_payment_profile">Start your subscription</button>
                                 </div>
                             </div>
                             <div class="row row-fluid">

@@ -1,0 +1,25 @@
+.card {
+  .card-header {
+    background-color: $green;
+    border: 2px solid $green;
+    margin-bottom: 0;
+    h4 {
+      color: white;
+    }
+  }
+  .card-block {
+    background: $black;
+    padding: 15px;
+    border: 2px solid $green;
+    h5 {
+      color: $white;
+    }
+    p {
+      color: $white;
+    }
+  }
+}
+
+.credit-block h4{
+	color: $green;
+}
