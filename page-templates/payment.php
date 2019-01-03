@@ -207,7 +207,7 @@ if ($client_token) {
                                                     </div>
                                                     <div class="coupon-responce pull-left p-2" style="display:none"></div>
                                                 </div>
-                                                <div class="coupon-messages-notices m-3 pt-3">
+                                                <div class="coupon-messages-notices m-3">
 
                                                 </div>
                                             </div>
@@ -219,7 +219,7 @@ if ($client_token) {
                                 </div>
                             </div>
                             <div class="row row-fluid">
-                                <div class="cc-messages-notices pt-3 m-3">
+                                <div class="cc-messages-notices m-3">
                                     
                                 </div>
                             </div>

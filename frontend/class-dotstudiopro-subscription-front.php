@@ -51,6 +51,7 @@ class Dotstudiopro_Subscription_Front {
         wp_enqueue_script('countries', plugin_dir_url(__FILE__) . 'assets/js/countries.js', array(), false, true);
         wp_enqueue_script('jquery.creditCardValidator', plugin_dir_url(__FILE__) . 'assets/js/jquery.creditCardValidator.js', array(), false, true);
         wp_enqueue_script('jquery-confirm', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js', array(), false, true);
+				wp_enqueue_script('jquery.match.height', plugin_dir_url(__FILE__) . 'assets/js/jquery.match.height.js', array(), false, true);
         wp_enqueue_script('subscription-custom', plugin_dir_url(__FILE__) . 'assets/js/subscription-custom.js', array(), false, true);
         wp_localize_script('subscription-custom', 'customVars', array('basedir' => plugin_dir_url(__DIR__), 'ajaxurl' => admin_url('admin-ajax.php')));
         wp_enqueue_style('subscription', plugin_dir_url(__FILE__) . 'assets/css/subscription.css', array(), $this->version, 'all');

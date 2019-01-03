@@ -71,13 +71,13 @@ var url = customVars.ajaxurl;
         validate_coupon.done(function (response) {
             $(this).prop('disabled', false);
             $('.coupon-responce').html('<img class="activation-img" src="' + success_img + '">');
-            $('.coupon-messages-notices').removeClass('error').addClass('success').html('<p>' + response.data.message + '</p>');
+            $('.coupon-messages-notices').removeClass('error').addClass('success').html('<p class="mb-0">' + response.data.message + '</p>');
         });
 
         validate_coupon.fail(function (response) {
             $(this).prop('disabled', false);
             $('.coupon-responce').html('<img class="activation-img" src="' + error_img + '">');
-            $('.coupon-messages-notices').removeClass('success').addClass('error').html('<p>' + response.responseJSON.data.message + '</p>');
+            $('.coupon-messages-notices').removeClass('success').addClass('error').html('<p class="mb-0">' + response.responseJSON.data.message + '</p>');
         })
     });
 
@@ -119,7 +119,7 @@ var url = customVars.ajaxurl;
             submit_form.fail(function (response) {
                 customOverlay(false);
                 showSnacksBar(false);
-                $('.cc-messages-notices').removeClass('success').addClass('error').html('<p>' + response.responseJSON.data.message + '</p>')
+                $('.cc-messages-notices').removeClass('success').addClass('error').html('<p class="mb-0">' + response.responseJSON.data.message + '</p>')
             })
         }
     });
@@ -160,7 +160,7 @@ var url = customVars.ajaxurl;
 
             submit_form.fail(function (response) {
                 $('#snackbar').html('Something went wrong...');
-                $('.cc-messages-notices').removeClass('success').addClass('error').html('<p>' + response.responseJSON.data.message + '</p>')
+                $('.cc-messages-notices').removeClass('success').addClass('error').html('<p class="mb-0">' + response.responseJSON.data.message + '</p>')
             })
         }
         setTimeout(function () {
@@ -337,3 +337,16 @@ function showSnacksBar(action) {
     if (!action)
         x.className = x.className.replace("show", "");
 }
+
+/**
+ * to set the column same size
+ */
+jQuery(document).ready(function() {
+    //alert("in");
+      jQuery('.sameSize').matchHeight({    
+          byRow: true,
+          property: 'height',
+          target: null,
+          remove: false
+      })    
+  });

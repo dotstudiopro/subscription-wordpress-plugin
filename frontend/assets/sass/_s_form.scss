@@ -22,3 +22,12 @@
 		margin-bottom: 1rem;
 	}
 }
+
+.invalid .form-control, .valid .form-control {
+  &:valid {
+    border-color: green;
+  }
+  &:invalid {
+    border-color: red;
+  }
+}

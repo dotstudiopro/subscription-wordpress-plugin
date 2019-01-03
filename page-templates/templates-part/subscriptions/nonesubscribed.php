@@ -44,7 +44,7 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
                     }
                     $button = !$client_token ? 'login-link' : 'select_plan';
                     ?>
-                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 pr-3 pb-3">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 pr-3 pb-3 sameSize">
                         <form  action="/credit-card/" id="form_<?php echo $subscription_id; ?>" method="POST">
                             <input type="hidden"  name="subscription_id" value="<?php echo $subscription_id; ?>">
                         </form>
@@ -54,7 +54,7 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
                                     <?php echo $name ?>
                                 </h4>
                             </div>
-                            <div class="card-block text-center">
+                            <div class="card-block text-center sameSize">
                                 <h5 class="display-4 mx-auto"><span class="currency">$</span><?php echo $price_period ?></h5>
                                 <?php
                                 if (!empty($trial_array)):
@@ -66,7 +66,7 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
                                     <?php
                                 else:
                                     ?>
-                                    <a href="#" class="btn btn-primary subscribe-now mt-2 <?php echo $button; ?>" data-subscriptionid="<?php echo $subscription_id; ?>">Subscribe now</a>
+                                    <a href="#" class="mt-2 mb-2 select_plan btn btn-secondary btn-ds-secondary w-100 btn-lg <?php echo $button; ?>" data-subscriptionid="<?php echo $subscription_id; ?>">Subscribe now</a>
                                 <?php
                                 endif;
                                 ?>
