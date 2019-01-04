@@ -31,3 +31,11 @@
     border-color: red;
   }
 }
+
+.jconfirm.jconfirm-bootstrap .jconfirm-bg {
+    background-color: rgba(0,0,0,0.5);
+}
+
+.jconfirm .jconfirm-box{
+	border: 1px solid $green !important;
+}

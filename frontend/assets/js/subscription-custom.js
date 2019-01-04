@@ -214,15 +214,16 @@ var url = customVars.ajaxurl;
      */
 
     $('#update_subscription_button').confirm({
-        content: "CLICK BUTTON BELOW TO CONFIRM SUBSCRIPTION CHANGE",
+        content: "Click button below to confirm subscripition change",
+				boxWidth: '500px',
         theme: 'bootstrap',
         animation: 'zoom',
         closeAnimation: 'scale',
-        type: 'purple',
         typeAnimated: true,
         buttons: {
             CONFIRM: {
                 text: 'CONFIRM',
+								btnClass: 'btn btn-secondary btn-ds-secondary',
                 action: function () {
                     var subscription_id = $('.update_subscription_id').val();
                     var action = $('#update_subscription_button').data('action');
