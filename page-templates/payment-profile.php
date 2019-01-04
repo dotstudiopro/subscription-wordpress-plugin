@@ -29,7 +29,7 @@ if ($client_token) {
         ?>
         <div class="custom-container container pt-5 pb-5">
             <div class="row no-gutters">
-                <h3 class="page-title mb-5">Manage your payment details</h3>
+                <h3 class="page-title mb-5 center_title">Manage your payment details</h3>
             </div>
             <div class="credit-block container mb-5">
                 <?php if ($plateform != 'web') { ?>
@@ -43,10 +43,10 @@ if ($client_token) {
                         <div class="row row-fluid">
                             <div class="col-md-6 col-sm-6">
                                 <div class="wrapper">
-                                    <h4>Billing Info</h4>
+                                    <h4 class="mt-3 mb-3">Billing Info</h4>
                                     <div class="form-group credit-group">
-                                        <div class="row row-fluid">
-                                            <div class="col-md-6">
+                                        <div class="row form-group credit-group required">
+                                            <div class="col-md-6 sm-mb-3">
                                                 <label class="credit_card_label" for="first_name">First Name</label>
                                                 <input type="text" class="form-control credit_card_input" readonly id="first_name" name="first_name" value="<?php echo $first_name ?>" >
                                             </div>
@@ -55,7 +55,7 @@ if ($client_token) {
                                                 <input type="text" class="form-control credit_card_input" readonly id="last_name" name="last_name" value="<?php echo $last_name; ?>">
                                             </div>    
                                         </div>
-                                        <div class="form-group credit-group">
+                                        <div class="form-group credit-group required">
                                             <label class="credit_card_label" for="billing_address">Address</label>
                                             <input type="text" class="form-control credit_card_input" id="billing_address" name="billing_address" value="<?php echo $billing_address; ?>" required>
                                             <div class="invalid-feedback">
@@ -66,8 +66,8 @@ if ($client_token) {
                                             <label class="credit_card_label">Address 2</label>
                                             <input type="text" class="form-control credit_card_input" id="billing_address_2" name="billing_address_2" value="<?php echo $billing_address_2; ?>">
                                         </div>
-                                        <div class="row row-fluid">
-                                            <div class="col-md-6">
+                                        <div class="row row-fluid required">
+                                            <div class="col-md-6 sm-mb-3">
                                                 <label class="credit_card_label" for="billing_city">City</label>
                                                 <input type="text" class="form-control credit_card_input" id="billing_city" name="billing_city" value="<?php echo $billing_city; ?>" required>
                                                 <div class="invalid-feedback">
@@ -103,7 +103,7 @@ if ($client_token) {
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="wrapper">
-                                    <h4>Credit Card Info</h4>
+                                    <h4 class="mt-3 mb-3">Credit Card Info</h4>
                                     <div class="your-card">
                                         <div class="bank-name" title="BestBank"><?php echo strtoupper($card_type . ' Card'); ?></div>
                                         <div class="chip">
@@ -133,68 +133,66 @@ if ($client_token) {
                                                                         </div>
                                                                     </div>-->
                                     <!--<div class="credit_card_info" style="display: none;">-->
-                                    <div class="credit_card_info mt-3">
-                                        <div class="form-group credit-group">
-                                            <div class="form-group-medium">
-                                                <label class="credit_card_label" for="card_number">Card Number</label>
-                                                <input type="text" class="form-control credit_card_input" id="card_number" name="card_number" maxlength="19" required>
-                                                <div class="invalid-feedback">
-                                                    Invalid card Number.
-                                                </div>
+                                    <div class="form-group credit-group required">
+                                        <div class="form-group-medium">
+                                            <label class="credit_card_label" for="card_number">Card Number</label>
+                                            <input type="text" class="form-control credit_card_input" id="card_number" name="card_number" maxlength="19" required>
+                                            <div class="invalid-feedback">
+                                                Invalid card Number.
                                             </div>
                                         </div>
-                                        <div class="form-group credit-group">
-                                            <div class="row row-fluid">
-                                                <div class="col-md-6">
-                                                    <label class="credit_card_label" for="exp_month">Expiry month</label>
-                                                    <select name="exp_month" id="exp_month" class="form-control credit_card_input" required>
-                                                        <option value>Select Month</option>
-                                                        <?php
-                                                        for ($month = 1; $month <= 12; $month++) {
-                                                            $month = str_pad($month, 2, '0', STR_PAD_LEFT);
-                                                            $monthName = date('M', mktime(0, 0, 0, $month, 10));
-                                                            echo '<option value="' . $month . '">' . $month . ' (' . $monthName . ')</option>';
-                                                        }
-                                                        ?>
-                                                    </select>
-                                                    <div class="invalid-feedback">
-                                                        Please select card expiry month
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label class="credit_card_label" for="exp_year">Expiry year</label>
-                                                    <select name="exp_year" id="exp_year" class="form-control credit_card_input" required>
-                                                        <option value>Select Year</option>
-                                                        <?php
-                                                        for ($year = date('Y'); $year <= date('Y') + 25; $year++) {
-                                                            echo '<option value="' . $year . '">' . $year . '</option>';
-                                                        }
-                                                        ?>
-                                                    </select>
-                                                    <div class="invalid-feedback">
-                                                        Please select card expiry year
-                                                    </div>
-                                                </div>    
-                                            </div>
-                                        </div>
-                                        <div class="form-group credit-group">
-                                            <div class="form-group-small margin">
-                                                <label class="credit_card_label" for="cvv">CVV</label>
-                                                <input type="password" class="form-control credit_card_input" maxlength="4" id="cvv" name="cvv" required>
+                                    </div>
+                                    <div class="form-group credit-group required">
+                                        <div class="row row-fluid">
+                                            <div class="col-md-6 sm-mb-3">
+                                                <label class="credit_card_label" for="exp_month">Expiry month</label>
+                                                <select name="exp_month" id="exp_month" class="form-control credit_card_input" required>
+                                                    <option value>Select Month</option>
+                                                    <?php
+                                                    for ($month = 1; $month <= 12; $month++) {
+                                                        $month = str_pad($month, 2, '0', STR_PAD_LEFT);
+                                                        $monthName = date('M', mktime(0, 0, 0, $month, 10));
+                                                        echo '<option value="' . $month . '">' . $month . ' (' . $monthName . ')</option>';
+                                                    }
+                                                    ?>
+                                                </select>
                                                 <div class="invalid-feedback">
-                                                    Invalid CVV.
+                                                    Please select card expiry month
                                                 </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="credit_card_label" for="exp_year">Expiry year</label>
+                                                <select name="exp_year" id="exp_year" class="form-control credit_card_input" required>
+                                                    <option value>Select Year</option>
+                                                    <?php
+                                                    for ($year = date('Y'); $year <= date('Y') + 25; $year++) {
+                                                        echo '<option value="' . $year . '">' . $year . '</option>';
+                                                    }
+                                                    ?>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Please select card expiry year
+                                                </div>
+                                            </div>    
+                                        </div>
+                                    </div>
+                                    <div class="form-group credit-group required">
+                                        <div class="form-group-small margin">
+                                            <label class="credit_card_label" for="cvv">CVV</label>
+                                            <input type="password" class="form-control credit_card_input" maxlength="4" id="cvv" name="cvv" required>
+                                            <div class="invalid-feedback">
+                                                Invalid CVV.
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row row-fluid w-100">
-                                <button type="submit" id="update_cc" class=" btn btn-primary button-submit" data-action="update_payment_profile">Update Your Details</button>
+                            <div class="mx-auto">
+                                <button type="submit" id="update_cc" class="btn btn-secondary btn-ds-secondary" data-action="update_payment_profile">Update Your Details</button>
                             </div>
                         </div>
                         <div class="row row-fluid">
-                            <div class="cc-messages-notices pt-3 m-3">
+                            <div class="cc-messages-notices m-3">
                             </div>
                         </div>
                     </form>
@@ -207,9 +205,9 @@ if ($client_token) {
         ?>
         <div class="custom-container container pt-5 pb-5">
             <div class="row no-gutters">
-                <h3 class="page-title mb-5">Manage your payment details</h3>
+                <h3 class="page-title mb-5 center_title">Manage your payment details</h3>
                 <h5>As per our records we could not find any active subscriptions under your account, so you don't have any payment profile has been created yet.</h5>
-                <div class="col-12 text-center pt-3"><a href="/packages" title="Subscribe Now" class="btn btn-primary">Subscribe Now</a></div>
+                <div class="col-12 text-center pt-3"><a href="/packages" title="Subscribe Now" class="btn btn-secondary btn-ds-secondary">Subscribe Now</a></div>
             </div>
         </div>
         <?php

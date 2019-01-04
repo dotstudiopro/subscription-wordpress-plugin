@@ -59,14 +59,14 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
                                 <?php
                                 if (!empty($trial_array)):
                                     ?>
-                                    <a href="#" class="mt-2 mb-2 select_plan btn btn-secondary btn-ds-secondary w-100 btn-lg <?php echo $button; ?>" data-subscriptionid="<?php echo $subscription_id; ?>">Try Free for <?php echo $trial_array['interval'] . ' ' . $trial_array['interval_unit'] ?></a>
+                                    <a href="#" class="mt-2 mb-2 btn btn-secondary btn-ds-secondary w-100 btn-lg <?php echo $button; ?>" data-subscriptionid="<?php echo $subscription_id; ?>">Try Free for <?php echo $trial_array['interval'] . ' ' . $trial_array['interval_unit'] ?></a>
                                     <?php if (!empty($trial_array['trial_price'])): ?>
                                         <p class="trial_price">You need to pay $<?php echo $trial_array['trial_price'] ?> to activate trial period</p>
                                     <?php endif; ?>
                                     <?php
                                 else:
                                     ?>
-                                    <a href="#" class="mt-2 mb-2 select_plan btn btn-secondary btn-ds-secondary w-100 btn-lg <?php echo $button; ?>" data-subscriptionid="<?php echo $subscription_id; ?>">Subscribe now</a>
+                                    <a href="#" class="mt-2 mb-2 btn btn-secondary btn-ds-secondary w-100 btn-lg <?php echo $button; ?>" data-subscriptionid="<?php echo $subscription_id; ?>">Subscribe now</a>
                                 <?php
                                 endif;
                                 ?>
