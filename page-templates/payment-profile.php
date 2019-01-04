@@ -66,7 +66,7 @@ if ($client_token) {
                                             <label class="credit_card_label">Address 2</label>
                                             <input type="text" class="form-control credit_card_input" id="billing_address_2" name="billing_address_2" value="<?php echo $billing_address_2; ?>">
                                         </div>
-                                        <div class="row row-fluid required">
+                                        <div class="row form-group credit-group required">
                                             <div class="col-md-6 sm-mb-3">
                                                 <label class="credit_card_label" for="billing_city">City</label>
                                                 <input type="text" class="form-control credit_card_input" id="billing_city" name="billing_city" value="<?php echo $billing_city; ?>" required>
@@ -104,7 +104,7 @@ if ($client_token) {
                             <div class="col-md-6 col-sm-6">
                                 <div class="wrapper">
                                     <h4 class="mt-3 mb-3">Credit Card Info</h4>
-                                    <div class="your-card">
+                                    <div class="your-card pb-3">
                                         <div class="bank-name" title="BestBank"><?php echo strtoupper($card_type . ' Card'); ?></div>
                                         <div class="chip">
                                             <img src="<?php echo plugin_dir_url() . 'wordpress-subscription-plugin/frontend/assets/images/chip.svg' ?>">
@@ -188,7 +188,7 @@ if ($client_token) {
                                 </div>
                             </div>
                             <div class="mx-auto">
-                                <button type="submit" id="update_cc" class="btn btn-secondary btn-ds-secondary" data-action="update_payment_profile">Update Your Details</button>
+                                <button type="submit" id="update_cc" class="btn btn-secondary btn-ds-secondary mt-3" data-action="update_payment_profile">Update Your Details</button>
                             </div>
                         </div>
                         <div class="row row-fluid">
