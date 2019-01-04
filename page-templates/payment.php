@@ -50,7 +50,7 @@ if ($client_token) {
             ?>
             <div class="custom-container container pt-5 pb-5">
                 <div class="row no-gutters">
-                    <h3 class="page-title mb-5">Your Current Subscription</h3>
+                    <h3 class="page-title mb-5 center_title">Your Current Subscription</h3>
                 </div>
                 <div class="credit-block container mb-5">
                     <p><?php echo $active_subscription; ?></p>
@@ -61,7 +61,7 @@ if ($client_token) {
                 ?>
                 <div class="custom-container container pt-5 pb-5">
                     <div class="row no-gutters">
-                        <h3 class="page-title mb-5">Make a Payment</h3>
+                        <h3 class="page-title mb-5 center_title">Make a Payment</h3>
                     </div>
                     <div class="credit-block mb-5 container">
                         <form action="/thankyou/" class="w-100 needs-validation" novalidate name="payment" id="form_payment">

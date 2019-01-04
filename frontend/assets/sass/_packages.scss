@@ -23,3 +23,20 @@
 .credit-block h4{
 	color: $green;
 }
+
+.center_title {
+  padding-bottom: 15px;
+  text-align: center;
+  width: 100%;
+  &:before {
+    border-bottom: 2px solid #87b145;
+    border-left: 0;
+    bottom: 0;
+    padding-bottom: 15px;
+    width: 10%;
+    text-align: center;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+}

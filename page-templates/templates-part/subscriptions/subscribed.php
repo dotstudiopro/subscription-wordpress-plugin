@@ -75,7 +75,7 @@ if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <button data-title="Update Subscription" data-nonce='<?php echo wp_create_nonce('upadate_subscription_plan'); ?>' data-action='update_subscription' id="update_subscription_button" class="vc_btn3-color-blue btn btn-primary">UPGRADE</button>
+                                            <button data-title="Update Subscription" data-nonce='<?php echo wp_create_nonce('upadate_subscription_plan'); ?>' data-action='update_subscription' id="update_subscription_button" class="btn btn-secondary btn-ds-secondary">UPGRADE</button>
                                         </div>
                                     </div>
                                 </div>

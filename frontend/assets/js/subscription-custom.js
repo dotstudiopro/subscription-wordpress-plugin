@@ -4,6 +4,20 @@ var error_img = customVars.basedir + '/frontend/assets/images/false.png';
 var url = customVars.ajaxurl;
 
 (function ($) {
+	
+		  $('.sameSize, .sameSize-inner').matchHeight({    
+          byRow: true,
+          property: 'height',
+          target: null,
+          remove: false
+      })
+			$('.sameSize-inner').matchHeight({    
+          byRow: true,
+          property: 'height',
+          target: null,
+          remove: false
+      })
+			
     if ($('#card_number').length) {
         var current_card = "";
         $('#card_number').validateCreditCard(function (e) {
@@ -337,16 +351,3 @@ function showSnacksBar(action) {
     if (!action)
         x.className = x.className.replace("show", "");
 }
-
-/**
- * to set the column same size
- */
-jQuery(document).ready(function() {
-    //alert("in");
-      jQuery('.sameSize').matchHeight({    
-          byRow: true,
-          property: 'height',
-          target: null,
-          remove: false
-      })    
-  });

@@ -10,7 +10,7 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
     ?>
     <div class="custom-container container pt-5 pb-5">
         <div class="row no-gutters">
-            <h3 class="page-title">PLEASE SELECT YOUR PLAN</h3>
+            <h3 class="page-title center_title">PLEASE SELECT YOUR PLAN</h3>
         </div>
         <div class="row no-gutters pt-5 justify-content-md-center">
             <?php
@@ -54,7 +54,7 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
                                     <?php echo $name ?>
                                 </h4>
                             </div>
-                            <div class="card-block text-center sameSize">
+                            <div class="card-block text-center sameSize-inner">
                                 <h5 class="display-4 mx-auto"><span class="currency">$</span><?php echo $price_period ?></h5>
                                 <?php
                                 if (!empty($trial_array)):
