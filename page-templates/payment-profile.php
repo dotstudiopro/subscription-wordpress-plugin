@@ -107,7 +107,7 @@ if ($client_token) {
                                     <div class="your-card pb-2 mb-3">
                                         <div class="bank-name" title="BestBank"><?php echo strtoupper($card_type . ' Card'); ?></div>
                                         <div class="chip">
-                                            <img src="http://192.168.0.16/ds-pro2/wp-content/plugins/wordpress-subscription-plugin/frontend/assets/images/chip.svg">
+                                            <img src="<?php echo plugin_dir_url() . 'wordpress-subscription-plugin/frontend/assets/images/chip.svg' ?>">
                                         </div>
                                         <div class="data">
                                             <div class="pan"><?php echo $card_number; ?></div>
