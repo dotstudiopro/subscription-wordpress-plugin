@@ -1,5 +1,5 @@
 var success_img = customVars.basedir + '/frontend/assets/images/true.png';
-var loader_gif = customVars.basedir + '/frontend/assets/images/Rolling.gif';
+var loader_gif = customVars.basedir + '/frontend/assets/images/loading.gif';
 var error_img = customVars.basedir + '/frontend/assets/images/false.png';
 var url = customVars.ajaxurl;
 
@@ -214,9 +214,10 @@ var url = customVars.ajaxurl;
      */
 
     $('#update_subscription_button').confirm({
-        content: "Click button below to confirm subscripition change",
-				boxWidth: '500px',
-        theme: 'bootstrap',
+        content: "Click button below to confirm subscripition change.",
+				boxWidth: '350px',
+				useBootstrap: false,
+        theme: 'custom',
         animation: 'zoom',
         closeAnimation: 'scale',
         typeAnimated: true,
@@ -237,25 +238,52 @@ var url = customVars.ajaxurl;
                             }
                     );
 
-                    $.alert('<div><img class="activation-img pb-3" src="' + loader_gif + '" style="margin-left:44%;"><p class="text-center"> Processing....</p></div>');
-                    setTimeout(function () {
-                        $('.jconfirm-buttons').hide();
-                    }, 10);
+                    $.alert({
+											title: 'Update Subscription',
+											boxWidth: '350px',
+											columnClass: 'loader',
+											useBootstrap: false,
+											theme: 'custom',
+        							animation: 'zoom',
+        							closeAnimation: 'scale',
+        							typeAnimated: true,
+											content:'<img class="activation-img pt-3 pb-3" src="' + loader_gif + '"><p class="text-center"> Processing....</p>'});
+											setTimeout(function () {
+													$('.jconfirm-buttons').hide();
+											}, 10);
 
-                    update_subscription.done(function (response) {
+                     update_subscription.done(function (response) {
                         $('.jconfirm-buttons button').trigger('click');
-                        $.alert('<h4 class="text-center">Thank You!</h4><br /><p>Your Package is updated successfully.</p>');
-                        setTimeout(function () {
-                            $('.jconfirm-buttons button').on('click', function () {
-                                window.location.reload();
-                            });
-                        }, 10);
+                        $.alert({
+													title: 'Update Subscription',
+													boxWidth: '350px',
+													columnClass: 'loader',
+													useBootstrap: false,
+													theme: 'custom',
+													animation: 'zoom',
+													closeAnimation: 'scale',
+													typeAnimated: true,
+													content:'<h4>Thank You!</h4><p class="mb-0">Your Package is updated successfully.</p>'});
+													setTimeout(function () {
+															$('.jconfirm-buttons button').on('click', function () {
+																	window.location.reload();
+															});
+													}, 10);
                     });
 
                     update_subscription.fail(function (response) {
                         $('.jconfirm-buttons button').trigger('click');
-                        $.alert('<h4 class="text-center"> Error </h4> <br /><p>' + response.responseJSON.data.message + '</p>');
-                        setTimeout(function () {
+                        $.alert({
+													title: 'Update Subscription',
+													boxWidth: '350px',
+													columnClass: 'loader',
+													useBootstrap: false,
+													theme: 'custom',
+													animation: 'zoom',
+													closeAnimation: 'scale',
+													typeAnimated: true,
+													content:'<h4> Error</h4><p class="mb-0">' + response.responseJSON.data.message + '</p>'});
+                        	setTimeout(function () {
                             $('.jconfirm-buttons button').on('click', function () {
                                 window.location.reload();
                             });
@@ -274,15 +302,17 @@ var url = customVars.ajaxurl;
      * Display conformation pop-up on Cancle subscription button click after that make ajax call on confirm button click
      */
     $('#cancel_subscription_button').confirm({
-        content: "CLICK BUTTON BELOW TO CONFIRM CANCLE SUBSCIPTION",
-        theme: 'bootstrap',
+        content: "Click button below to confirm cancle Subscription.",
+				boxWidth: '350px',
+				useBootstrap: false,
+        theme: 'custom',
         animation: 'zoom',
         closeAnimation: 'scale',
-        type: 'purple',
         typeAnimated: true,
         buttons: {
             CONFIRM: {
                 text: 'CONFIRM',
+								btnClass: 'btn btn-secondary btn-ds-secondary',
                 action: function () {
                     var action = $('#cancel_subscription_button').data('action');
                     var nonce = $('#cancel_subscription_button').data('nonce');
@@ -293,31 +323,76 @@ var url = customVars.ajaxurl;
                                 'nonce': nonce
                             }
                     );
-
-                    $.alert('<div><img class="activation-img pb-3" src="' + loader_gif + '" style="margin-left:44%;"><p class="text-center"> Processing....</p></div>');
-                    setTimeout(function () {
-                        $('.jconfirm-buttons').hide();
-                    }, 10);
+										 $.alert({
+											title: 'Update Subscription',
+											boxWidth: '350px',
+											columnClass: 'loader',
+											useBootstrap: false,
+											theme: 'custom',
+        							animation: 'zoom',
+        							closeAnimation: 'scale',
+        							typeAnimated: true,
+											content:'<img class="activation-img pt-3 pb-3" src="' + loader_gif + '"><p class="text-center"> Processing....</p>'});
+											setTimeout(function () {
+													$('.jconfirm-buttons').hide();
+											}, 10);
 
                     cancle_subscription.done(function (response) {
                         $('.jconfirm-buttons button').trigger('click');
-                        $.alert('<p>We have received your request to cancel your subscription. Your subscription will automatically cancel at the end of your trial period.</p>');
-                        setTimeout(function () {
-                            $('.jconfirm-buttons button').on('click', function () {
-                                window.location.reload();
-                            });
-                        }, 10);
+												$.alert({
+													title: 'Update Subscription',
+													boxWidth: '350px',
+													columnClass: 'loader',
+													useBootstrap: false,
+													theme: 'custom',
+													animation: 'zoom',
+													closeAnimation: 'scale',
+													typeAnimated: true,
+													content:'<p>We have received your request to cancel your subscription. Your subscription will automatically cancel at the end of your trial period.</p>'});
+													setTimeout(function () {
+															$('.jconfirm-buttons button').on('click', function () {
+																	window.location.reload();
+															});
+													}, 10);
                     });
+										
+										update_subscription.done(function (response) {
+                        $('.jconfirm-buttons button').trigger('click');
+                        $.alert({
+													title: 'Update Subscription',
+													boxWidth: '350px',
+													columnClass: 'loader',
+													useBootstrap: false,
+													theme: 'custom',
+													animation: 'zoom',
+													closeAnimation: 'scale',
+													typeAnimated: true,
+													content:'<h4>Thank You!</h4><p class="mb-0">Your Package is updated successfully.</p>'});
+													setTimeout(function () {
+															$('.jconfirm-buttons button').on('click', function () {
+																	window.location.reload();
+															});
+													}, 10);
+                    });
+										
 
                     cancle_subscription.fail(function (response) {
                         $('.jconfirm-buttons button').trigger('click');
-                        $.alert('<h4 class="text-center"> Error </h4> <br /><p>' + response.responseJSON.data.message + '</p>');
-                        setTimeout(function () {
-                            $('.jconfirm-buttons button').on('click', function () {
-                                window.location.reload();
-                            });
-                        }, 10);
-
+												 $.alert({
+													title: 'Update Subscription',
+													boxWidth: '350px',
+													columnClass: 'loader',
+													useBootstrap: false,
+													theme: 'custom',
+													animation: 'zoom',
+													closeAnimation: 'scale',
+													typeAnimated: true,
+													content:'<h4>Error</h4><p class="mb-0">' + response.responseJSON.data.message + '</p>'});
+													setTimeout(function () {
+															$('.jconfirm-buttons button').on('click', function () {
+																	window.location.reload();
+															});
+													}, 10);
                     })
                 }
             },

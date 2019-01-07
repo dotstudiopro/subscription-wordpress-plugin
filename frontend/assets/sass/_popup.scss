@@ -1,0 +1,22 @@
+.jconfirm.jconfirm-custom {
+  .jconfirm-bg {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  .jconfirm-box {
+    border: 1px solid $green;
+    padding: 0;
+    text-align: center;
+    .jconfirm-title-c {
+      padding: 15px 20px;
+      background: $black;
+      color: $green;
+    }
+    .jconfirm-content-pane {
+      margin: 15px 20px;
+      width: auto;
+    }
+    .jconfirm-buttons {
+      margin: 0 20px;
+    }
+  }
+}
