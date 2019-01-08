@@ -41,7 +41,7 @@ if ($client_token) {
                     <form action="/thankyou/" class="w-100 needs-validation" novalidate name="payment" id="form_payment">
                         <input type="hidden" name="nonce" id="nonce" value="<?php echo wp_create_nonce('update_payment'); ?>">
                         <div class="row row-fluid">
-                            <div class="col-md-6 col-sm-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="wrapper">
                                     <h4 class="mt-3 mb-3">Billing Info</h4>
                                     <div class="form-group credit-group">
@@ -101,7 +101,7 @@ if ($client_token) {
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-sm-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="wrapper">
                                     <h4 class="mt-3 mb-3">Credit Card Info</h4>
                                     <div class="your-card pb-2 mb-3">
@@ -203,10 +203,10 @@ if ($client_token) {
         <?php
     } else {
         ?>
-        <div class="custom-container container pt-5 pb-5">
+        <div class="custom-container container pt-5 pb-5  pt-5 pb-5 center-page-content">
             <div class="row no-gutters">
                 <h3 class="page-title mb-5 center_title">Manage your payment details</h3>
-                <h5>As per our records we could not find any active subscriptions under your account, so you don't have any payment profile has been created yet.</h5>
+                <p class="col-12 text-center">As per our records we could not find any active subscriptions under your account, so you don't have any payment profile has been created yet.</p>
                 <div class="col-12 text-center pt-3"><a href="/packages" title="Subscribe Now" class="btn btn-secondary btn-ds-secondary">Subscribe Now</a></div>
             </div>
         </div>

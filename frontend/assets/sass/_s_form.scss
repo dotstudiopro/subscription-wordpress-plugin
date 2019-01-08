@@ -70,11 +70,8 @@
 }
 
 .thankyou-page {
-	.row{
-		@include center-text;
-		top: 40%;
-	}
 	i {
 		color: $green;
 	}
 }
+

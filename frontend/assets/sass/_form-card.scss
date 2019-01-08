@@ -4,6 +4,7 @@ form #card_number {
   background-size: 120px 366px, 120px 370px;
   background-repeat: no-repeat;
   padding-left: 54px;
+	min-height: 36px;
   &.visa {
     background-position: 2px -163px, 508px -61px;
   }

@@ -48,14 +48,15 @@ if ($client_token) {
         }
         if ($subscription_id) {
             ?>
-            <div class="custom-container container pt-5 pb-5">
+            <div class="custom-container container pt-5 pb-5 center-page-content">
                 <div class="row no-gutters">
                     <h3 class="page-title mb-5 center_title">Your Current Subscription</h3>
-                </div>
-                <div class="credit-block container mb-5">
+                <div class="credit-block container mb-5 text-center">
                     <p><?php echo $active_subscription; ?></p>
-                    <p><a class="btn btn-primary"  href="/packages">Manage your Subscriptions</a></p>
+                    <p><a class="btn btn-secondary btn-ds-secondary"  href="/packages">Manage your Subscriptions</a></p>
                 </div>
+                </div>
+             </div>
                 <?php
             } else {
                 ?>
@@ -74,7 +75,7 @@ if ($client_token) {
                                 </div>
                             </div>
                             <div class="row row-fluid">
-                                <div class="col-md-6 col-sm-6">
+                                <div class="col-md-6 col-sm-12">
                                     <div class="wrapper">
                                         <h4 class="mt-3 mb-3">Billing Info</h4>
                                         <div class="form-group credit-group">
@@ -140,7 +141,7 @@ if ($client_token) {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-sm-6">
+                                <div class="col-md-6 col-sm-12">
                                     <div class="wrapper">
                                         <h4 class="mt-3 mb-3">Credit Card Info</h4>
                                         <div class="form-group credit-group required">

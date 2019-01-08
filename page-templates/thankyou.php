@@ -3,7 +3,7 @@ global $client_token;
 //if ($client_token && wp_verify_nonce($_POST['thankyou'], 'submit_payment')) {
     get_header();
     ?>
-    <div class="custom-container container pt-5 pb-5 thankyou-page">
+    <div class="custom-container container pt-5 pb-5 thankyou-page center-page-content">
         <div class="row no-gutters">
             <div class="col-md-12 text-center">
             <i class="fas fa-check-circle display-2 pb-3"></i>
