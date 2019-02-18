@@ -43,24 +43,63 @@ class Dotstudiopro_Subscription_Front {
     }
 
     /**
-     * Register the stylesheets for the admin area.
+     * Register the front-end head stylesheets.
      *
      * @since    1.0.0
      */
     public function enqueue_styles() {
-        wp_enqueue_script('countries', plugin_dir_url(__FILE__) . 'assets/js/countries.js', array(), false, true);
-        wp_enqueue_script('jquery.creditCardValidator', plugin_dir_url(__FILE__) . 'assets/js/jquery.creditCardValidator.js', array(), false, true);
+        wp_enqueue_script('jquery.match.height', plugin_dir_url(__FILE__) . 'assets/js/jquery.match.height.js', array(), false, true);
+    }
+
+    /**
+     * Register the front-end footer stylesheets.
+     *
+     * @since    1.0.1
+     */
+    public function enqueue_footer_styles() {
+        // Defer what JS/CSS we can
+        $urls = array(
+            array("url" => plugin_dir_url(__FILE__) . 'assets/js/countries.js', "type" => "script"), // countries
+            array("url" => plugin_dir_url(__FILE__) . 'assets/js/jquery.creditCardValidator.js', "type" => "script"), // jquery.creditCardValidator
+            array("url" => plugin_dir_url(__FILE__) . 'assets/css/subscription.css', "type" => "style"), // subscription css
+        );
+        // Get the defer scripts
+        $defer = $this->footer_script_defer($urls);
+        // If we have scripts, then we don't need to enqueue the above files
+        if ($defer) {
+            echo $defer;
+            return;
+        } else {
+            // Something went sideways, so we enqueue these as normal
+            wp_enqueue_script('countries', plugin_dir_url(__FILE__) . 'assets/js/countries.js', array(), false, true);
+            wp_enqueue_script('jquery.creditCardValidator', plugin_dir_url(__FILE__) . 'assets/js/jquery.creditCardValidator.js', array(), false, true);
+            wp_enqueue_style('subscription', plugin_dir_url(__FILE__) . 'assets/css/subscription.css', array(), $this->version, 'all');
+        }
+
         wp_enqueue_script('jquery-confirm', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js', array(), false, true);
-				wp_enqueue_script('jquery.match.height', plugin_dir_url(__FILE__) . 'assets/js/jquery.match.height.js', array(), false, true);
-        wp_enqueue_script('subscription-custom', plugin_dir_url(__FILE__) . 'assets/js/subscription-custom.js', array(), false, true);
-        wp_localize_script('subscription-custom', 'customVars', array('basedir' => plugin_dir_url(__DIR__), 'ajaxurl' => admin_url('admin-ajax.php')));
-        wp_enqueue_style('subscription', plugin_dir_url(__FILE__) . 'assets/css/subscription.css', array(), $this->version, 'all');
         wp_enqueue_style('jquery-confirm', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css', array(), $this->version, 'all');
+        wp_enqueue_script('subscription-custom', plugin_dir_url(__FILE__) . 'assets/js/subscription-custom.js', array('jquery-confirm'), false, true);
+        wp_localize_script('subscription-custom', 'customVars', array('basedir' => plugin_dir_url(__DIR__), 'ajaxurl' => admin_url('admin-ajax.php')));
+    }
+
+    /**
+     * Create script tags for deferring the load of scripts and styles as needed
+     * @param array $arr The array of files to get script tags for
+     *
+     * @since    1.0.1
+     * @return string|boolean The parsed script tags, or false if something is wrong
+     */
+    public function footer_script_defer($arr) {
+        if (!is_array($arr)) return false;
+        if (function_exists('dsp_bootstrap_footer_script_defer')) {
+            return dsp_bootstrap_footer_script_defer($arr);
+        }
+        return false;
     }
 
     /**
      * Function to validate the couponcode if user has applied the coupon on payment form
-     * 
+     *
      * @global type $client_token
      * @since 1.0.0
      */
@@ -87,7 +126,7 @@ class Dotstudiopro_Subscription_Front {
 
     /**
      * Function to create the user's payment profile for first time subscription
-     * 
+     *
      * @global type $client_token
      * @since 1.0.0
      */
@@ -113,7 +152,7 @@ class Dotstudiopro_Subscription_Front {
     }
     /**
      * Function to create the user's payment profile for first time subscription
-     * 
+     *
      * @global type $client_token
      * @since 1.0.0
      */

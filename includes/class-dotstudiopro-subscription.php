@@ -172,6 +172,7 @@ class Dotstudiopro_Subscription {
     private function define_frontend_hooks() {
         $plugin_front = new Dotstudiopro_Subscription_Front($this->get_Dotstudiopro_Subscription(), $this->get_version());
         $this->loader->add_action('wp_enqueue_scripts', $plugin_front, 'enqueue_styles');
+        $this->loader->add_action('get_footer', $plugin_front, 'enqueue_footer_styles');
         $this->loader->add_action('wp_ajax_validate_couponcode', $plugin_front, 'validate_couponcode');
         $this->loader->add_action('wp_ajax_nopriv_validate_couponcode', $plugin_front, 'validate_couponcode');
         $this->loader->add_action('wp_ajax_create_payment_profile', $plugin_front, 'create_payment_profile');
