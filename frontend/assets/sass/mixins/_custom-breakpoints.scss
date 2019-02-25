@@ -1,0 +1,22 @@
+@mixin respond-to($media) {
+	@if $media == handhelds {
+ 	 @media only screen and (max-width: $large-laptop) { @content; }
+  }
+	@else if $media == medium-screens {
+    @media only screen and (max-width: $small-laptop) { @content; }
+  }
+	@else if $media == small-screens {
+    @media only screen and (max-width: $custom-laptop) { @content; }
+  }
+	@else if $media == small-desktop {
+    @media only screen and (max-width: $small-desktop) { @content; }
+  }
+	@else if $media == smaller-desktop {
+    @media only screen and (max-width: $smaller-desktop) { @content; }
+  }
+	@else if $media == tablet-landscape {
+    @media only screen and (max-width: $tablet-landscape) { @content; }
+  }
+}
+
+

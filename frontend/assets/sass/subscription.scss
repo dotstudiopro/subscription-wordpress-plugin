@@ -1,9 +1,9 @@
-@import "../../../../../themes/wp-bootstrap-theme/assets/sass/bootstrap/functions";
-@import "../../../../../themes/wp-bootstrap-theme/assets/sass/bootstrap/variables";
-@import "../../../../../themes/wp-bootstrap-theme/assets/sass/bootstrap/mixins";
+@import "./bootstrap/functions";
+@import "./bootstrap/variables";
+@import "./bootstrap/mixins";
 
-@import "../../../../../themes/wp-bootstrap-theme/assets/sass/_custom-variables.scss";
-@import "../../../../../themes/wp-bootstrap-theme/assets/sass/_custom-mixin.scss";
+@import "custom-variables";
+@import "custom-mixin";
 @import "packages";
 @import "form-card";
 @import "s_form";
@@ -11,5 +11,3 @@
 @import "snackbar";
 @import "s_form - Copy";
 @import "popup";
-
-

@@ -1,0 +1,38 @@
+@mixin watch_now {
+    background: rgba(0, 0, 0, 0.5);
+		@include rem(height, 60px); 
+    @include rem(width, 60px);
+    text-align: center;
+    position: absolute;
+    z-index: 99;
+    padding: 0;
+    a {
+        display: block;
+        @include rem(height, 60px); 
+    		@include rem(width, 60px);
+        &:after {
+						@include rem(border-top, 15px solid transparent);
+						@include rem(border-bottom, 15px solid transparent);
+						@include rem(border-left, 25px solid $green);
+            display: inline-block;
+						@include rem(margin-top, 16px);
+            content: "";
+        }
+    }
+}
+
+@mixin watch_now_big {
+	@include rem(height, 180px);
+	@include rem(width, 180px);
+	@include rem(margin-top, -180px);
+	a {
+		@include rem(height, 180px);
+		@include rem(width, 180px);
+    &:after {
+			@include rem(border-top, 40px solid transparent);
+			@include rem(border-bottom, 40px solid transparent);
+			@include rem(border-left, 70px solid $green);
+			@include rem(margin-top, 46px);
+    }
+  }
+}

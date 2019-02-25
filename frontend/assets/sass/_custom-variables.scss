@@ -1,0 +1,29 @@
+// Color system
+
+$black:   									#000 !default;
+$black-1:										#2D2D2D;
+$green: 										#87b145;
+$light-gray:								#5a5a5a;
+$light-gray1:								#dddddd;
+$black-2:										#2b2b2b;
+$light-red:									#f5abab;
+$light-green:								#d9f9da;
+
+//Custom Width
+$custom-container:					90vw;
+$header-left:       				350px;
+$header-right:       				calc(100% - 350px);
+
+// Fonts Family
+$font-family-Roboto: 				'Roboto', sans-serif;
+$font-display:              'swap';
+
+// Based on HTML reset
+$baseFontSize: 16;
+
+$large-laptop:							1440px;
+$small-laptop:							1366px;
+$custom-laptop:							1300px;
+$small-desktop:							1280px;
+$smaller-desktop:						1200px;
+$tablet-landscape:					1024px;
