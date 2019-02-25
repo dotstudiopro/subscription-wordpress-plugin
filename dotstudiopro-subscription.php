@@ -40,6 +40,11 @@ if (!defined('DOTSTUDIOPRO_SUBSCRIPTION_BASENAME')) {
 if (!defined('DOTSTUDIOPRO_SUBSCRIPTION_BASE_DIR'))
     define('DOTSTUDIOPRO_SUBSCRIPTION_BASE_DIR', dirname(DOTSTUDIOPRO_SUBSCRIPTION_BASENAME));
 /**
+ * Helper functions
+ */
+require_once plugin_dir_path(__FILE__) . 'helpers.php';
+
+/**
  * The code that runs during plugin activation.
  */
 require_once plugin_dir_path(__FILE__) . 'includes/class-dotstudiopro-subscription-activator.php';

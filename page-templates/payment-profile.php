@@ -4,38 +4,24 @@ global $client_token;
 
 $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
 
-
-
 if ($client_token) {
     $subscription_id = null;
     $options = null;
     $user_subscribe = $dsp_subscription_object->getUserSubscription($client_token);
     if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['subscriptions'][0]['subscription']['product']['id'])) {
         $subscription_id = $user_subscribe['subscriptions'][0]['subscription']['product']['id'];
-        $chargify_id = $user_subscribe['subscriptions'][0]['subscription']['credit_card']['id'];
-        $card_number = !empty($user_subscribe['subscriptions'][0]['subscription']['credit_card']['masked_card_number']) ? $user_subscribe['subscriptions'][0]['subscription']['credit_card']['masked_card_number'] : '';
-        $exp_month = !empty($user_subscribe['subscriptions'][0]['subscription']['credit_card']['expiration_month']) ? $user_subscribe['subscriptions'][0]['subscription']['credit_card']['expiration_month'] : '';
-        $exp_year = !empty($user_subscribe['subscriptions'][0]['subscription']['credit_card']['expiration_year']) ? $user_subscribe['subscriptions'][0]['subscription']['credit_card']['expiration_year'] : '';
-        $first_name = !empty($user_subscribe['subscriptions'][0]['subscription']['credit_card']['first_name']) ? $user_subscribe['subscriptions'][0]['subscription']['credit_card']['first_name'] : '';
-        $last_name = !empty($user_subscribe['subscriptions'][0]['subscription']['credit_card']['last_name']) ? $user_subscribe['subscriptions'][0]['subscription']['credit_card']['last_name'] : '';
-        $billing_city = !empty($user_subscribe['subscriptions'][0]['subscription']['credit_card']['billing_city']) ? $user_subscribe['subscriptions'][0]['subscription']['credit_card']['billing_city'] : '';
-        $billing_state = !empty($user_subscribe['subscriptions'][0]['subscription']['credit_card']['billing_state']) ? $user_subscribe['subscriptions'][0]['subscription']['credit_card']['billing_state'] : '';
-        $billing_zip = !empty($user_subscribe['subscriptions'][0]['subscription']['credit_card']['billing_zip']) ? $user_subscribe['subscriptions'][0]['subscription']['credit_card']['billing_zip'] : '';
-        $billing_country = !empty($user_subscribe['subscriptions'][0]['subscription']['credit_card']['billing_country']) ? $user_subscribe['subscriptions'][0]['subscription']['credit_card']['billing_country'] : '';
-        $billing_address = !empty($user_subscribe['subscriptions'][0]['subscription']['credit_card']['billing_address']) ? $user_subscribe['subscriptions'][0]['subscription']['credit_card']['billing_address'] : '';
-        $billing_address_2 = !empty($user_subscribe['subscriptions'][0]['subscription']['credit_card']['billing_address_2']) ? $user_subscribe['subscriptions'][0]['subscription']['credit_card']['billing_address_2'] : '';
-        $card_type = !empty($user_subscribe['subscriptions'][0]['subscription']['credit_card']['card_type']) ? $user_subscribe['subscriptions'][0]['subscription']['credit_card']['card_type'] : '';
-        $plateform = !empty($user_subscribe['subscriptions'][0]['subscription']['platform']) ? $user_subscribe['subscriptions'][0]['subscription']['platform'] : '';
+        $chargify_id = $user_subscribe['subscriptions'][0]['subscription']['customer']['id'];
+        $cc_info = dsp_parse_cc_info($user_subscribe['subscriptions'][0]['subscription']);
+        $platform = !empty($user_subscribe['subscriptions'][0]['subscription']['platform']) ? $user_subscribe['subscriptions'][0]['subscription']['platform'] : '';
         ?>
         <div class="custom-container container pt-5 pb-5">
             <div class="row no-gutters">
                 <h3 class="page-title mb-5 center_title">Manage your payment details</h3>
             </div>
             <div class="credit-block container mb-5">
-                <?php if ($plateform != 'web') { ?>
+                <?php if ($platform != 'web') { ?>
                     <div class="row row-fluid">
-                        <p>As you do not have subscribed using the website plateform, so you can not update your payment details using the website. Please use the relavant plateform that you have used to subscribe the packages.</p>
-                        <p>For more information please visit <a href="/packages" title="Subscription Packages">Packages</a></p>
+                        <p>You have subscribed to Revry via <?php echo ucfirst($platform); ?>, outside of our website. To update your subscription, please find your subscription settings on that platform.</p>
                     </div>
                 <?php } else { ?>
                     <form action="/thankyou/" class="w-100 needs-validation" novalidate name="payment" id="form_payment">
@@ -48,43 +34,43 @@ if ($client_token) {
                                         <div class="row form-group credit-group required">
                                             <div class="col-md-6 sm-mb-3">
                                                 <label class="credit_card_label" for="first_name">First Name</label>
-                                                <input type="text" class="form-control credit_card_input" readonly id="first_name" name="first_name" value="<?php echo $first_name ?>" >
+                                                <input type="text" class="form-control credit_card_input" readonly id="first_name" name="first_name" value="<?php echo $cc_info_obj->first_name ?>" >
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="credit_card_label" for="last_name">Last Name</label>
-                                                <input type="text" class="form-control credit_card_input" readonly id="last_name" name="last_name" value="<?php echo $last_name; ?>">
-                                            </div>    
+                                                <input type="text" class="form-control credit_card_input" readonly id="last_name" name="last_name" value="<?php echo $cc_info_obj->last_name; ?>">
+                                            </div>
                                         </div>
                                         <div class="form-group credit-group required">
                                             <label class="credit_card_label" for="billing_address">Address</label>
-                                            <input type="text" class="form-control credit_card_input" id="billing_address" name="billing_address" value="<?php echo $billing_address; ?>" required>
+                                            <input type="text" class="form-control credit_card_input" id="billing_address" name="billing_address" value="<?php echo $cc_info_obj->billing_address; ?>" required>
                                             <div class="invalid-feedback">
                                                 Address field is required.
                                             </div>
                                         </div>
                                         <div class="form-group credit-group">
                                             <label class="credit_card_label">Address 2</label>
-                                            <input type="text" class="form-control credit_card_input" id="billing_address_2" name="billing_address_2" value="<?php echo $billing_address_2; ?>">
+                                            <input type="text" class="form-control credit_card_input" id="billing_address_2" name="billing_address_2" value="<?php echo $cc_info_obj->billing_address_2; ?>">
                                         </div>
                                         <div class="row form-group credit-group required">
                                             <div class="col-md-6 sm-mb-3">
                                                 <label class="credit_card_label" for="billing_city">City</label>
-                                                <input type="text" class="form-control credit_card_input" id="billing_city" name="billing_city" value="<?php echo $billing_city; ?>" required>
+                                                <input type="text" class="form-control credit_card_input" id="billing_city" name="billing_city" value="<?php echo $cc_info_obj->billing_city; ?>" required>
                                                 <div class="invalid-feedback">
                                                     Please select city.
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="credit_card_label" for="billing_zip">Zipcode</label>
-                                                <input type="text" class="form-control credit_card_input" id="billing_zip" name="billing_zip" value="<?php echo $billing_zip; ?>" required>
+                                                <input type="text" class="form-control credit_card_input" id="billing_zip" name="billing_zip" value="<?php echo $cc_info_obj->billing_zip; ?>" required>
                                                 <div class="invalid-feedback">
                                                     Zipcode field is required.
                                                 </div>
-                                            </div>    
+                                            </div>
                                         </div>
                                         <div class="form-group credit-group">
                                             <label class="credit_card_label" for="billing_country">Country</label>
-                                            <select class="form-control credit_card_input crs-country" id="billing_country" name="billing_country" data-region-id="billing_state" data-default-value="<?php echo $billing_country; ?>" data-value="shortcode" required>
+                                            <select class="form-control credit_card_input crs-country" id="billing_country" name="billing_country" data-region-id="billing_state" data-default-value="<?php echo $cc_info_obj->billing_country; ?>" data-value="shortcode" required>
                                                 <option value>Select Country</option>
                                             </select>
                                             <div class="invalid-feedback">
@@ -93,7 +79,7 @@ if ($client_token) {
                                         </div>
                                         <div class="form-group credit-group">
                                             <label class="credit_card_label" for="billing_state">State / Region</label>
-                                            <select class="form-control credit_card_input" id="billing_state" name="billing_state" data-value="shortcode" data-default-value="<?php echo $billing_state; ?>" required></select>
+                                            <select class="form-control credit_card_input" id="billing_state" name="billing_state" data-value="shortcode" data-default-value="<?php echo $cc_info_obj->billing_state; ?>" required></select>
                                             <div class="invalid-feedback">
                                                 Please select state/region
                                             </div>
@@ -105,7 +91,7 @@ if ($client_token) {
                                 <div class="wrapper">
                                     <h4 class="mt-3 mb-3">Credit Card Info</h4>
                                     <div class="your-card pb-2 mb-3">
-                                        <div class="bank-name" title="BestBank"><?php echo strtoupper($card_type . ' Card'); ?></div>
+                                        <div class="bank-name" title="BestBank"><?php echo strtoupper($cc_info_obj->card_type . ' Card'); ?></div>
                                         <div class="chip">
                                             <img src="<?php echo plugin_dir_url() . 'wordpress-subscription-plugin/frontend/assets/images/chip.svg' ?>">
                                         </div>
@@ -115,10 +101,10 @@ if ($client_token) {
                                                 <div class="left-label">EXPIRES END</div>
                                                 <div class="exp-date">
                                                     <div class="upper-labels">MONTH/YEAR</div>
-                                                    <div class="date"><?php echo str_pad($exp_month, 2, '0', STR_PAD_LEFT) . '/' . substr($exp_year, 2, 2); ?></div>
+                                                    <div class="date"><?php echo str_pad($cc_info_obj->exp_month, 2, '0', STR_PAD_LEFT) . '/' . substr($cc_info_obj->exp_year, 2, 2); ?></div>
                                                 </div>
                                             </div>
-                                            <div class="name-on-card"><?php echo $first_name . ' ' . $last_name; ?></div>
+                                            <div class="name-on-card"><?php echo $cc_info_obj->first_name . ' ' . $cc_info_obj->last_name; ?></div>
                                         </div>
                                         <div class="lines-down"></div>
                                         <div class="lines-up"></div>
@@ -173,7 +159,7 @@ if ($client_token) {
                                                 <div class="invalid-feedback">
                                                     Please select card expiry year
                                                 </div>
-                                            </div>    
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group credit-group required">
