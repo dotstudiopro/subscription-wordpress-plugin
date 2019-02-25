@@ -1,0 +1,19 @@
+{
+  "name": "wp-subscription-plugin",
+  "version": "1.0.1",
+  "description": "The dotstudioPRO subscription plugin for use with the dotstudioPRO Premium Theme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "dotstudioPRO",
+  "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^7.0.1",
+    "gulp": "^4.0.0",
+    "gulp-clean-css": "^4.0.0",
+    "gulp-minify": "^3.1.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5"
+  }
+}

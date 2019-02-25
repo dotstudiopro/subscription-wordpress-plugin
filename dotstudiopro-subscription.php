@@ -15,7 +15,7 @@
  * Plugin Name:       dotstudioPRO Subscription
  * Plugin URI:        https://www.dotstudiopro.com
  * Description:       This plugin is an addon to the dosstudioPRO API plugin to allow users to manage their subscriptions.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            dotstudioPRO
  * Author URI:        http://www.dotstudiopro.com
  * License:           GPLv3
@@ -39,6 +39,17 @@ if (!defined('DOTSTUDIOPRO_SUBSCRIPTION_BASENAME')) {
 }
 if (!defined('DOTSTUDIOPRO_SUBSCRIPTION_BASE_DIR'))
     define('DOTSTUDIOPRO_SUBSCRIPTION_BASE_DIR', dirname(DOTSTUDIOPRO_SUBSCRIPTION_BASENAME));
+
+/**
+ * A script/plugin that communicates with our WP Updater service to determine plugin updates
+ */
+require 'plugin-update-checker/plugin-update-checker.php';
+$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+    'https://updates.wordpress.dotstudiopro.com/wp-update-server/?action=get_metadata&slug=dspdev-subscription-plugin',
+    __FILE__,
+    'dspdev-subscription-plugin'
+);
+
 /**
  * Helper functions
  */
