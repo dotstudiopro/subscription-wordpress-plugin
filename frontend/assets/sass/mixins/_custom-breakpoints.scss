@@ -17,6 +17,9 @@
 	@else if $media == tablet-landscape {
     @media only screen and (max-width: $tablet-landscape) { @content; }
   }
+	@else if $media == large-desktop {
+    @media only screen and (min-width: $larger-desktop) { @content; }
+  }
 }
 
 

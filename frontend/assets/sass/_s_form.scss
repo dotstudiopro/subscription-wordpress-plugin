@@ -5,12 +5,12 @@
 }
 
 .form-group{
-	@include media-breakpoint-down(sm) {
+	@media (max-width: 767px) {
 		font-size: 1.5rem;
 	}
 }
 .credit-block .form-control{
-	@include media-breakpoint-down(sm) {
+	@media (max-width: 767px) {
 		font-size: 1.5rem;
 		height: auto;
 		padding: 0.5rem .75rem;
@@ -18,7 +18,7 @@
 }
 
 .sm-mb-3 {
-	@include media-breakpoint-down(sm) {
+	@media (max-width: 767px) {
 		margin-bottom: 1rem;
 	}
 }

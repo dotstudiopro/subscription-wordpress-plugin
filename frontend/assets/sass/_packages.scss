@@ -29,7 +29,7 @@
   text-align: center;
   width: 100%;
   &:before {
-    border-bottom: 2px solid #87b145;
+    border-bottom: 2px solid $pink;
     border-left: 0;
     bottom: 0;
     padding-bottom: 15px;
@@ -42,5 +42,5 @@
 }
 
 .subscription_info{
-	background: #ddd;
+	background: $light-gray1;
 }

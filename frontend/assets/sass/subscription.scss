@@ -1,12 +1,11 @@
-@import "./bootstrap/functions";
-@import "./bootstrap/variables";
-@import "./bootstrap/mixins";
-
-@import "custom-variables";
-@import "custom-mixin";
+@import "_custom-mixin.scss";
+@import "_custom-variables.scss";
 @import "packages";
 @import "form-card";
 @import "s_form";
 @import "card";
 @import "snackbar";
+@import "s_form - Copy";
 @import "popup";
+
+

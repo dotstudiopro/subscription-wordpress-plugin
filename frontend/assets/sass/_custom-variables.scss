@@ -1,26 +1,32 @@
 // Color system
-
-$black:   									#000 !default;
+$black:											#000000;
+$white:											#ffffff;
+$red:												#ff0000;
 $black-1:										#2D2D2D;
+$black-2:										#1f1f1f;
 $green: 										#87b145;
+$dark-gray:									#343434;
 $light-gray:								#5a5a5a;
 $light-gray1:								#dddddd;
+$light-gray2:								#8e8e8e;
 $black-2:										#2b2b2b;
 $light-red:									#f5abab;
 $light-green:								#d9f9da;
+$sky-blue:									#11DDF5;
+$pink:											#f00886;
 
 //Custom Width
-$custom-container:					90vw;
-$header-left:       				350px;
-$header-right:       				calc(100% - 350px);
+$custom-container:					1170px;
+$header-left:       				220px;
+$header-right:       				calc(100% - 220px);
 
 // Fonts Family
-$font-family-Roboto: 				'Roboto', sans-serif;
+$font-family-Montserrat: 		'Montserrat', sans-serif;
 $font-display:              'swap';
 
 // Based on HTML reset
 $baseFontSize: 16;
-
+$larger-desktop:						1921px;
 $large-laptop:							1440px;
 $small-laptop:							1366px;
 $custom-laptop:							1300px;

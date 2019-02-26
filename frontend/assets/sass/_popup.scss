@@ -6,7 +6,7 @@
     border: 1px solid $green;
     padding: 0;
     text-align: center;
-		@include media-breakpoint-down(xs) {
+		@media (max-width: 575px) {
 			width: 300px !important;
 		}
     .jconfirm-title-c {
