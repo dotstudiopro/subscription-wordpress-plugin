@@ -43,6 +43,7 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
                         $price_period = $price . '<span class="period"> /<br>' . $interval . ' ' . $interval_unit . '</span>';
                     }
                     $button = !$client_token ? 'login-link' : 'select_plan';
+                    $url = !$client_token ?  wp_login_url( get_permalink() ) : '#';
                     ?>
                     <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 pr-3 pb-3 sameSize">
                         <form  action="/credit-card/" id="form_<?php echo $subscription_id; ?>" method="POST">
@@ -66,7 +67,7 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
                                     <?php
                                 else:
                                     ?>
-                                    <a href="#" class="mt-2 mb-2 btn btn-secondary btn-ds-secondary w-100 btn-lg <?php echo $button; ?>" data-subscriptionid="<?php echo $subscription_id; ?>">Subscribe now</a>
+                                    <a href="<?php echo $url; ?>" class="mt-2 mb-2 btn btn-secondary btn-ds-secondary w-100 btn-lg <?php echo $button; ?>" data-subscriptionid="<?php echo $subscription_id; ?>">Subscribe now</a>
                                 <?php
                                 endif;
                                 ?>
