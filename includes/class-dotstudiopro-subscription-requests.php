@@ -30,13 +30,19 @@ if (class_exists('Dsp_External_Api_Request')) {
             if (!$token)
                 return array();
 
+            $cache_key = "get_company_product_summary";
+            $cache = get_transient($cache_key);
+            if ($cache) return $cache;
+
             $path = 'subscriptions/summary/';
 
             $headers = array(
                 'x-access-token' => $token
             );
 
-            return $this->api_request_get($path, null, $headers);
+            $result = $this->api_request_get($path, null, $headers);
+            set_transient($cache_key, $result, 3600);
+            return $result;
         }
 
         /**
@@ -52,13 +58,19 @@ if (class_exists('Dsp_External_Api_Request')) {
             if (!$token)
                 return array();
 
+            $cache_key = "get_list_of_channels_in_product_" . $product_id;
+            $cache = get_transient($cache_key);
+            if ($cache) return $cache;
+
             $path = 'subscriptions/channels-by-product/' . $product_id;
 
             $headers = array(
                 'x-access-token' => $token
             );
 
-            return $this->api_request_get($path, null, $headers);
+            $result = $this->api_request_get($path, null, $headers);
+            set_transient($cache_key, $result, 3600);
+            return $result;
         }
 
         /**
@@ -261,7 +273,7 @@ if (class_exists('Dsp_External_Api_Request')) {
                 'content-type'  => 'application/json',
                 'x-access-token' => $token,
                 'x-client-token' => $client_token
-                    
+
             );
 
             $body = array(
