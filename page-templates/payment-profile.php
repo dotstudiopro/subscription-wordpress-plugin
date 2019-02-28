@@ -34,35 +34,35 @@ if ($client_token) {
                                         <div class="row form-group credit-group required">
                                             <div class="col-md-6 sm-mb-3">
                                                 <label class="credit_card_label" for="first_name">First Name</label>
-                                                <input type="text" class="form-control credit_card_input" readonly id="first_name" name="first_name" value="<?php echo $cc_info_obj->first_name ?>" >
+                                                <input type="text" class="form-control credit_card_input" readonly id="first_name" name="first_name" value="<?php echo $cc_info->first_name ?>" >
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="credit_card_label" for="last_name">Last Name</label>
-                                                <input type="text" class="form-control credit_card_input" readonly id="last_name" name="last_name" value="<?php echo $cc_info_obj->last_name; ?>">
+                                                <input type="text" class="form-control credit_card_input" readonly id="last_name" name="last_name" value="<?php echo $cc_info->last_name; ?>">
                                             </div>
                                         </div>
                                         <div class="form-group credit-group required">
                                             <label class="credit_card_label" for="billing_address">Address</label>
-                                            <input type="text" class="form-control credit_card_input" id="billing_address" name="billing_address" value="<?php echo $cc_info_obj->billing_address; ?>" required>
+                                            <input type="text" class="form-control credit_card_input" id="billing_address" name="billing_address" value="<?php echo $cc_info->billing_address; ?>" required>
                                             <div class="invalid-feedback">
                                                 Address field is required.
                                             </div>
                                         </div>
                                         <div class="form-group credit-group">
                                             <label class="credit_card_label">Address 2</label>
-                                            <input type="text" class="form-control credit_card_input" id="billing_address_2" name="billing_address_2" value="<?php echo $cc_info_obj->billing_address_2; ?>">
+                                            <input type="text" class="form-control credit_card_input" id="billing_address_2" name="billing_address_2" value="<?php echo $cc_info->billing_address_2; ?>">
                                         </div>
                                         <div class="row form-group credit-group required">
                                             <div class="col-md-6 sm-mb-3">
                                                 <label class="credit_card_label" for="billing_city">City</label>
-                                                <input type="text" class="form-control credit_card_input" id="billing_city" name="billing_city" value="<?php echo $cc_info_obj->billing_city; ?>" required>
+                                                <input type="text" class="form-control credit_card_input" id="billing_city" name="billing_city" value="<?php echo $cc_info->billing_city; ?>" required>
                                                 <div class="invalid-feedback">
                                                     Please select city.
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="credit_card_label" for="billing_zip">Zipcode</label>
-                                                <input type="text" class="form-control credit_card_input" id="billing_zip" name="billing_zip" value="<?php echo $cc_info_obj->billing_zip; ?>" required>
+                                                <input type="text" class="form-control credit_card_input" id="billing_zip" name="billing_zip" value="<?php echo $cc_info->billing_zip; ?>" required>
                                                 <div class="invalid-feedback">
                                                     Zipcode field is required.
                                                 </div>
@@ -70,7 +70,7 @@ if ($client_token) {
                                         </div>
                                         <div class="form-group credit-group">
                                             <label class="credit_card_label" for="billing_country">Country</label>
-                                            <select class="form-control credit_card_input crs-country" id="billing_country" name="billing_country" data-region-id="billing_state" data-default-value="<?php echo $cc_info_obj->billing_country; ?>" data-value="shortcode" required>
+                                            <select class="form-control credit_card_input crs-country" id="billing_country" name="billing_country" data-region-id="billing_state" data-default-value="<?php echo $cc_info->billing_country; ?>" data-value="shortcode" required>
                                                 <option value>Select Country</option>
                                             </select>
                                             <div class="invalid-feedback">
@@ -79,7 +79,7 @@ if ($client_token) {
                                         </div>
                                         <div class="form-group credit-group">
                                             <label class="credit_card_label" for="billing_state">State / Region</label>
-                                            <select class="form-control credit_card_input" id="billing_state" name="billing_state" data-value="shortcode" data-default-value="<?php echo $cc_info_obj->billing_state; ?>" required></select>
+                                            <select class="form-control credit_card_input" id="billing_state" name="billing_state" data-value="shortcode" data-default-value="<?php echo $cc_info->billing_state; ?>" required></select>
                                             <div class="invalid-feedback">
                                                 Please select state/region
                                             </div>
@@ -91,20 +91,20 @@ if ($client_token) {
                                 <div class="wrapper">
                                     <h4 class="mt-3 mb-3">Credit Card Info</h4>
                                     <div class="your-card pb-2 mb-3">
-                                        <div class="bank-name" title="BestBank"><?php echo strtoupper($cc_info_obj->card_type . ' Card'); ?></div>
+                                        <div class="bank-name" title="BestBank"><?php echo strtoupper($cc_info->card_type . ' Card'); ?></div>
                                         <div class="chip">
-                                            <img src="<?php echo plugin_dir_url() . 'wordpress-subscription-plugin/frontend/assets/images/chip.svg' ?>">
+                                            <img src="<?php echo plugins_url() . '/wordpress-subscription-plugin/frontend/assets/images/chip.svg' ?>">
                                         </div>
                                         <div class="data">
-                                            <div class="pan"><?php echo $card_number; ?></div>
+                                            <div class="pan"><?php echo $cc_info->card_number; ?></div>
                                             <div class="exp-date-wrapper">
                                                 <div class="left-label">EXPIRES END</div>
                                                 <div class="exp-date">
                                                     <div class="upper-labels">MONTH/YEAR</div>
-                                                    <div class="date"><?php echo str_pad($cc_info_obj->exp_month, 2, '0', STR_PAD_LEFT) . '/' . substr($cc_info_obj->exp_year, 2, 2); ?></div>
+                                                    <div class="date"><?php echo str_pad($cc_info->exp_month, 2, '0', STR_PAD_LEFT) . '/' . substr($cc_info->exp_year, 2, 2); ?></div>
                                                 </div>
                                             </div>
-                                            <div class="name-on-card"><?php echo $cc_info_obj->first_name . ' ' . $cc_info_obj->last_name; ?></div>
+                                            <div class="name-on-card"><?php echo $cc_info->first_name . ' ' . $cc_info->last_name; ?></div>
                                         </div>
                                         <div class="lines-down"></div>
                                         <div class="lines-up"></div>
