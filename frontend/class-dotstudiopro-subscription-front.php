@@ -60,8 +60,8 @@ class Dotstudiopro_Subscription_Front {
     public function enqueue_footer_styles() {
         wp_enqueue_style('subscription', $this->assets_dir . 'css/subscription.min.css', array(), $this->cachebuster, 'all');
         wp_enqueue_script('jquery.match.height', $this->assets_dir . 'js/jquery.match.height.min.js', array(), $this->cachebuster, true);
-        wp_enqueue_script('jquery-confirm', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js', array(), $this->cachebuster, true);
-        wp_enqueue_style('jquery-confirm', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css', array(), $this->cachebuster, 'all');
+        wp_enqueue_script('jquery-confirm', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js', array(), null, true);
+        wp_enqueue_style('jquery-confirm', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css', array(), null, 'all');
         wp_enqueue_script('subscription-custom', $this->assets_dir . 'js/subscription-custom.min.js', array('jquery-confirm', 'jquery.match.height'), false, true);
         wp_enqueue_script('countries', $this->assets_dir . 'js/countries.min.js', array(), $this->cachebuster, true);
         wp_enqueue_script('jquery.creditCardValidator', $this->assets_dir . 'js/jquery.creditCardValidator.min.js', array(), $this->cachebuster, true);
