@@ -39,9 +39,9 @@ if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['
                 if ($active_subscription_id == $subscription_id) {
                     $active_subscription_information .= '<div class="form-group"><h5>' . $name . ' $' . $price_period . ' (Current)</h5></div>';
                     if (!empty($user_subscribe['subscriptions'][0]['subscription']['delayed_cancel_at']))
-                        $active_subscription_information .='<p>Your Subscription Will be Cancelled at' . date('F j, Y, g:i a T', strtotime($user_subscribe['subscriptions'][0]['subscription']['delayed_cancel_at'])) . '</p>';
+                        $active_subscription_information .='<p>Your Subscription Will be Cancelled at ' . date('F j, Y, g:i a T', strtotime($user_subscribe['subscriptions'][0]['subscription']['delayed_cancel_at'])) . '</p>';
                     else
-                        $active_subscription_information .= '<p>Current period ends at' . date('F j, Y, g:i a T', strtotime($user_subscribe['subscriptions'][0]['subscription']['current_period_ends_at'])) . '</p>';
+                        $active_subscription_information .= '<p>Current period ends at ' . date('F j, Y, g:i a T', strtotime($user_subscribe['subscriptions'][0]['subscription']['current_period_ends_at'])) . '</p>';
                 }
                 else {
                     if ($platform == 'web') {

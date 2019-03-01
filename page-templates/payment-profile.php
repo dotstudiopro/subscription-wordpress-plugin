@@ -21,7 +21,7 @@ if ($client_token) {
             <div class="credit-block container mb-5">
                 <?php if ($platform != 'web') { ?>
                     <div class="row row-fluid">
-                        <p>You have subscribed to Revry via <?php echo ucfirst($platform); ?>, outside of our website. To update your subscription, please find your subscription settings on that platform.</p>
+                        <p>You have subscribed to <?php echo bloginfo(); ?> via <?php echo ucfirst($platform); ?>, outside of our website. To update your subscription, please find your subscription settings on that platform.</p>
                     </div>
                 <?php } else { ?>
                     <form action="/thankyou/" class="w-100 needs-validation" novalidate name="payment" id="form_payment">
