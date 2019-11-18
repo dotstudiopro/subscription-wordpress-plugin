@@ -15,7 +15,7 @@
  * Plugin Name:       dotstudioPRO Subscription
  * Plugin URI:        https://www.dotstudiopro.com
  * Description:       This plugin is an addon to the dosstudioPRO API plugin to allow users to manage their subscriptions.
- * Version:           1.0.1
+ * Version:           1.0.2
  * Author:            dotstudioPRO
  * Author URI:        http://www.dotstudiopro.com
  * License:           GPLv3
