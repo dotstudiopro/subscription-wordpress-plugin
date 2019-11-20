@@ -107,7 +107,7 @@ if (class_exists('Dsp_External_Api_Request')) {
          * @param type $exp_month
          * @param type $exp_year
          * @param type $cvv
-         * @param type $coupon
+         * @param type $coupon_code
          * @param type $billing_address
          * @param type $billing_address_2
          * @param type $billing_city
@@ -140,7 +140,7 @@ if (class_exists('Dsp_External_Api_Request')) {
                 "exp_month" => $formData['exp_month'],
                 "exp_year" => $formData['exp_year'],
                 "cvv" => $formData['cvv'],
-                "coupon" => $formData['coupon'],
+                "coupon" => $formData['coupon_code'],
                 "billing_address" => $formData['billing_address'],
                 "billing_address_2" => $formData['billing_address_2'],
                 "billing_city" => $formData['billing_city'],
@@ -162,7 +162,6 @@ if (class_exists('Dsp_External_Api_Request')) {
          * @param type $exp_month
          * @param type $exp_year
          * @param type $cvv
-         * @param type $coupon
          * @param type $billing_address
          * @param type $billing_address_2
          * @param type $billing_city

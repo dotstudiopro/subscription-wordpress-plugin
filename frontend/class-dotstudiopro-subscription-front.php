@@ -98,7 +98,7 @@ class Dotstudiopro_Subscription_Front {
                 $send_response = array('message' => 'Server Error : ' . $response->get_error_message());
                 wp_send_json_error($send_response, 403);
             } elseif (isset($response['success']) && $response['success'] == 1) {
-                $send_response = array('message' => 'Your subscription has been created.');
+                $send_response = array('message' => 'The coupon code is valid.');
                 wp_send_json_success($send_response, 200);
             } else {
                 $send_response = array('message' => 'Internal Server Error');
@@ -125,7 +125,7 @@ class Dotstudiopro_Subscription_Front {
                 $send_response = array('message' => 'Server Error : ' . $response->get_error_message());
                 wp_send_json_error($send_response, 403);
             } elseif (isset($response['success']) && $response['success'] == 1) {
-                $send_response = array('message' => 'The coupon code is valid.');
+                $send_response = array('message' => 'Your subscription has been created.');
                 wp_send_json_success($send_response, 200);
             } else {
                 $send_response = array('message' => 'Internal Server Error');
