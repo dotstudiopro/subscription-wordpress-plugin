@@ -358,7 +358,7 @@ jQuery(document).ready(function() {
                             }, 10);
                         });
 
-                        update_subscription.done(function(response) {
+                        cancle_subscription.done(function(response) {
                             $('.jconfirm-buttons button').trigger('click');
                             $.alert({
                                 title: 'Update Subscription',
