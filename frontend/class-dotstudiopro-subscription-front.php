@@ -104,7 +104,7 @@ class Dotstudiopro_Subscription_Front {
                 }
                 else {
                     $send_response = array('message' => 'The coupon code is not valid');
-                    wp_send_json_error($send_response, 500);    
+                    wp_send_json_error($send_response, 500);
                 }
             } else {
                 $send_response = array('message' => 'Internal Server Error');
@@ -179,7 +179,8 @@ class Dotstudiopro_Subscription_Front {
             $subscription_id = ($_POST['subscription_id']) ? $_POST['subscription_id'] : '';
             $response = $this->dotstudiopro_subscription->updateSubscription($client_token, $subscription_id);
             if (is_wp_error($response)) {
-                $send_response = array('message' => 'Server Error : ' . $response->get_error_message());
+                $err = $response->get_error_message();
+                $send_response = array('message' => 'Server Error : ' . (is_string($err) ? $err : json_encode($err)));
                 wp_send_json_error($send_response, 403);
             } elseif (isset($response['success']) && $response['success'] == 1) {
                 $send_response = array('message' => 'Your Package is updated successfully.');
