@@ -154,7 +154,7 @@ class Dotstudiopro_Subscription_Front {
             parse_str($_POST['formData'], $formData);
             $response = $this->dotstudiopro_subscription->updatePaymentProfile($client_token, $formData);
             if (is_wp_error($response)) {
-                $send_response = array('message' => 'Server Error : ' . $response->get_error_message());
+                $send_response = array('message' => 'Server Error : ' . (is_string($err) ? $err : json_encode($err)));
                 wp_send_json_error($send_response, 403);
             } elseif (isset($response['success']) && $response['success'] == 1) {
                 $send_response = array('message' => 'Your payment profile has been updated.');
