@@ -47,6 +47,9 @@
   &.error {
     border: 2px solid $red;
     background: $light-red;
+    position:inherit;
+    height:auto;
+    display:block;
   }
 	&.success {
 		border: 2px solid green;
@@ -62,6 +65,9 @@
   &.error {
     border: 2px solid $red;
     background: $light-red;
+    position:inherit;
+    height:auto;
+    display:block;
   }
   &.success {
     border: 2px solid green;

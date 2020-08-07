@@ -294,7 +294,7 @@ jQuery(document).ready(function() {
                     }
                 },
                 CANCLE: {
-                    text: 'CANCLE',
+                    text: 'CANCEL',
                 }
             }
         });
@@ -303,7 +303,7 @@ jQuery(document).ready(function() {
          * Display conformation pop-up on Cancle subscription button click after that make ajax call on confirm button click
          */
         $('#cancel_subscription_button').confirm({
-            content: "Click button below to confirm cancle Subscription.",
+            content: "Click button below to confirm cancel Subscription.",
             boxWidth: '350px',
             useBootstrap: false,
             theme: 'custom',
@@ -401,7 +401,7 @@ jQuery(document).ready(function() {
                     }
                 },
                 CANCLE: {
-                    text: 'CANCLE',
+                    text: 'CANCEL',
                 }
             }
         });
