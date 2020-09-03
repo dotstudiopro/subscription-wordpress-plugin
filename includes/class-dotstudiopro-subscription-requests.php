@@ -153,6 +153,75 @@ if (class_exists('Dsp_External_Api_Request')) {
         }
 
         /**
+         * subscribe user.
+         * @since 1.0.0
+         * @param $client_token
+         * @param $formData
+         * @return type
+         */
+        public function createWithPayment($client_token, $formData) {
+
+            $token = $this->api_token_check();
+
+            if (!$token && !$client_token)
+                return array();
+
+            $path = 'subscriptions/users/create_with_payment';
+
+            $headers = array(
+                'content-type'  => 'application/json',
+                'x-access-token' => $token,
+                'x-client-token' => $client_token
+            );
+
+            $body = array(
+                "first_name" => $formData['first_name'],
+                "last_name" => $formData['last_name'],
+                "card_number" => $formData['card_number'],
+                "exp_month" => $formData['exp_month'],
+                "exp_year" => $formData['exp_year'],
+                "cvv" => $formData['cvv'],
+                "coupon" => $formData['coupon_code'],
+                "billing_address" => $formData['billing_address'],
+                "billing_address_2" => $formData['billing_address_2'],
+                "billing_city" => $formData['billing_city'],
+                "billing_state" => $formData['billing_state'],
+                "billing_zip" => $formData['billing_zip'],
+                "billing_country" => $formData['billing_country'],
+            );
+
+            return $this->api_request_post($path, $query, $headers, json_encode($body));
+        }
+
+        /**
+         * Import Subscribe to.
+         * @since 1.0.0
+         * @param $client_token
+         * @param $formData
+         * @return type
+         */
+        public function importSubscribeTo($client_token, $formData) {
+
+            $token = $this->api_token_check();
+
+            if (!$token && !$client_token)
+                return array();
+
+            $path = 'subscriptions/users/import/subscribe_to/'. $formData['subscription_id'];
+
+            $headers = array(
+                'content-type'  => 'application/json',
+                'x-access-token' => $token,
+                'x-client-token' => $client_token
+            );
+
+            $query = array('platform' => 'web', 'coupon' => $formData['coupon_code']);
+
+            return $this->api_request_post($path, $query, $headers, json_encode($body));
+        }
+
+
+        /**
          * function to update payment profile.
          * @since 1.0.0
          * @param type $client_token
