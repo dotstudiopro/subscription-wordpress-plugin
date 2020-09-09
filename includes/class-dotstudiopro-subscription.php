@@ -68,7 +68,7 @@ class Dotstudiopro_Subscription {
     public function __construct() {
 
         $this->Dotstudiopro_Subscription = 'dotstudiopro-subscription';
-        $this->version = '1.0.3';
+        $this->version = '1.0.5';
 
         $this->load_dependencies();
         $this->set_locale();
