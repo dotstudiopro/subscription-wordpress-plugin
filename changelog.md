@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.0.5] - 2020-09-09
+
+### Changed
+- Update the API related to the create the customer into braintree first and after that import the user subscription
+
 ## [1.0.4] - 2020-07-13
 
 ### Fixed
