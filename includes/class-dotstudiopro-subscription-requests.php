@@ -350,6 +350,31 @@ if (class_exists('Dsp_External_Api_Request')) {
             return $this->api_request_post($path, null, $headers, json_encode($body));
         }
 
+
+        /**
+         * Get SVOD/TVOD products for a channel
+         * @since 1.1.0
+         * @param string $channel_id
+         * @return object
+         */
+        public function getProductsByChannel($channel_id)
+
+            $token = $this->api_token_check();
+
+            if (!$token)
+                return array();
+
+            $path = '/subscriptions/products-by-channel/' + $channel_id;
+
+            $headers = array(
+                'content-type'  => 'application/json',
+                'x-access-token' => $token,
+                'x-client-token' => $client_token
+
+            );
+            return $this->api_request_get($path, null, $headers);
+        }
+
     }
 
 }
