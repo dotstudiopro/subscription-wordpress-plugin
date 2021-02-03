@@ -1,0 +1,47 @@
+.product-detail-banner {
+  width: 100%;
+  font-size: 28px;
+  display: flex;
+  > .product-detail-name {
+    margin-left: 10px;
+    flex-basis: 50%;
+  }
+  > .product-detail-duration-price {
+    margin-right: 10px;
+    text-align: right;
+    flex-basis: 50%;
+  }
+}
+
+.product-detail-channels {
+  width: 100%;
+  text-align: center;
+  > .product-detail-channel {
+    text-align: left;
+    > .product-channel-image {
+      > img {
+        border-radius: 10px;
+        height: 52.25%;
+        width: 100%;
+      }
+    }
+    > .product-channel-title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+  }
+}
+
+.product-button-select {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  > .product-button-back {
+    margin-left: 10%;
+    flex-basis: 30%;
+  }
+  > .product-button-buy {
+    margin-left: 10%;
+    flex-basis: 30%;
+  }
+}
