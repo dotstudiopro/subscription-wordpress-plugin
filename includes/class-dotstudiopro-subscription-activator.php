@@ -42,7 +42,9 @@ class Dotstudiopro_Subscription_Activator {
         if (get_option('payment-profile') == NULL)
             self::add_my_custom_pages('Payment Profile', 'payment-profile');
         if (get_option('thankyou') == NULL)
-            self::add_my_custom_pages('Thankyou', 'thankyou');
+            self::add_my_custom_pages('Thank You', 'thankyou');
+        if (get_option('more-ways-to-watch') == NULL)
+            self::add_my_custom_pages('More Ways To Watch', 'more-ways-to-watch');
     }
 
     public static function add_my_custom_pages($title, $slug, $desc = '', $status = 'publish', $author = 1, $type = 'page') {

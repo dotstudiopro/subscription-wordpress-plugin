@@ -78,6 +78,26 @@ register_deactivation_hook(__FILE__, array('Dotstudiopro_Subscription_Deactivato
 require_once plugin_dir_path(__FILE__) . 'includes/class-dotstudiopro-subscription.php';
 
 /**
+ * Add rewrite tags
+ *
+ * @link https://codex.wordpress.org/Rewrite_API/add_rewrite_tag
+ */
+function dsp_channel_slug_rewrite_tag() {
+	add_rewrite_tag( '%channel_slug%', '([^&]+)' );
+}
+add_action('init', 'dsp_channel_slug_rewrite_tag', 10, 0);
+
+/**
+ * Add rewrite rules
+ *
+ * @link https://codex.wordpress.org/Rewrite_API/add_rewrite_rule
+ */
+function dsp_channel_slug_rewrite_rule() {
+	add_rewrite_rule( 'more-ways-to-watch/(.+)/?$', 'index.php?pagename=more-ways-to-watch&channel_slug=$matches[1]','top' );
+}
+add_action('init', 'dsp_channel_slug_rewrite_rule', 10, 0);
+
+/**
  * Begins execution of the plugin.
  *
  * Since everything within the plugin is registered via hooks,

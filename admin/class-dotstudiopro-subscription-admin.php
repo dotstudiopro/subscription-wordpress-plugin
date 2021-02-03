@@ -44,7 +44,7 @@ class Dotstudiopro_Subscription_Admin {
 
     /**
      * Function to load dynamic templates based on the page slug
-     * 
+     *
      * @global type $post
      * @param type $template
      * @return type
@@ -69,6 +69,10 @@ class Dotstudiopro_Subscription_Admin {
             if ($page_slug == 'payment-profile') {
                 $template_class = new Subscription_Listing_Template();
                 $template = $template_class->locate_template('payment-profile');
+            }
+            if ($page_slug == 'more-ways-to-watch') {
+                $template_class = new Subscription_Listing_Template();
+                $template = $template_class->locate_template('tvod_products');
             }
         endif;
         return $template;

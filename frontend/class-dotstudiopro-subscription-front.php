@@ -146,7 +146,7 @@ class Dotstudiopro_Subscription_Front {
                     $send_response = array('message' => 'Internal Server Error');
                     wp_send_json_error($send_response, 500);
                 }
-                
+
             } else {
                 $send_response = array('message' => 'Internal Server Error');
                 wp_send_json_error($send_response, 500);
@@ -231,6 +231,19 @@ class Dotstudiopro_Subscription_Front {
             $send_response = array('message' => 'Internal Server Error');
             wp_send_json_error($send_response, 500);
         }
+    }
+
+    public function show_more_ways_to_watch($channel_id) {
+        $tvod_products = dsp_get_channel_tvod_products($channel_id);
+        $args = array(
+           'meta_key' => 'dspro_channel_id',
+           'meta_value' => $channel_id,
+           'post_type' => 'channel'
+        );
+        $query = new WP_Query($args);
+        $post = $query->posts[0];
+        $slug = $post->post_name;
+        if (!empty($tvod_products) && !is_wp_error($tvod_products)) echo '<a href="/more-ways-to-watch/' . $slug . '" class="btn btn-secondary btn-ds-secondary">More Ways to Watch</a>';
     }
 
 }

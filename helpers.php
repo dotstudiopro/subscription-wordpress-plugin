@@ -37,4 +37,25 @@ function dsp_parse_cc_info( $sub_info ) {
     return $cc_info_obj;
 }
 
-?>
+/**
+  *  Get the TVOD products for a given channel
+  *
+  *  @type    function
+  *  @since   1.0.0
+  *
+  *  @param   $channel_id (string) The channel to get products for
+  *  @return  array TVOD products
+  */
+function dsp_get_channel_tvod_products($channel_id) {
+    if (!class_exists('Dotstudiopro_Subscription_Request')) return [];
+    $tkey = 'dsp_get_channel_tvod_products:' . $channel_id;
+    $current_products = get_transient($tkey);
+    if (!empty($current_products)) return $current_products;
+    $dsp_subs_api = new Dotstudiopro_Subscription_Request();
+    $channel_products = $dsp_subs_api->getProductsByChannel($channel_id);
+    $tvod_products = array_values(array_filter($channel_products['products'], function($cp) {
+        return $cp && !empty($cp['product_type']) && $cp['product_type'] === 'tvod';
+    }));
+    set_transient($tkey, $tvod_products, 300);
+    return $tvod_products;
+}

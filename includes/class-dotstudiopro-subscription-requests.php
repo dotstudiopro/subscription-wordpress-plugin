@@ -357,14 +357,16 @@ if (class_exists('Dsp_External_Api_Request')) {
          * @param string $channel_id
          * @return object
          */
-        public function getProductsByChannel($channel_id)
+        public function getProductsByChannel($channel_id) {
+
+            global $client_token;
 
             $token = $this->api_token_check();
 
             if (!$token)
                 return array();
 
-            $path = '/subscriptions/products-by-channel/' + $channel_id;
+            $path = '/subscriptions/products-by-channel/' . $channel_id;
 
             $headers = array(
                 'content-type'  => 'application/json',
