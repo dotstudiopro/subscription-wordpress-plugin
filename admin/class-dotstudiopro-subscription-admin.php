@@ -54,25 +54,24 @@ class Dotstudiopro_Subscription_Admin {
         global $post;
         if($post):
             $page_slug = $post->post_name;
+            $template_class = new Subscription_Listing_Template();
             if ($page_slug == 'packages') {
-                $template_class = new Subscription_Listing_Template();
                 $template = $template_class->locate_template('subscriptions');
             }
             if ($page_slug == 'credit-card') {
-                $template_class = new Subscription_Listing_Template();
                 $template = $template_class->locate_template('payment');
             }
             if ($page_slug == 'thankyou') {
-                $template_class = new Subscription_Listing_Template();
                 $template = $template_class->locate_template('thankyou');
             }
             if ($page_slug == 'payment-profile') {
-                $template_class = new Subscription_Listing_Template();
                 $template = $template_class->locate_template('payment-profile');
             }
             if ($page_slug == 'more-ways-to-watch') {
-                $template_class = new Subscription_Listing_Template();
                 $template = $template_class->locate_template('tvod_products');
+            }
+            if ($page_slug == 'product-details') {
+                $template = $template_class->locate_template('product_details');
             }
         endif;
         return $template;

@@ -8,14 +8,14 @@
  * that starts the plugin.
  *
  * @link              https://www.dotstudiopro.com
- * @since             1.0.1
+ * @since             1.0.6
  * @package           Dotstudiopro_Subscription
  *
  * @wordpress-plugin
  * Plugin Name:       dotstudioPRO Subscription
  * Plugin URI:        https://www.dotstudiopro.com
  * Description:       This plugin is an addon to the dosstudioPRO API plugin to allow users to manage their subscriptions.
- * Version:           1.1.0
+ * Version:           1.1.1
  * Author:            dotstudioPRO
  * Author URI:        http://www.dotstudiopro.com
  * License:           GPLv3
@@ -82,20 +82,22 @@ require_once plugin_dir_path(__FILE__) . 'includes/class-dotstudiopro-subscripti
  *
  * @link https://codex.wordpress.org/Rewrite_API/add_rewrite_tag
  */
-function dsp_channel_slug_rewrite_tag() {
-	add_rewrite_tag( '%channel_slug%', '([^&]+)' );
+function dsp_vod_products_rewrite_tag() {
+    add_rewrite_tag( '%product_id%', '([^&]+)' );
+    add_rewrite_tag( '%channel_slug%', '([^&]+)' );
 }
-add_action('init', 'dsp_channel_slug_rewrite_tag', 10, 0);
+add_action('init', 'dsp_vod_products_rewrite_tag', 10, 0);
 
 /**
  * Add rewrite rules
  *
  * @link https://codex.wordpress.org/Rewrite_API/add_rewrite_rule
  */
-function dsp_channel_slug_rewrite_rule() {
-	add_rewrite_rule( 'more-ways-to-watch/(.+)/?$', 'index.php?pagename=more-ways-to-watch&channel_slug=$matches[1]','top' );
+function dsp_vod_products_rewrite_rule() {
+    add_rewrite_rule( 'more-ways-to-watch/(.+)/?$', 'index.php?pagename=more-ways-to-watch&channel_slug=$matches[1]','top' );
+    add_rewrite_rule( 'product-details/(.+)/?$', 'index.php?pagename=product-details&product_id=$matches[1]','top' );
 }
-add_action('init', 'dsp_channel_slug_rewrite_rule', 10, 0);
+add_action('init', 'dsp_vod_products_rewrite_rule', 10, 0);
 
 /**
  * Begins execution of the plugin.

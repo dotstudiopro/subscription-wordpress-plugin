@@ -377,6 +377,31 @@ if (class_exists('Dsp_External_Api_Request')) {
             return $this->api_request_get($path, null, $headers);
         }
 
+        /**
+         * Get details for a product by DSP id
+         * @since 1.1.0
+         * @param string $product_id
+         * @return object
+         */
+        public function getProductDetails($product_id) {
+
+            $token = $this->api_token_check();
+
+            if (!$token)
+                return array();
+
+            $path = '/subscriptions/details/' . $product_id;
+
+            $headers = array(
+                'content-type'  => 'application/json',
+                'x-access-token' => $token
+
+            );
+            return $this->api_request_get($path, null, $headers);
+        }
+
     }
 
 }
+
+

@@ -59,3 +59,71 @@ function dsp_get_channel_tvod_products($channel_id) {
     set_transient($tkey, $tvod_products, 300);
     return $tvod_products;
 }
+
+function dsp_get_channels_for_product($product_id) {
+  if (!class_exists('Dotstudiopro_Subscription_Request')) return [];
+    $tkey = 'dsp_get_channels_for_product:' . $product_id;
+    $current_channels = get_transient($tkey);
+    if (!empty($current_channels)) return $current_channels;
+    $dsp_subs_api = new Dotstudiopro_Subscription_Request();
+    $channels = $dsp_subs_api->getListofChannelsinProduct($product_id);
+    if (is_wp_error($channels)) return [];
+    if (!$channels['success']) {
+      return null;
+    }
+    set_transient($tkey, $channels['channels'], 300);
+    return $channels['channels'];
+}
+
+/**
+  *  Get a vod product by id
+  *
+  *  @type    function
+  *  @since   1.0.0
+  *
+  *  @param   $product_id (string) VOD Product id
+  *  @return  object or null
+  */
+function dsp_get_vod_product_by_id($product_id) {
+    if (!class_exists('Dotstudiopro_Subscription_Request')) return null;
+    $tkey = 'dsp_get_vod_product_by_id:' . $product_id;
+    $current_product = get_transient($tkey);
+    if (!empty($current_product)) return $current_product;
+    $dsp_subs_api = new Dotstudiopro_Subscription_Request();
+    $product = $dsp_subs_api->getProductDetails($product_id);
+    if (is_wp_error($product)) return null;
+    if (!$product['success']) {
+      return null;
+    }
+    $product_data = json_decode($product['subscription']);
+    set_transient($tkey, $product_data, 300);
+    return $product_data;
+}
+
+/**
+  *  Create a post in Wordpress
+  *
+  *  @type    function
+  *  @since   1.0.0
+  *
+  *  @param   $title (string) Post title
+  *  @param   $slug (string) Post Slug
+  *  @param   $content (string) Post Content
+  *  @param   $status (string) Current post status (draft, publish, etc)
+  *  @param   $author (int) Author user ID
+  *  @param   $type (string) The channel to get products for
+  *  @return  null
+  */
+function dspsubs_create_page($title, $slug, $content = '', $status = 'publish', $author = 1, $type = 'page') {
+    $my_post = array(
+        'post_title' => wp_strip_all_tags($title),
+        'post_content' => $content,
+        'post_status' => $status,
+        'post_name' => $slug,
+        'post_author' => $author,
+        'post_type' => $type,
+    );
+    $page_id = wp_insert_post($my_post);
+    update_option($slug, $page_id);
+}
+

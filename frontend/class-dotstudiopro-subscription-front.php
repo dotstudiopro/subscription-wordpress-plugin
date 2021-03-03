@@ -50,6 +50,7 @@ class Dotstudiopro_Subscription_Front {
      * @since    1.0.0
      */
     public function enqueue_styles() {
+        wp_enqueue_style('subscription', $this->assets_dir . 'css/subscription.min.css', array(), $this->cachebuster, 'all');
     }
 
     /**
@@ -58,7 +59,6 @@ class Dotstudiopro_Subscription_Front {
      * @since    1.0.1
      */
     public function enqueue_footer_styles() {
-        wp_enqueue_style('subscription', $this->assets_dir . 'css/subscription.min.css', array(), $this->cachebuster, 'all');
         wp_enqueue_script('jquery.match.height', $this->assets_dir . 'js/jquery.match.height.min.js', array(), $this->cachebuster, true);
         wp_enqueue_script('jquery-confirm', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js', array(), null, true);
         wp_enqueue_style('jquery-confirm', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css', array(), null, 'all');
@@ -233,8 +233,19 @@ class Dotstudiopro_Subscription_Front {
         }
     }
 
+    /**
+      *  Determine whether or not to show the 'More Ways to Watch' button, and display if necessary
+      *
+      *  @type    function
+      *  @since   1.0.0
+      *
+      *  @param   $channel_id (string) Channel id to get products for
+      *  @return  string
+      */
     public function show_more_ways_to_watch($channel_id) {
         $tvod_products = dsp_get_channel_tvod_products($channel_id);
+        if (empty($tvod_products) || is_wp_error($tvod_products)) return '';
+
         $args = array(
            'meta_key' => 'dspro_channel_id',
            'meta_value' => $channel_id,
@@ -243,7 +254,36 @@ class Dotstudiopro_Subscription_Front {
         $query = new WP_Query($args);
         $post = $query->posts[0];
         $slug = $post->post_name;
-        if (!empty($tvod_products) && !is_wp_error($tvod_products)) echo '<a href="/more-ways-to-watch/' . $slug . '" class="btn btn-secondary btn-ds-secondary">More Ways to Watch</a>';
+        echo '<a href="/more-ways-to-watch/' . $slug . '" class="btn btn-secondary btn-ds-secondary">More Ways to Watch</a>';
+    }
+
+    /**
+      *  Creates the necessary subscription-related pages we need, as well as flushes any rewrite rules that exist
+      *
+      *  @type    function
+      *  @since   1.0.0
+      *
+      *  @return  null
+      */
+    public function create_subscription_pages() {
+        //flush rewrite rules. Just to make sure our rewrite rules from an earlier activation are applied again!
+        flush_rewrite_rules();
+        //would want to use flush_rewrite_rules only but that does not work for some reason??
+        delete_option('rewrite_rules');
+
+        // create the page if not exists while plugin activated
+        if (get_option('packages') == NULL)
+            dspsubs_create_page('Packages', 'packages');
+        if (get_option('credit-card') == NULL)
+            dspsubs_create_page('Credit Card', 'credit-card');
+        if (get_option('payment-profile') == NULL)
+            dspsubs_create_page('Payment Profile', 'payment-profile');
+        if (get_option('thankyou') == NULL)
+            dspsubs_create_page('Thank You', 'thankyou');
+        if (get_option('more-ways-to-watch') == NULL)
+            dspsubs_create_page('More Ways To Watch', 'more-ways-to-watch');
+        if (get_option('product-details') == NULL)
+            dspsubs_create_page('Product Details', 'product-details');
     }
 
 }

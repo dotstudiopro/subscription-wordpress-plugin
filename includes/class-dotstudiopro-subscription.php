@@ -68,7 +68,7 @@ class Dotstudiopro_Subscription {
     public function __construct() {
 
         $this->Dotstudiopro_Subscription = 'dotstudiopro-subscription';
-        $this->version = '1.0.5';
+        $this->version = '1.1.0';
 
         $this->load_dependencies();
         $this->set_locale();
@@ -170,7 +170,8 @@ class Dotstudiopro_Subscription {
      * @access private
      */
     private function define_frontend_hooks() {
-        $plugin_front = new Dotstudiopro_Subscription_Front($this->get_Dotstudiopro_Subscription(), $this->get_version());
+        $v = $this->get_version();
+        $plugin_front = new Dotstudiopro_Subscription_Front($this->get_Dotstudiopro_Subscription(), $v);
         $this->loader->add_action('wp_enqueue_scripts', $plugin_front, 'enqueue_styles');
         $this->loader->add_action('get_footer', $plugin_front, 'enqueue_footer_styles');
         $this->loader->add_action('wp_ajax_validate_couponcode', $plugin_front, 'validate_couponcode');
@@ -184,7 +185,12 @@ class Dotstudiopro_Subscription {
         $this->loader->add_action('wp_ajax_cancle_subscription', $plugin_front, 'cancle_subscription');
         $this->loader->add_action('wp_ajax_nopriv_cancle_subscription', $plugin_front, 'cancle_subscription');
         $this->loader->add_action('dsp_channel_options_no_subscription', $plugin_front, 'show_more_ways_to_watch');
-
+        // Conditionally run the functionality to create pages based on whether or not it has been run for this version
+        // of the plugin
+        if (!get_option('dspsubs_pages_created_v' . $v)) {
+            $this->loader->add_action('init', $plugin_front, 'create_subscription_pages');
+            update_option('dspsubs_pages_created_v' . $v, 1);
+        }
 
     }
 

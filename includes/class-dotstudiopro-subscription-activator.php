@@ -22,29 +22,15 @@
 class Dotstudiopro_Subscription_Activator {
 
     /**
-     * Flush rewrite rules
+     * Flush rewrite rules and create pages we need
      * @since    1.0.0
      */
     public static function activate() {
-        //flush rewrite rules. Just to make sure our rewrite rules from an earlier activation are applied again!
-        flush_rewrite_rules();
-        //would want to use flush_rewrite_rules only but that does not work for some reason??
-        delete_option('rewrite_rules');
 
         $dsp_subscription = new Dotstudiopro_Subscription();
         $dsp_subscription_admin = new Dotstudiopro_Subscription_Front($dsp_subscription->get_Dotstudiopro_Subscription(), $dsp_subscription->get_version());
+        $dsp_subscription_admin->create_subscription_pages();
 
-        // create the page if not exists while plugin activated
-        if (get_option('packages') == NULL)
-            self::add_my_custom_pages('Packages', 'packages');
-        if (get_option('credit-card') == NULL)
-            self::add_my_custom_pages('Credit Card', 'credit-card');
-        if (get_option('payment-profile') == NULL)
-            self::add_my_custom_pages('Payment Profile', 'payment-profile');
-        if (get_option('thankyou') == NULL)
-            self::add_my_custom_pages('Thank You', 'thankyou');
-        if (get_option('more-ways-to-watch') == NULL)
-            self::add_my_custom_pages('More Ways To Watch', 'more-ways-to-watch');
     }
 
     public static function add_my_custom_pages($title, $slug, $desc = '', $status = 'publish', $author = 1, $type = 'page') {
