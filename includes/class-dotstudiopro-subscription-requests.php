@@ -97,6 +97,29 @@ if (class_exists('Dsp_External_Api_Request')) {
         }
 
         /**
+         * Get user's product.
+         * @since 1.1.0
+         * @param type $client_token
+         * @return type
+         */
+        public function getUserProducts($client_token) {
+
+            $token = $this->api_token_check();
+
+            if (!$token && !$client_token)
+                return array();
+
+            $path = 'subscriptions/users/products';
+
+            $headers = array(
+                'x-access-token' => $token,
+                'x-client-token' => $client_token
+            );
+
+            return $this->api_request_get($path, null, $headers);
+        }
+
+        /**
          * Create payment profile and subscribe.
          * @since 1.0.0
          * @param type $subscription_id

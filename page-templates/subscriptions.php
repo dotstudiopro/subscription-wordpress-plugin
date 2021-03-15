@@ -10,8 +10,8 @@ $template_class = new Subscription_Listing_Template();
 
 if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
     if ($client_token) {
-        $user_subscribe = $dsp_subscription_object->getUserSubscription($client_token);
-        if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['subscriptions'][0]['subscription']['product']['id'])) {
+        $user_subscribe = $dsp_subscription_object->getUserProducts($client_token);
+        if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['products']['svod'][0]['product']['id'])) {
             $template_class->locate_template('templates-part/subscriptions/subscribed');
         } else {
             $template_class->locate_template('templates-part/subscriptions/nonesubscribed');

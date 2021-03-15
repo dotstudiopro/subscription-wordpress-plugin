@@ -10,11 +10,12 @@ $subscriptions = dsp_get_channel_tvod_products(get_post_meta($post->ID, 'dspro_c
 
 if (!is_wp_error($subscriptions) && !empty($subscriptions) && is_array($subscriptions)) {
     ?>
-    <div class="custom-container container pt-5 pb-5">
+    <div class="custom-container container pt-5 pb-3">
         <div class="row no-gutters">
-            <h3 class="page-title center_title">PLEASE SELECT YOUR Product</h3>
+            <h3 class="page-title center_title">Choose Your Product</h3>
+            <p class="center_title">Get access on your favorite channels by choosing your favorite product.</p>
         </div>
-        <div class="row no-gutters pt-5 justify-content-md-center">
+        <div class="row no-gutters pt-2 justify-content-md-center">
             <?php
             foreach ($subscriptions as $subscription):
 
@@ -47,7 +48,7 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions) && is_array($subscrip
                             </div>
                             <div class="card-block text-center sameSize-inner">
                                 <h5 class="display-4 mx-auto"><?php echo $price_period ?></h5>
-                                <h6 class='channel-count display-4 mx-auto'>Includes <?php echo $channel_count; ?> Titles</h6>
+                                <h5 class='channel-count mx-auto'>Includes <?php echo $channel_count; ?> Titles</h5>
                                <a href="<?php echo $url; ?>" class="mt-2 mb-2 btn btn-secondary btn-ds-secondary w-100 btn-lg <?php echo $button; ?>" data-subscriptionid="<?php echo $subscription_id; ?>">Select now</a>
                             </div>
                         </div>

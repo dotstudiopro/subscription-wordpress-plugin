@@ -7,12 +7,12 @@ $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
 if ($client_token) {
     $subscription_id = null;
     $options = null;
-    $user_subscribe = $dsp_subscription_object->getUserSubscription($client_token);
-    if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['subscriptions'][0]['subscription']['product']['id'])) {
-        $subscription_id = $user_subscribe['subscriptions'][0]['subscription']['product']['id'];
-        $chargify_id = $user_subscribe['subscriptions'][0]['subscription']['customer']['id'];
-        $cc_info = dsp_parse_cc_info($user_subscribe['subscriptions'][0]['subscription']);
-        $platform = !empty($user_subscribe['subscriptions'][0]['subscription']['platform']) ? $user_subscribe['subscriptions'][0]['subscription']['platform'] : '';
+    $user_subscribe = $dsp_subscription_object->getUserProducts($client_token);
+    if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['products']['svod'][0]['product']['id'])) {
+        $subscription_id = $user_subscribe['products']['svod'][0]['product']['id'];
+        $chargify_id = $user_subscribe['products']['svod'][0]['customer']['id'];
+        $cc_info = dsp_parse_cc_info($user_subscribe['products']['svod'][0]);
+        $platform = !empty($user_subscribe['products']['svod'][0]['platform']) ? $user_subscribe['products']['svod'][0]['platform'] : '';
         ?>
         <div class="custom-container container pt-5 pb-5">
             <div class="row no-gutters">

@@ -16,8 +16,9 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
             <?php
             foreach ($subscriptions['data'] as $subscription):
 
-                if ($subscription['status'] == 'Active'):
+                if ($subscription['status'] == 'Active' && $subscription['product_type'] == 'svod'):
 
+                    $dsp_subscription_id = !empty($subscription['_id']) ? $subscription['_id'] : '';
                     $name = !empty($subscription['name']) ? $subscription['name'] : '';
                     $price = !empty($subscription['price']) ? $subscription['price'] : '';
                     $subscription_id = !empty($subscription['chargify_id']) ? $subscription['chargify_id'] : '';
@@ -46,8 +47,8 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
                     $url = !$client_token ?  wp_login_url( get_permalink() ) : '#';
                     ?>
                     <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 pr-3 pb-3 sameSize">
-                        <form  action="/credit-card/" id="form_<?php echo $subscription_id; ?>" method="POST">
-                            <input type="hidden"  name="subscription_id" value="<?php echo $subscription_id; ?>">
+                        <form  action="/package-detail/" id="form_<?php echo $subscription_id; ?>" method="POST">
+                            <input type="hidden"  name="subscription_id" value="<?php echo $dsp_subscription_id; ?>">
                         </form>
                         <div class="card text-xs-center">
                             <div class="card-header">
@@ -72,7 +73,11 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
                                 endif;
                                 ?>
                                 <p>$<?php echo $price; ?> billed <?php
-                                    echo ($interval_bottom == 'day' ? 'daily' : $interval_bottom . 'ly');
+                                    if($interval != 1){
+                                        echo ' every '.$interval. ' ' .$interval_bottom;
+                                    }else{
+                                        echo ($interval_bottom == 'day' ? 'daily' : $interval_bottom . 'ly');
+                                    }
                                     echo (empty($trial_array) ? ' after subscription' : ' after trial period')
                                     ?> 
                                 </p>

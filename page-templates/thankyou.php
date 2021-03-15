@@ -1,6 +1,6 @@
 <?php
 global $client_token;
-if ($client_token && wp_verify_nonce($_POST['thankyou'], 'submit_payment')) {
+if ($client_token && (wp_verify_nonce($_POST['thankyou'], 'submit_payment') || || wp_verify_nonce($_POST['thankyou'], 'submit_complete_payment'))) {
     get_header();
     ?>
     <div class="custom-container container pt-5 pb-5 thankyou-page center-page-content">

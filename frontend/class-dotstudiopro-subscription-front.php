@@ -156,6 +156,35 @@ class Dotstudiopro_Subscription_Front {
             wp_send_json_error($send_response, 500);
         }
     }
+
+    /**
+     * Function to purchase the svod or tvod product after payment profile is created
+     *
+     * @global type $client_token
+     * @since 1.0.0
+     */
+    public function complete_payment() {
+        global $client_token;
+        if ($client_token && wp_verify_nonce($_POST['nonce'], 'submit_complete_payment')) {
+            parse_str($_POST['formData'], $formData);
+            $import_subscribe_to = $this->dotstudiopro_subscription->updateSubscription($client_token, $formData['subscription_id']);
+            if (is_wp_error($import_subscribe_to)) {
+                $send_response = array('message' => 'Server Error : ' . $import_subscribe_to->get_error_message());
+                wp_send_json_error($send_response, 403);
+            } elseif (isset($import_subscribe_to['success']) && $import_subscribe_to['success'] == 1) {
+                $send_response = array('message' => 'Your subscription has been created.');
+                wp_send_json_success($send_response, 200);
+            }
+            else {
+                $send_response = array('message' => 'Internal Server Error');
+                wp_send_json_error($send_response, 500);
+            }
+        } else {
+            $send_response = array('message' => 'Internal Server Error');
+            wp_send_json_error($send_response, 500);
+        }
+    }
+
     /**
      * Function to create the user's payment profile for first time subscription
      *
@@ -284,6 +313,8 @@ class Dotstudiopro_Subscription_Front {
             dspsubs_create_page('More Ways To Watch', 'more-ways-to-watch');
         if (get_option('product-details') == NULL)
             dspsubs_create_page('Product Details', 'product-details');
+        if (get_option('package-detail') == NULL)
+            dspsubs_create_page('Package Details', 'package-detail');
     }
 
 }

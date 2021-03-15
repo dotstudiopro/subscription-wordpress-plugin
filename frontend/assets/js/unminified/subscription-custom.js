@@ -139,6 +139,44 @@ jQuery(document).ready(function() {
         });
 
         /**
+         *  AJAX action to creates a new customer object in Chargify corresponding to an existing user in dotstudioPRO's Braintree account
+         */
+        $('button#complete_payment').on('click', function(e) {
+            e.preventDefault();
+            var form = $('#form_complete_payment')[0];
+                customOverlay(true);
+                showSnacksBar(true);
+                var action = $(this).data('action');
+                var nonce = $('#nonce').val();
+                var formData = $('#form_complete_payment').serialize();
+                $('#snackbar').html('Sending your request...');
+                var submit_form = $.post(
+                    url, {
+                        'action': action,
+                        'formData': formData,
+                        'nonce': nonce
+                    }
+                );
+                submit_form.done(function(response) {
+                    customOverlay(false);
+                    showSnacksBar(false);
+                    $('.cc-messages-notices').removeClass('error').addClass('success').html('<p>Payment Received...Please wait...</p>');
+                    window.location.href = $('#form_payment').attr('action');
+                    var url = $('#form_complete_payment').attr('action');
+                    var form = $('<form action="' + url + '" method="post">' +
+                        '<input type="hidden" name="thankyou" value="' + nonce + '" />' +
+                        '</form>');
+                    $('body').append(form);
+                    form.submit();
+                });
+                submit_form.fail(function(response) {
+                    customOverlay(false);
+                    showSnacksBar(false);
+                    $('.cc-messages-notices').removeClass('success').addClass('error').html('<p class="mb-0">' + response.responseJSON.data.message + '</p>')
+                })
+        });
+
+        /**
          *  AJAX action to submit the credit card details to subscribe the subscription
          */
         $('button#update_cc').on('click', function(e) {
@@ -404,6 +442,30 @@ jQuery(document).ready(function() {
                     text: 'CANCEL',
                 }
             }
+        });
+
+        /**
+         * Code to open the modal popup when click on product channel
+         */
+
+        $(".open-channel-detail-modal").on("click", function() {
+           var channel_name = $(this).data('channel-title');
+           var channel_description = $(this).data('channel-description');
+           var channel_image = $(this).data('channel-image');
+           var modal = $('#channel-detail-modal');
+           modal.find('.modal_channel_title').text(channel_name)
+           modal.find('.modal_channel_image').attr('src',channel_image)
+           $('#channel-detail-modal').appendTo("body").modal('show');
+        });
+
+
+        /**
+         * Code to Submit the form when click on buy now button on product page
+         */
+        $('.product-buy-now').on('click', function(e) {
+            e.preventDefault();
+            var form_id = $(this).data('productid');
+            $('form#form_' + form_id).submit();
         });
 
     })(jQuery);

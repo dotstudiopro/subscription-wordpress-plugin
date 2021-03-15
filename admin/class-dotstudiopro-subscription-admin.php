@@ -73,6 +73,9 @@ class Dotstudiopro_Subscription_Admin {
             if ($page_slug == 'product-details') {
                 $template = $template_class->locate_template('product_details');
             }
+            if ($page_slug == 'package-detail') {
+                $template = $template_class->locate_template('package_detail');
+            }
         endif;
         return $template;
     }

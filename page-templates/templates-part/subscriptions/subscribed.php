@@ -3,11 +3,13 @@ global $client_token;
 get_header();
 $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
 $subscriptions = $dsp_subscription_object->getCompanyProductSummary();
-$user_subscribe = $dsp_subscription_object->getUserSubscription($client_token);
-if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['subscriptions'][0]['subscription']['product']['id'])) {
-    $active_subscription_id = $user_subscribe['subscriptions'][0]['subscription']['product']['id'];
-    $platform = !empty($user_subscribe['subscriptions'][0]['subscription']['platform']) ? $user_subscribe['subscriptions'][0]['subscription']['platform'] : "none";
+$user_subscribe = $dsp_subscription_object->getUserProducts($client_token);
+
+if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['products']['svod'][0]['product']['id'])) {
+    $active_subscription_id = $user_subscribe['products']['svod'][0]['product']['id'];
+    $platform = !empty($user_subscribe['products']['svod'][0]['platform']) ? $user_subscribe['products']['svod'][0]['platform'] : "none";
 }
+
 ?>
 <div class="custom-container container pt-5 pb-5">
     <div class="row no-gutters">
@@ -21,7 +23,7 @@ if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['
         $cancle_subscription_information = '';
         $platform_error = '';
         foreach ($subscriptions['data'] as $subscription):
-            if ($subscription['status'] == 'Active'):
+            if ($subscription['status'] == 'Active' && $subscription['product_type'] == 'svod'):
                 $name = !empty($subscription['name']) ? $subscription['name'] : '';
                 $price = !empty($subscription['price']) ? $subscription['price'] : '';
                 $subscription_id = !empty($subscription['chargify_id']) ? $subscription['chargify_id'] : '';
@@ -38,15 +40,15 @@ if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['
 
                 if ($active_subscription_id == $subscription_id) {
                     $active_subscription_information .= '<div class="form-group"><h5>' . $name . ' $' . $price_period . ' (Current)</h5></div>';
-                    if (!empty($user_subscribe['subscriptions'][0]['subscription']['delayed_cancel_at']))
-                        $active_subscription_information .='<p>Your Subscription Will be Cancelled at ' . date('F j, Y, g:i a T', strtotime($user_subscribe['subscriptions'][0]['subscription']['delayed_cancel_at'])) . '</p>';
+                    if (!empty($user_subscribe['products']['svod'][0]['delayed_cancel_at']))
+                        $active_subscription_information .='<p>Your Subscription Will be Cancelled at ' . date('F j, Y, g:i a T', strtotime($user_subscribe['products']['svod'][0]['delayed_cancel_at'])) . '</p>';
                     else
-                        $active_subscription_information .= '<p>Current period ends at ' . date('F j, Y, g:i a T', strtotime($user_subscribe['subscriptions'][0]['subscription']['current_period_ends_at'])) . '</p>';
+                        $active_subscription_information .= '<p>Current period ends at ' . date('F j, Y, g:i a T', strtotime($user_subscribe['products']['svod'][0]['current_period_ends_at'])) . '</p>';
                 }
                 else {
                     if ($platform == 'web') {
                         $update_subscription_information .= '<option value="' . $subscription_id . '">' . $name . ' $' . $price_period . '</option>';
-                        if (empty($user_subscribe['subscriptions'][0]['subscription']['delayed_cancel_at']))
+                        if (empty($user_subscribe['products']['svod'][0]['delayed_cancel_at']))
                             $cancle_subscription_information = '<button id="cancel_subscription_button" data-title="Cancle Subscription" data-nonce=' . wp_create_nonce('cancle_subscription_plan') . ' data-action="cancle_subscription" class="vc_btn3-color-blue btn btn-danger">CANCEL SUBSCRIPTION</button>';
                     }
                     else {
