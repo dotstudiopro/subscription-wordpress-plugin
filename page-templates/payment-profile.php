@@ -12,10 +12,8 @@ if ($client_token) {
     if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['paymentInfo'])) {
         $cc_info = dsp_parse_cc_info_new($user_subscribe['paymentInfo']);
         $platform = '';
-        if(isset($user_subscribe['products']['svod']) && !empty($user_subscribe['products']['svod'][0]['product']['id'])){
-            $platform = !empty($user_subscribe['products']['svod'][0]['platform']) ? $user_subscribe['products']['svod'][0]['platform'] : '';
-        }else if(isset($user_subscribe['products']['tvod']) && !empty($user_subscribe['products']['tvod'][0]['product']['id'])){
-            $platform = !empty($user_subscribe['products']['tvod'][0]['platform']) ? $user_subscribe['products']['tvod'][0]['platform'] : '';
+        if(isset($user_subscribe['platform']) && !empty($user_subscribe['platform'])){
+            $platform = $user_subscribe['platform'];
         }
         ?>
         <div class="custom-container container pt-5 pb-5">

@@ -7,7 +7,12 @@ $user_subscribe = $dsp_subscription_object->getUserProducts($client_token);
 
 if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['products']['svod'][0]['product']['id'])) {
     $active_subscription_id = $user_subscribe['products']['svod'][0]['product']['id'];
-    $platform = !empty($user_subscribe['products']['svod'][0]['platform']) ? $user_subscribe['products']['svod'][0]['platform'] : "none";
+    // $platform = !empty($user_subscribe['products']['svod'][0]['platform']) ? $user_subscribe['products']['svod'][0]['platform'] : "none";
+    if(isset($user_subscribe['platform']) && !empty($user_subscribe['platform'])){
+        $platform = $user_subscribe['platform'];
+    }else{
+        $platform = "none";
+    }
 }
 
 ?>
