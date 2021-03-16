@@ -23,14 +23,17 @@ if($client_token){
     $template_class = new Subscription_Listing_Template();
 
     $user_info = array();
+    $credit_card_info = array();
 
     $user_subscribe_to_svod_product = false;
     if(!is_wp_error($user_products) && $user_products){
         if(isset($user_products['products']['svod']) && !empty($user_products['products']['svod'][0]['product']['id'])){
             $user_info = $user_products['products']['svod'][0];
+            $credit_card_info = $user_products['paymentInfo'];
             $user_subscribe_to_svod_product = true;
         }else if(isset($user_products['products']['tvod']) && !empty($user_products['products']['tvod'][0]['product']['id'])){
             $user_info = $user_products['products']['tvod'][0];
+            $credit_card_info = $user_products['paymentInfo'];
         }
     }
 
@@ -118,7 +121,7 @@ if($client_token){
         </div>
         <div class="payment_information">
             <?php 
-            if($user_info){
+            if($user_info && $credit_card_info){
             ?>
             <div class="container mb-5 bill_info">
               <div class="row row-fluid complete_payment ">
@@ -141,14 +144,14 @@ if($client_token){
                                 <p>State / Region</p>
                             </div>
                             <div class="col-md-6 col-sm-12 billing_info_value">
-                                <p><?php echo ($user_info['credit_card']['first_name']) ? :"&nbsp;";?></p>
-                                <p><?php echo ($user_info['credit_card']['last_name']) ? :"&nbsp;";?></p>
-                                <p><?php echo ($user_info['credit_card']['billing_address']) ? :"&nbsp;";?></p>
-                                <p><?php echo ($user_info['credit_card']['billing_address_2']) ? :"&nbsp;";?></p>
-                                <p><?php echo ($user_info['credit_card']['billing_city']) ? :"&nbsp;";?></p>
-                                <p><?php echo ($user_info['credit_card']['billing_zip']) ? :"&nbsp;";?></p>
-                                <p><?php echo ($user_info['credit_card']['billing_country']) ? :"&nbsp;";?></p>
-                                <p><?php echo ($user_info['credit_card']['billing_state']) ? :"&nbsp;";?></p>
+                                <p><?php echo ($credit_card_info['first_name']) ? :"&nbsp;";?></p>
+                                <p><?php echo ($credit_card_info['last_name']) ? :"&nbsp;";?></p>
+                                <p><?php echo ($credit_card_info['billing_address']) ? :"&nbsp;";?></p>
+                                <p><?php echo ($credit_card_info['billing_address_2']) ? :"&nbsp;";?></p>
+                                <p><?php echo ($credit_card_info['billing_city']) ? :"&nbsp;";?></p>
+                                <p><?php echo ($credit_card_info['billing_zip']) ? :"&nbsp;";?></p>
+                                <p><?php echo ($credit_card_info['billing_country']) ? :"&nbsp;";?></p>
+                                <p><?php echo ($credit_card_info['billing_state']) ? :"&nbsp;";?></p>
                             </div>  
                           </div>
                       </div>
@@ -157,20 +160,20 @@ if($client_token){
                       <div class="wrapper">
                           <h4 class="mt-3 mb-3">Credit Card Info <a href="/payment-profile/" target="_blank"><i class="fas fa-pencil main-color"></i></a></h4>
                           <div class="your-card pb-2 mb-3" style="margin: unset;">
-                              <div class="bank-name" title="BestBank"><?php echo strtoupper($user_info['credit_card']['card_type'] . ' Card'); ?></div>
+                              <div class="bank-name" title="BestBank"><?php echo strtoupper($credit_card_info['credit_card']['card_type'] . ' Card'); ?></div>
                               <div class="chip">
                                   <img src="<?php echo plugins_url() . '/wordpress-subscription-plugin/frontend/assets/images/chip.svg' ?>">
                               </div>
                               <div class="data">
-                                  <div class="pan"><?php echo $user_info['credit_card']['masked_card_number']; ?></div>
+                                  <div class="pan"><?php echo $credit_card_info['masked_card_number']; ?></div>
                                   <div class="exp-date-wrapper">
                                       <div class="left-label">EXPIRES END</div>
                                       <div class="exp-date">
                                           <div class="upper-labels">MONTH/YEAR</div>
-                                          <div class="date"><?php echo str_pad($user_info['credit_card']['expiration_month'], 2, '0', STR_PAD_LEFT) . '/' . substr($user_info['credit_card']['expiration_year'], 2, 2); ?></div>
+                                          <div class="date"><?php echo str_pad($credit_card_info['expiration_month'], 2, '0', STR_PAD_LEFT) . '/' . substr($credit_card_info['expiration_year'], 2, 2); ?></div>
                                       </div>
                                   </div>
-                                  <div class="name-on-card"><?php echo $user_info['credit_card']['first_name']. ' ' . $$user_info['credit_card']['last_name']; ?></div>
+                                  <div class="name-on-card"><?php echo $credit_card_info['first_name']. ' ' . $credit_card_info['credit_card']['last_name']; ?></div>
                               </div>
                               <div class="lines-down"></div>
                               <div class="lines-up"></div>
@@ -178,8 +181,8 @@ if($client_token){
                           <div class="card_info">
                               <h5 class="pt-2 pb-2">CARD NUMBER</h5>
                               <div class="card_number_info">
-                                  <p class="mr-5 pull-left"><?php echo $user_info['credit_card']['masked_card_number']; ?></p>
-                                  <p><?php echo strtoupper($user_info['credit_card']['card_type']); ?></p>
+                                  <p class="mr-5 pull-left"><?php echo $credit_card_info['masked_card_number']; ?></p>
+                                  <p><?php echo strtoupper($credit_card_info['card_type']); ?></p>
                               </div>
                           </div>
                       </div>
