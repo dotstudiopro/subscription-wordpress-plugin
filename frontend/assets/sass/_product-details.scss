@@ -57,11 +57,17 @@
 }
 
 #channel-detail-modal{
-  top: 15%; 
+  top: 15%;
   z-index: 9999;
   > .modal-dialog .modal-content .modal-body {
+    > hr {
+      border-top: solid 1px #000000;
+    }
+    > .hidden{
+      display: none!important;
+    }
     > .modal_channel_image {
-      height: 250px; 
+      height: 250px;
       border-radius: 12px;
     }
     > .modal_description:before {

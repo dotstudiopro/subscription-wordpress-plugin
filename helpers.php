@@ -123,7 +123,10 @@ function dsp_get_vod_product_by_id($product_id) {
     if (!$product['success']) {
       return null;
     }
-    $product_data = json_decode($product['subscription']);
+    // Convert the arrays to objects for the front end
+    $product_data = (object) $product['subscription'];
+    $product_data->duration = (object) $product_data->duration;
+    unset($product_data->duration->_id);
     set_transient($tkey, $product_data, 300);
     return $product_data;
 }

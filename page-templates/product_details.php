@@ -46,13 +46,22 @@ $main_color = $dsp_theme_options['opt-main-theme-color'];
     </form>
     <div class="row no-gutters pt-5 justify-content-md-center">
         <div class='product-detail-channels row main-body-txt'>
-            <?php foreach($channels as $channel): 
+            <?php foreach($channels as $channel):
                 $channel_title = $channel['title'];
-                $channel_image = !empty($channel['spotlight_poster']) ? $channel['spotlight_poster'] : $channel['poster'];
+                $channel_description = !empty($channel['description']) ? $channel['description'] : "";
+                $channel_directors = array_filter(!empty($channel['directors']) ? $channel['directors'] : []);
+                $channel_actors = array_filter(!empty($channel['actors']) ? $channel['actors'] : []);
+
+                $channel_image = "https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1";
+                if (!empty($channel['spotlight_poster'])) {
+                    $channel_image = $channel['spotlight_poster'];
+                } else if (!empty($channel['poster'])) {
+                    $channel_image = $channel['poster'];
+                }
             ?>
                 <div class="product-detail-channel col-sm-3 col-xs-6">
                     <div class='product-channel-image'>
-                        <a href="javascript:void(0)" class="open-channel-detail-modal" data-channel-title="<?php echo $channel_title; ?>" data-channel-image="<?php echo $channel_image;?>">
+                        <a href="javascript:void(0)" class="open-channel-detail-modal" data-channel-title="<?php echo $channel_title; ?>" data-channel-description="<?php echo $channel_description; ?>" data-channel-image="<?php echo $channel_image;?>" data-channel-actors='<?php echo json_encode($channel_actors); ?>' data-channel-directors='<?php echo json_encode($channel_directors); ?>'>
                             <img src="<?php echo $channel_image ?>" id="channelimg" class="lazy w-100">
                             <!-- <img src="<?php //echo $channel_image.'/480/215' ?>" class="lazy w-100">  -->
                         </a>
@@ -60,6 +69,7 @@ $main_color = $dsp_theme_options['opt-main-theme-color'];
                     <div class='product-channel-title'>
                         <?php echo $channel['title']; ?>
                     </div>
+
                 </div>
             <?php endforeach; ?>
         </div>
@@ -85,7 +95,13 @@ $main_color = $dsp_theme_options['opt-main-theme-color'];
       <div class="modal-body">
         <img id="imagepreview" class="modal_channel_image lazy w-100">
         <h4 class="modal_channel_title pt-3"></h4>
-        <p class="modal_description mt-4"></p>
+        <hr class='modal_director_actor_buffer hidden'/>
+        <h4 class='modal_directors_title hidden'>Directors</h4>
+        <p class="modal_channel_directors mt-4"></p>
+        <h4 class='modal_actors_title hidden'>Actors</h4>
+        <p class="modal_channel_actors mt-4"></p>
+        <hr class='modal_description_buffer hidden'/>
+        <p class="modal_channel_description mt-4"></p>
       </div>
     </div>
   </div>

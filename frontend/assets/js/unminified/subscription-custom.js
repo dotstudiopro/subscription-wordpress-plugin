@@ -54,14 +54,6 @@ jQuery(document).ready(function() {
         });
 
         /**
-         * Action to load login pop-up if user is not logged-in
-         */
-        $('.login-link').on('click', function(e) {
-            e.preventDefault();
-            $('#a0LoginButton').click();
-        });
-
-        /**
          * AJAX action to validate the coupon
          */
         $('#validate_coupon').on('click', function(e) {
@@ -144,36 +136,36 @@ jQuery(document).ready(function() {
         $('button#complete_payment').on('click', function(e) {
             e.preventDefault();
             var form = $('#form_complete_payment')[0];
-                customOverlay(true);
-                showSnacksBar(true);
-                var action = $(this).data('action');
-                var nonce = $('#nonce').val();
-                var formData = $('#form_complete_payment').serialize();
-                $('#snackbar').html('Sending your request...');
-                var submit_form = $.post(
-                    url, {
-                        'action': action,
-                        'formData': formData,
-                        'nonce': nonce
-                    }
-                );
-                submit_form.done(function(response) {
-                    customOverlay(false);
-                    showSnacksBar(false);
-                    $('.cc-messages-notices').removeClass('error').addClass('success').html('<p>Payment Received...Please wait...</p>');
-                    window.location.href = $('#form_payment').attr('action');
-                    var url = $('#form_complete_payment').attr('action');
-                    var form = $('<form action="' + url + '" method="post">' +
-                        '<input type="hidden" name="thankyou" value="' + nonce + '" />' +
-                        '</form>');
-                    $('body').append(form);
-                    form.submit();
-                });
-                submit_form.fail(function(response) {
-                    customOverlay(false);
-                    showSnacksBar(false);
-                    $('.cc-messages-notices').removeClass('success').addClass('error').html('<p class="mb-0">' + response.responseJSON.data.message + '</p>')
-                })
+            customOverlay(true);
+            showSnacksBar(true);
+            var action = $(this).data('action');
+            var nonce = $('#nonce').val();
+            var formData = $('#form_complete_payment').serialize();
+            $('#snackbar').html('Sending your request...');
+            var submit_form = $.post(
+                url, {
+                    'action': action,
+                    'formData': formData,
+                    'nonce': nonce
+                }
+            );
+            submit_form.done(function(response) {
+                customOverlay(false);
+                showSnacksBar(false);
+                $('.cc-messages-notices').removeClass('error').addClass('success').html('<p>Payment Received...Please wait...</p>');
+                window.location.href = $('#form_payment').attr('action');
+                var url = $('#form_complete_payment').attr('action');
+                var form = $('<form action="' + url + '" method="post">' +
+                    '<input type="hidden" name="thankyou" value="' + nonce + '" />' +
+                    '</form>');
+                $('body').append(form);
+                form.submit();
+            });
+            submit_form.fail(function(response) {
+                customOverlay(false);
+                showSnacksBar(false);
+                $('.cc-messages-notices').removeClass('success').addClass('error').html('<p class="mb-0">' + response.responseJSON.data.message + '</p>')
+            })
         });
 
         /**
@@ -449,13 +441,46 @@ jQuery(document).ready(function() {
          */
 
         $(".open-channel-detail-modal").on("click", function() {
-           var channel_name = $(this).data('channel-title');
-           var channel_description = $(this).data('channel-description');
-           var channel_image = $(this).data('channel-image');
-           var modal = $('#channel-detail-modal');
-           modal.find('.modal_channel_title').text(channel_name)
-           modal.find('.modal_channel_image').attr('src',channel_image)
-           $('#channel-detail-modal').appendTo("body").modal('show');
+            var channel_name = $(this).data('channel-title');
+            var channel_description = $(this).data('channel-description');
+            var channel_actors = $(this).data('channel-actors');
+            var channel_directors = $(this).data('channel-directors');
+            var channel_image = $(this).data('channel-image');
+
+            const channel_actors_formatted = channel_actors && channel_actors.length && channel_actors.join(', ');
+            const channel_directors_formatted = channel_directors && channel_directors.length && channel_directors.join(', ');
+
+            var modal = $('#channel-detail-modal');
+            // Hide our buffers in case we don't need to show them
+            modal.find('.modal_description_buffer').addClass('hidden');
+            modal.find('.modal_director_actor_buffer').addClass('hidden');
+            // Hide section titles in case we don't need them
+            modal.find('.modal_actors_title').addClass('hidden');
+            modal.find('.modal_directors_title').addClass('hidden');
+            // Clear the populated text in sections to avoid showing bad data from
+            // a previous selection
+            modal.find('.modal_channel_description').text("");
+            modal.find('.modal_channel_actors').text("");
+            modal.find('.modal_channel_directors').text("");
+
+            modal.find('.modal_channel_title').text(channel_name);
+            modal.find('.modal_channel_image').attr('src', channel_image);
+            if (channel_description && channel_description.length) {
+                modal.find('.modal_description_buffer').removeClass('hidden');
+                modal.find('.modal_channel_description').text(channel_description);
+            }
+            if (channel_actors_formatted || channel_directors_formatted) {
+                modal.find('.modal_director_actor_buffer').removeClass('hidden');
+                if (channel_actors_formatted) {
+                    modal.find('.modal_channel_actors').text(channel_actors_formatted);
+                    modal.find('.modal_actors_title').removeClass('hidden');
+                }
+                if (channel_directors_formatted) {
+                    modal.find('.modal_channel_directors').text(channel_directors_formatted);
+                    modal.find('.modal_directors_title').removeClass('hidden');
+                }
+            }
+            $('#channel-detail-modal').appendTo("body").modal('show');
         });
 
 

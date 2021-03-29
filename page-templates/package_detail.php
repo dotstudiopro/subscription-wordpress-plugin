@@ -6,12 +6,14 @@ global $client_token, $dsp_theme_options;
 
 $subscription_id = isset($_REQUEST['subscription_id']) ? $_REQUEST['subscription_id'] : '';
 
+
+
 if($subscription_id){
 
     $product = dsp_get_vod_product_by_id($subscription_id);
 
     $name = $product->name;
-       
+
     $price = str_replace("$","",$product->price);
     $interval_unit = !empty($product->duration->unit) ? $product->duration->unit : '';
     $interval = !empty($product->duration->number) ? $product->duration->number : '';
@@ -88,9 +90,9 @@ if($subscription_id){
                     <p class="pt-2" style="font-size: 22px;">Recur Billing continuously until canceled</p>
                 </div>
             </div>
-            
+
         </div>
-        
+
         <div class="row no-gutters pt-5">
             <div class='product-button-select'>
                 <div class='product-button-back'>
@@ -110,4 +112,4 @@ if($subscription_id){
 
 get_footer();
 
-?> 
+?>

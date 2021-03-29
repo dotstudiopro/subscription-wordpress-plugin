@@ -136,7 +136,7 @@ class Dotstudiopro_Subscription_Front {
                 $import_subscribe_to = $this->dotstudiopro_subscription->importSubscribeTo($client_token, $formData);
 
                 if (is_wp_error($import_subscribe_to)) {
-                    $send_response = array('message' => 'Server Error : ' . $import_subscribe_to->get_error_message());
+                    $send_response = array('message' => 'Server Error : ' . json_encode($import_subscribe_to->get_error_message()));
                     wp_send_json_error($send_response, 403);
                 } elseif (isset($import_subscribe_to['success']) && $import_subscribe_to['success'] == 1) {
                     $send_response = array('message' => 'Your subscription has been created.');

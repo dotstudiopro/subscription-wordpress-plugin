@@ -29,11 +29,11 @@ if($client_token){
     if(!is_wp_error($user_products) && $user_products){
         if(isset($user_products['products']['svod']) && !empty($user_products['products']['svod'][0]['product']['id'])){
             $user_info = $user_products['products']['svod'][0];
-            $credit_card_info = $user_products['paymentInfo'];
+            $credit_card_info = !empty($user_products['paymentInfo']) ? $user_products['paymentInfo'] : array();
             $user_subscribe_to_svod_product = true;
         }else if(isset($user_products['products']['tvod']) && !empty($user_products['products']['tvod'][0]['product']['id'])){
             $user_info = $user_products['products']['tvod'][0];
-            $credit_card_info = $user_products['paymentInfo'];
+            $credit_card_info = !empty($user_products['paymentInfo']) ? $user_products['paymentInfo'] : array();
         }
     }
 
@@ -50,7 +50,7 @@ if($client_token){
     else if($subscription_id){
        $product = dsp_get_vod_product_by_id($subscription_id);
        $name = $product->name;
-       
+
        $price = str_replace("$","",$product->price);
        $interval_unit = !empty($product->duration->unit) ? $product->duration->unit : '';
        $interval = !empty($product->duration->number) ? $product->duration->number : '';
@@ -74,12 +74,13 @@ if($client_token){
         $product_charigfy_id = $product->chargify_id;
         $active_subscription = $name . ' ' . $price_period;
     }else{
-        wp_redirect('/'); 
+        wp_redirect('/');
     }
 
     get_header();
 
     if($user_subscribe_to_svod_product){
+      $purchaseMessage = "Start your subscription";
     ?>
     <div class="custom-container container pt-5 pb-5 center-page-content">
         <div class="row no-gutters">
@@ -92,6 +93,7 @@ if($client_token){
      </div>
     <?php
     }else{
+      $purchaseMessage = "Complete Purchase";
     ?>
     <style type="text/css">
         .main-color-bg {
@@ -120,8 +122,8 @@ if($client_token){
             </div>
         </div>
         <div class="payment_information">
-            <?php 
-            if($user_info && $credit_card_info){
+            <?php
+            if($user_info && !empty($credit_card_info)){
             ?>
             <div class="container mb-5 bill_info">
               <div class="row row-fluid complete_payment ">
@@ -152,7 +154,7 @@ if($client_token){
                                 <p><?php echo ($credit_card_info['billing_zip']) ? :"&nbsp;";?></p>
                                 <p><?php echo ($credit_card_info['billing_country']) ? :"&nbsp;";?></p>
                                 <p><?php echo ($credit_card_info['billing_state']) ? :"&nbsp;";?></p>
-                            </div>  
+                            </div>
                           </div>
                       </div>
                   </div>
@@ -226,7 +228,7 @@ if($client_token){
                                             <div class="invalid-feedback">
                                                 Last name is required.
                                             </div>
-                                        </div>    
+                                        </div>
                                     </div>
                                     <div class="form-group credit-group required">
                                         <label class="credit_card_label" for="billing_address">Address</label>
@@ -253,7 +255,7 @@ if($client_token){
                                             <div class="invalid-feedback">
                                                 Zipcode field is required.
                                             </div>
-                                        </div>    
+                                        </div>
                                     </div>
                                     <div class="form-group credit-group">
                                         <label class="credit_card_label" for="billing_country">Country</label>
@@ -317,7 +319,7 @@ if($client_token){
                                             <div class="invalid-feedback">
                                                 Please select card expiry year
                                             </div>
-                                        </div>    
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group credit-group required">
@@ -349,7 +351,7 @@ if($client_token){
                             </div>
                         </div>
                         <div class="mx-auto">
-                            <button type="submit" id="submit_cc" class="btn btn-secondary btn-ds-secondary" data-action="create_payment_profile">Start your subscription</button>
+                            <button type="submit" id="submit_cc" class="btn btn-secondary btn-ds-secondary" data-action="create_payment_profile"><?php echo $purchaseMessage; ?></button>
                         </div>
                     </div>
                     <div class="row row-fluid">
@@ -358,7 +360,7 @@ if($client_token){
                     </div>
                 </form>
             </div>
-            <?php     
+            <?php
             }
             ?>
             <div id="snackbar"></div>

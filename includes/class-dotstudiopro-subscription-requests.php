@@ -213,6 +213,8 @@ if (class_exists('Dsp_External_Api_Request')) {
                 "billing_country" => $formData['billing_country'],
             );
 
+            $query = array('platform' => 'web');
+
             return $this->api_request_post($path, $query, $headers, json_encode($body));
         }
 

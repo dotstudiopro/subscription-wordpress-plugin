@@ -34,7 +34,7 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions) && is_array($subscrip
                     $price_period = $price . '<span class="period tvod"> / ' . $interval . " " . $interval_unit . '</span>';
 
                     $button = empty($client_token) ? 'login-link' : 'show-plan-details';
-                    $url = empty($client_token) ?  wp_login_url( '/more-ways-to-watch/' . $channel_slug ) : home_url( '/product-details/' . $subscription['_id'] ) ;
+                    $url = empty($client_token) ?  wp_login_url( '/product-details/' . $subscription['_id'] ) : home_url( '/product-details/' . $subscription['_id'] ) ;
                     ?>
                     <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 pr-3 pb-3 sameSize">
                         <form  action="/credit-card/" id="form_<?php echo $subscription_id; ?>" method="POST">
