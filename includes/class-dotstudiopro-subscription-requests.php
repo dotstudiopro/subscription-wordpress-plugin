@@ -102,7 +102,7 @@ if (class_exists('Dsp_External_Api_Request')) {
          * @param type $client_token
          * @return type
          */
-        public function getUserProducts($client_token) {
+        public function getUserProducts($client_token, $product_status = null) {
 
             $token = $this->api_token_check();
 
@@ -116,7 +116,11 @@ if (class_exists('Dsp_External_Api_Request')) {
                 'x-client-token' => $client_token
             );
 
-            return $this->api_request_get($path, null, $headers);
+            $query = '';
+            if($product_status)
+                $query = array('include_inactive_products' => 'true');
+
+            return $this->api_request_get($path, $query, $headers);
         }
 
         /**

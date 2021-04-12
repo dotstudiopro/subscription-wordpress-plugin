@@ -5,6 +5,7 @@ global $client_token;
 
 $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
 $subscriptions = $dsp_subscription_object->getCompanyProductSummary();
+$check_for_inactive_subscription = $dsp_subscription_object->getUserProducts($client_token, 'inactive');
 
 if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
     ?>
@@ -61,7 +62,7 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
                                 <?php
                                 if (!empty($trial_array)):
                                     ?>
-                                    <a href="#" class="mt-2 mb-2 btn btn-secondary btn-ds-secondary w-100 btn-lg <?php echo $button; ?>" data-subscriptionid="<?php echo $subscription_id; ?>">Try Free for <?php echo $trial_array['interval'] . ' ' . $trial_array['interval_unit'] ?></a>
+                                    <a href="<?php echo $url; ?>" class="mt-2 mb-2 btn btn-secondary btn-ds-secondary w-100 btn-lg <?php echo $button; ?>" data-subscriptionid="<?php echo $subscription_id; ?>">Try Free for <?php echo $trial_array['interval'] . ' ' . $trial_array['interval_unit'] ?></a>
                                     <?php if (!empty($trial_array['trial_price'])): ?>
                                         <p class="trial_price">You need to pay $<?php echo $trial_array['trial_price'] ?> to activate trial period</p>
                                     <?php endif; ?>
@@ -89,6 +90,19 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
             endforeach;
             ?>
         </div>
+        <?php 
+            if (!is_wp_error($check_for_inactive_subscription) && $check_for_inactive_subscription && !empty($check_for_inactive_subscription['products']['svod'][0]['product']['id'])) {
+                $cancle_subscription_information .= '<h4>Your subscription was canceled on ' . date('F j, Y, g:i a T', strtotime($check_for_inactive_subscription['products']['svod'][0]['canceled_at'])) . ' <br>Please select a plan to re-subscribe.</h4>';
+            ?>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-5 text-center">
+                    <div class="active_subscription_information">
+                        <?php echo $cancle_subscription_information; ?>
+                    </div>
+                </div>
+            <?php
+            }
+
+        ?>
     </div>    
     <?php
 }

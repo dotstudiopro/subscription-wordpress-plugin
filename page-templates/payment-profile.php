@@ -8,12 +8,20 @@ if ($client_token) {
     
     $options = null;
     $user_subscribe = $dsp_subscription_object->getUserProducts($client_token);
+    $check_for_inactive_subscription = $dsp_subscription_object->getUserProducts($client_token, 'inactive');
     
-    if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['paymentInfo'])) {
-        $cc_info = dsp_parse_cc_info_new($user_subscribe['paymentInfo']);
+    if ((!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['paymentInfo'])) || (!is_wp_error($check_for_inactive_subscription) && $check_for_inactive_subscription && !empty($check_for_inactive_subscription['paymentInfo']))) {
+        if(isset($user_subscribe['paymentInfo']) && !empty($user_subscribe['paymentInfo'])){
+            $cc_info = dsp_parse_cc_info_new($user_subscribe['paymentInfo']);    
+        } else if(isset($check_for_inactive_subscription['paymentInfo']) && !empty($check_for_inactive_subscription['paymentInfo'])){
+            $cc_info = dsp_parse_cc_info_new($check_for_inactive_subscription['paymentInfo']);    
+        }
+        
         $platform = '';
         if(isset($user_subscribe['platform']) && !empty($user_subscribe['platform'])){
             $platform = $user_subscribe['platform'];
+        } else if(isset($check_for_inactive_subscription['platform']) && !empty($check_for_inactive_subscription['platform'])){
+            $platform = $check_for_inactive_subscription['platform'];
         }
         ?>
         <div class="custom-container container pt-5 pb-5">
@@ -36,11 +44,11 @@ if ($client_token) {
                                         <div class="row form-group credit-group required">
                                             <div class="col-md-6 sm-mb-3">
                                                 <label class="credit_card_label" for="first_name">First Name</label>
-                                                <input type="text" class="form-control credit_card_input" readonly id="first_name" name="first_name" value="<?php echo $cc_info->first_name ?>" >
+                                                <input type="text" class="form-control credit_card_input" id="first_name" name="first_name" value="<?php echo $cc_info->first_name ?>" >
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="credit_card_label" for="last_name">Last Name</label>
-                                                <input type="text" class="form-control credit_card_input" readonly id="last_name" name="last_name" value="<?php echo $cc_info->last_name; ?>">
+                                                <input type="text" class="form-control credit_card_input" id="last_name" name="last_name" value="<?php echo $cc_info->last_name; ?>">
                                             </div>
                                         </div>
                                         <div class="form-group credit-group required">

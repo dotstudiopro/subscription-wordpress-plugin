@@ -20,20 +20,22 @@ if($client_token){
 
     $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
     $user_products = $dsp_subscription_object->getUserProducts($client_token);
+    $check_for_inactive_subscription = $dsp_subscription_object->getUserProducts($client_token, 'inactive');
     $template_class = new Subscription_Listing_Template();
 
-    $user_info = array();
     $credit_card_info = array();
 
     $user_subscribe_to_svod_product = false;
+   
     if(!is_wp_error($user_products) && $user_products){
         if(isset($user_products['products']['svod']) && !empty($user_products['products']['svod'][0]['product']['id'])){
-            $user_info = $user_products['products']['svod'][0];
             $credit_card_info = !empty($user_products['paymentInfo']) ? $user_products['paymentInfo'] : array();
             $user_subscribe_to_svod_product = true;
         }else if(isset($user_products['products']['tvod']) && !empty($user_products['products']['tvod'][0]['product']['id'])){
-            $user_info = $user_products['products']['tvod'][0];
             $credit_card_info = !empty($user_products['paymentInfo']) ? $user_products['paymentInfo'] : array();
+        }
+        else if(!is_wp_error($check_for_inactive_subscription) && $check_for_inactive_subscription){
+          $credit_card_info = !empty($check_for_inactive_subscription['paymentInfo']) ? $check_for_inactive_subscription['paymentInfo'] : array();
         }
     }
 
@@ -123,7 +125,7 @@ if($client_token){
         </div>
         <div class="payment_information">
             <?php
-            if($user_info && !empty($credit_card_info)){
+            if(!empty($credit_card_info)){
             ?>
             <div class="container mb-5 bill_info">
               <div class="row row-fluid complete_payment ">
