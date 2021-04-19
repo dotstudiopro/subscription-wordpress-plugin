@@ -31,13 +31,13 @@ $main_color = $dsp_theme_options['opt-main-theme-color'];
 </style>
 
 <div class="custom-container container pt-5 pb-5">
-    <div class="row no-gutters">
+    <div class="row no-gutters pb-5">
         <div class='product-detail-banner main-color-bg'>
             <div class='product-detail-name mt-2 ml-4 main-body-txt'>
-                <h4><?php echo $name; ?></h4>
+                <h3><?php echo $name; ?></h3>
             </div>
             <div class='product-detail-duration-price main-body-txt mt-2 mr-4'>
-                <h4>Available for <?php echo $price; ?> / <?php echo $duration; ?></h4>
+                <h3>Available for <?php echo $price; ?> / <?php echo $duration; ?></h3>
             </div>
         </div>
     </div>
@@ -59,7 +59,7 @@ $main_color = $dsp_theme_options['opt-main-theme-color'];
                     $channel_image = $channel['poster'];
                 }
             ?>
-                <div class="product-detail-channel col-sm-3 col-xs-6">
+                <div class="product-detail-channel col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 pb-3 pr-3">
                     <div class='product-channel-image'>
                         <a href="javascript:void(0)" class="open-channel-detail-modal" data-channel-title="<?php echo $channel_title; ?>" data-channel-description="<?php echo $channel_description; ?>" data-channel-image="<?php echo $channel_image;?>" data-channel-actors='<?php echo json_encode($channel_actors); ?>' data-channel-directors='<?php echo json_encode($channel_directors); ?>'>
                             <img src="<?php echo $channel_image ?>" id="channelimg" class="lazy w-100">
@@ -74,15 +74,9 @@ $main_color = $dsp_theme_options['opt-main-theme-color'];
             <?php endforeach; ?>
         </div>
     </div>
-    <div class="row no-gutters pt-5">
-        <div class='product-button-select'>
-            <div class='product-button-back'>
-                <a href="<?php echo wp_get_referer(); ?>" class="mt-2 mb-2 btn btn-secondary btn-ds-secondary w-100 btn-lg" >Go Back</a>
-            </div>
-            <div class='product-button-buy'>
-                <a href="#" class="mt-2 mb-2 btn btn-secondary btn-ds-secondary w-100 btn-lg product-buy-now" data-productid="<?php echo $product_id;?>">Buy Now</a>
-            </div>
-        </div>
+    <div class="col-md-12 text-center pt-5 pb-5">
+        <a href="<?php echo wp_get_referer(); ?>" class="mt-2 mb-2 btn btn-secondary btn-ds-secondary w-25 btn-lg" >Go Back</a>
+        <a href="#" class="mt-2 mb-2 btn btn-secondary btn-ds-secondary btn-lg product-buy-now w-25" data-productid="<?php echo $product_id;?>">Buy Now</a>
     </div>
 </div>
 

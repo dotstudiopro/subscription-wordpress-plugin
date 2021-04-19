@@ -31,7 +31,7 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions) && is_array($subscrip
                         continue;
                     }
                     if ((int) $interval > 1) $interval_unit .= "s";
-                    $price_period = $price . '<span class="period tvod"> / ' . $interval . " " . $interval_unit . '</span>';
+                    $price_period = $price . ' / ' . $interval . " " . $interval_unit;
 
                     $button = empty($client_token) ? 'login-link' : 'show-plan-details';
                     $url = empty($client_token) ?  wp_login_url( '/product-details/' . $subscription['_id'] ) : home_url( '/product-details/' . $subscription['_id'] ) ;

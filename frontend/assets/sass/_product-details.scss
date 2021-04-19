@@ -89,3 +89,35 @@
         padding-left: 10rem;
   }
 }
+
+.billing_value{
+    font-size: 1.375rem;
+    font-weight: 500;
+    color: #000000;
+    margin-left: 5%;
+}
+
+.credit_card_label_info{
+    font-size: 1.175rem;
+    font-weight: 500;
+    color: #000000;
+    text-transform: uppercase; 
+    width: 30%;
+}
+
+.card_info .card_number_info p{
+    font-size: 1.375rem;
+    font-weight: 500;
+    color: #000000;
+}
+
+.modal_channel_description, .modal_channel_actors, .modal_channel_directors{
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #000000 !important;
+    font-family: "Roboto";
+}
+
+#channel-detail-modal .modal-dialog{
+    max-width: 600px;
+}

@@ -116,10 +116,10 @@ if($client_token){
         <div class="row no-gutters">
             <div class='product-detail-banner main-color-bg'>
                 <div class='product-detail-name mt-2 ml-4 main-body-txt'>
-                    <h4><?php echo $name; ?></h4>
+                    <h3><?php echo $name; ?></h3>
                 </div>
                 <div class='product-detail-duration-price main-body-txt mt-2 mr-4'>
-                    <h4>Available for <?php echo $duration; ?></h4>
+                    <h3>Available for <?php echo $duration; ?></h3>
                 </div>
             </div>
         </div>
@@ -127,42 +127,56 @@ if($client_token){
             <?php
             if(!empty($credit_card_info)){
             ?>
-            <div class="container mb-5 bill_info">
+            <div class="credit-block container mt-3 mb-5 bill_info">
               <div class="row row-fluid complete_payment ">
                   <form  action="/thankyou/" id="form_complete_payment" name="form_complete_payment">
                       <input type="hidden"  name="subscription_id" value="<?php echo $product_charigfy_id; ?>">
                       <input type="hidden" name="nonce" id="nonce" value="<?php echo wp_create_nonce('submit_complete_payment'); ?>">
                   </form>
-                  <div class="col-md-6 col-sm-12 b-info">
+              </div>
+              <div class="row row-fluid">
+                  <div class="col-md-6 col-sm-12 pp-pr pt-3">
                       <div class="wrapper">
-                          <h4 class="mt-3 mb-3">Billing Info <a href="/payment-profile/" target="_blank"><i class="fas fa-pencil main-color"></i></a></h4>
-                          <div class="row">
-                            <div class="col-md-4 col-sm-12 billing_info_title">
-                                <p>First Name</p>
-                                <p>Last Name</p>
-                                <p>Address</p>
-                                <p>Address 2</p>
-                                <p>City</p>
-                                <p>Zip Code</p>
-                                <p>Country</p>
-                                <p>State / Region</p>
-                            </div>
-                            <div class="col-md-6 col-sm-12 billing_info_value">
-                                <p><?php echo ($credit_card_info['first_name']) ? :"&nbsp;";?></p>
-                                <p><?php echo ($credit_card_info['last_name']) ? :"&nbsp;";?></p>
-                                <p><?php echo ($credit_card_info['billing_address']) ? :"&nbsp;";?></p>
-                                <p><?php echo ($credit_card_info['billing_address_2']) ? :"&nbsp;";?></p>
-                                <p><?php echo ($credit_card_info['billing_city']) ? :"&nbsp;";?></p>
-                                <p><?php echo ($credit_card_info['billing_zip']) ? :"&nbsp;";?></p>
-                                <p><?php echo ($credit_card_info['billing_country']) ? :"&nbsp;";?></p>
-                                <p><?php echo ($credit_card_info['billing_state']) ? :"&nbsp;";?></p>
-                            </div>
+                          <h4 class="mt-3 mb-5">Billing Info<a href="/payment-profile/" class="ml-4" target="_blank"><i class="fas fa-pencil main-color"></i></a></h4>
+                          <div class="form-group credit-group">
+                              <div class="form-group credit-group">
+                                  <label class="credit_card_label_info" for="first_name">First Name</label>
+                                  <span class="billing_value"><?php echo ($credit_card_info['first_name']) ? :"&nbsp;";?></span>
+                              </div>
+                              <div class="form-group credit-group">
+                                  <label class="credit_card_label_info" for="last_name">Last Name</label>
+                                  <span class="billing_value"><?php echo ($credit_card_info['last_name']) ? :"&nbsp;";?></span>
+                              </div>
+                              <div class="form-group credit-group">
+                                  <label class="credit_card_label_info" for="billing_address">Address</label>
+                                  <span class="billing_value"><?php echo ($credit_card_info['billing_address']) ? :"&nbsp;";?></span>
+                              </div>
+                              <div class="form-group credit-group">
+                                  <label class="credit_card_label_info" for="billing_address_2">Address 2</label>
+                                  <span class="billing_value"><?php echo ($credit_card_info['billing_address_2']) ? :"&nbsp;";?></span>
+                              </div>
+                              <div class="form-group credit-group">
+                                  <label class="credit_card_label_info" for="billing_city">City</label>
+                                  <span class="billing_value"><?php echo ($credit_card_info['billing_city']) ? :"&nbsp;";?></span>
+                              </div>
+                              <div class="form-group credit-group">
+                                  <label class="credit_card_label_info" for="billing_zip">Zip Code</label>
+                                  <span class="billing_value"><?php echo ($credit_card_info['billing_zip']) ? :"&nbsp;";?></span>
+                              </div>
+                              <div class="form-group credit-group">
+                                  <label class="credit_card_label_info" for="billing_country">Country</label>
+                                  <span class="billing_value"><?php echo ($credit_card_info['billing_country']) ? :"&nbsp;";?></span>
+                              </div>
+                              <div class="form-group credit-group">
+                                  <label class="credit_card_label_info" for="billing_state">State / Region</label>
+                                  <span class="billing_value"><?php echo ($credit_card_info['billing_state']) ? :"&nbsp;";?></span>
+                              </div>
                           </div>
                       </div>
                   </div>
-                  <div class="col-md-6 col-sm-12 b-info">
+                  <div class="col-md-6 col-sm-12 b-info pt-3">
                       <div class="wrapper">
-                          <h4 class="mt-3 mb-3">Credit Card Info <a href="/payment-profile/" target="_blank"><i class="fas fa-pencil main-color"></i></a></h4>
+                          <h4 class="mt-3 mb-3">Credit Card Info <a href="/payment-profile/" class="ml-4" target="_blank"><i class="fas fa-pencil main-color"></i></a></h4>
                           <div class="your-card pb-2 mb-3" style="margin: unset;">
                               <div class="bank-name" title="BestBank"><?php echo strtoupper($credit_card_info['credit_card']['card_type'] . ' Card'); ?></div>
                               <div class="chip">

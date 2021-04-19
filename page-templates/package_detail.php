@@ -23,17 +23,17 @@ if($subscription_id){
     $trial_array = '';
     $interval_bottom = $interval_unit;
     if ($price_display == 'total') {
-        $price_period = '$'. $price . '<span class="period"> / year</span>';
+        $price_period = '$'. $price . '/ year';
     } elseif ($price_display == 'monthly') {
         $monthly_price = floor(($price * 100) / $interval) / 100;
-        $price_period = '$'. $monthly_price . '<span class="period"> / month</span>';
+        $price_period = '$'. $monthly_price . '/ month';
     } else {
         if ($interval == 12 && $interval_unit == 'month') {
             $monthly_price = floor(($price * 100) / 12) / 100;
-            $price_period = '$'.$monthly_price . '<span class="period"> / month ' . '</span>';
+            $price_period = '$'.$monthly_price . '/ month';
             $interval_bottom = "year";
         } else {
-            $price_period = '$'.$price . '<span class="period"> / ' . $interval_unit . '</span>';
+            $price_period = '$'.$price . '/ ' . $interval_unit;
         }
     }
     $duration = $price_period;
@@ -55,10 +55,10 @@ if($subscription_id){
         <div class="row no-gutters">
             <div class='product-detail-banner main-color-bg'>
                 <div class='product-detail-name mt-2 ml-4 main-body-txt'>
-                    <h4><?php echo $name; ?></h4>
+                    <h3><?php echo $name; ?></h3>
                 </div>
                 <div class='product-detail-duration-price main-body-txt mt-2 mr-4'>
-                    <h4>Available for <?php echo $duration; ?></h4>
+                    <h3>Available for <?php echo $duration; ?></h3>
                 </div>
             </div>
         </div>
@@ -66,43 +66,41 @@ if($subscription_id){
             <input type="hidden"  name="subscription_id" value="<?php echo $subscription_id; ?>">
         </form>
 
-        <div class="package-detail container pt-5">
+        <div class="package-detail">
             <div class="row">
-                <div class="col-sm-6 col-xs-6">
-                    <h4>Description</h4>
-                    <?php
-                    if(isset($product->description) && !empty($product->description)){
-                        $description = $product->description;
-                    }else{
-                        $description = '$'. $price . ' billed ';
-                        if($interval != 1){
-                            $description .= ' every '.$interval. ' ' .$interval_bottom;
+                <div class="col-sm-6 col-xs-6 pt-5">
+                    <div class="ml-5">
+                        <h4>Description</h4>
+                        <?php
+                        if(isset($product->description) && !empty($product->description)){
+                            $description = $product->description;
                         }else{
-                            $description .=  ($interval_bottom == 'day' ? 'daily' : $interval_bottom . 'ly');
+                            $description = '$'. $price . ' billed ';
+                            if($interval != 1){
+                                $description .= ' every '.$interval. ' ' .$interval_bottom;
+                            }else{
+                                $description .=  ($interval_bottom == 'day' ? 'daily' : $interval_bottom . 'ly');
+                            }
+                            $description .= (empty($trial_array) ? ' after subscription end' : ' after trial period');
                         }
-                        $description .= (empty($trial_array) ? ' after subscription end' : ' after trial period');
-                    }
-                    ?>
-                    <p class="pt-2" style="font-size: 22px;"><?php echo $description; ?></p>
+                        ?>
+                        <h5 class="pt-1"><?php echo $description; ?></h5>
+                    </div>
                 </div>
-                <div class="col-sm-6 col-xs-6">
-                    <h4>Billing Expiration</h4>
-                    <p class="pt-2" style="font-size: 22px;">Recur Billing continuously until canceled</p>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="row no-gutters pt-5">
-            <div class='product-button-select'>
-                <div class='product-button-back'>
-                    <a href="<?php echo wp_get_referer(); ?>" class="mt-2 mb-2 btn btn-secondary btn-ds-secondary w-100 btn-lg" >Go Back</a>
-                </div>
-                <div class='product-button-buy'>
-                    <a href="#" class="mt-2 mb-2 btn btn-secondary btn-ds-secondary w-100 btn-lg product-buy-now" data-productid="<?php echo $subscription_id;?>">Buy Now</a>
+                <div class="col-sm-6 col-xs-6 pt-5">
+                    <div class="ml-5">
+                        <h4>Billing Expiration</h4>
+                        <h5 class="pt-1">Recur Billing continuously until canceled</h5>
+                    </div>
                 </div>
             </div>
         </div>
+
+         <div class="col-md-12 text-center pt-5 pb-5">
+            <a href="<?php echo wp_get_referer(); ?>" class="mt-2 mb-2 btn btn-secondary btn-ds-secondary btn-lg w-25" >Go Back</a>
+            <a href="#" class="mt-2 mb-2 btn btn-secondary btn-ds-secondary btn-lg product-buy-now w-25" data-productid="<?php echo $subscription_id;?>">Buy Now</a>
+        </div>
+
     </div>
 
 <?php
