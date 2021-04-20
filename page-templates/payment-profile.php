@@ -202,7 +202,7 @@ if ($client_token) {
         <div class="custom-container container pt-5 pb-5  pt-5 pb-5 center-page-content">
             <div class="row no-gutters">
                 <h3 class="page-title mb-5 center_title">Manage your payment details</h3>
-                <p class="col-12 text-center">As per our records we could not find any active subscriptions under your account, so you don't have any payment profile has been created yet.</p>
+                <p class="col-12 text-center">We could not find any active subscriptions or purchases on your account. Your payment profile will be available during and after your next purchase.</p>
                 <div class="col-12 text-center pt-3"><a href="/packages" title="Subscribe Now" class="btn btn-secondary btn-ds-secondary">Subscribe Now</a></div>
             </div>
         </div>
