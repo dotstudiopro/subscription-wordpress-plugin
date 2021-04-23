@@ -1,5 +1,6 @@
 <?php
 global $client_token;
+$previous_page_url = isset($_REQUEST['previous_page_url']) ? $_REQUEST['previous_page_url'] : '';
 if ($client_token && (wp_verify_nonce($_POST['thankyou'], 'submit_payment') || wp_verify_nonce($_POST['thankyou'], 'submit_complete_payment'))) {
     get_header();
     ?>
@@ -10,7 +11,11 @@ if ($client_token && (wp_verify_nonce($_POST['thankyou'], 'submit_payment') || w
                 <h4>Thank You and Welcome!</h4>
                 <p>Your payment was successfully processed</p>
                 <div class="sb_wrapper">
-                    <a href="/" class="btn btn-secondary btn-ds-secondary">Start Browsing</a>
+                    <?php if(isset($previous_page_url) && !empty($previous_page_url)): ?>
+                        <a href="<?php echo $previous_page_url; ?>" class="btn btn-secondary btn-ds-secondary">Start Exploring</a>
+                    <?php else: ?>
+                        <a href="/" class="btn btn-secondary btn-ds-secondary">Start Exploring</a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
