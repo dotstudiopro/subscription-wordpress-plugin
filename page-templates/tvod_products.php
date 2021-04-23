@@ -1,7 +1,9 @@
 <?php
 get_header();
 
-global $client_token;
+global $client_token, $post, $wp;
+
+$previous_page_url = wp_get_referer();
 
 $channel_slug = get_query_var( 'channel_slug');
 $post = get_page_by_path($channel_slug, 'OBJECT', 'channel');
@@ -33,12 +35,12 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions) && is_array($subscrip
                     if ((int) $interval > 1) $interval_unit .= "s";
                     $price_period = $price . ' / ' . $interval . " " . $interval_unit;
 
-                    $button = empty($client_token) ? 'login-link' : 'show-plan-details';
-                    $url = empty($client_token) ?  wp_login_url( '/product-details/' . $subscription['_id'] ) : home_url( '/product-details/' . $subscription['_id'] ) ;
+                    $button = empty($client_token) ? '' : 'tvod_product_select';
+                    $url = empty($client_token) ?  wp_login_url( home_url( add_query_arg( array(), $wp->request ) ) ) : '#' ;
                     ?>
                     <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 pr-3 pb-3 sameSize">
-                        <form  action="/credit-card/" id="form_<?php echo $subscription_id; ?>" method="POST">
-                            <input type="hidden"  name="subscription_id" value="<?php echo $subscription_id; ?>">
+                        <form  action="<?php echo home_url( '/product-details/' . $subscription['_id'] ); ?>" id="form_<?php echo $subscription_id; ?>" method="POST">
+                            <input type="hidden"  name="previous_page_url" value="<?php echo $previous_page_url; ?>">
                         </form>
                         <div class="card text-xs-center">
                             <div class="card-header">

@@ -315,6 +315,8 @@ class Dotstudiopro_Subscription_Front {
             dspsubs_create_page('Product Details', 'product-details');
         if (get_option('package-detail') == NULL)
             dspsubs_create_page('Package Details', 'package-detail');
+        if (get_option('purchase-history') == NULL)
+            dspsubs_create_page('Purchase History', 'purchase-history');
     }
 
 }

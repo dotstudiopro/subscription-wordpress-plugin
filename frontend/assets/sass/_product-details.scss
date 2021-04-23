@@ -121,3 +121,43 @@
 #channel-detail-modal .modal-dialog{
     max-width: 600px;
 }
+
+.payment_history_current_plan_info h5{
+    font-family: "Roboto";
+    font-size: 1.275rem;
+    font-weight: 500;
+    line-height: 1.4875rem;
+}
+
+.payment_history_current_plan_info p{
+    font-family: "Roboto";
+    font-size: 1.275rem;
+    font-weight: 500;
+    line-height: 1.4875rem;
+}
+
+.active_subscription_information .current_plan{
+    background-color: #f5f5f5;
+    border: 2px solid #e0e0e0;
+    padding: 25px;
+}
+
+.active_subscription_information .current_plan_title, .purchase_listing .current_plan_title{
+    font-size: 2.0rem;
+    font-weight: 500;
+    line-height: 2.1875rem;
+}
+
+.purchase_listing table thead th{
+    font-family: "Roboto";
+    font-size: 1.275rem;
+    font-weight: bold;
+    line-height: 1.4875rem;
+}
+
+.purchase_listing table tbody tr td{
+    font-family: "Roboto";
+    font-size: 1.0rem;
+    font-weight: 500;
+    line-height: 1.2875rem;
+}

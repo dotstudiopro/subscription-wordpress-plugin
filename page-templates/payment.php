@@ -4,6 +4,7 @@ global $client_token, $dsp_theme_options;
 
 $product_id = isset($_REQUEST['product_id']) ? $_REQUEST['product_id'] : '';
 $subscription_id = isset($_REQUEST['subscription_id']) ? $_REQUEST['subscription_id'] : '';
+$previous_page_url = isset($_REQUEST['previous_page_url']) ? $_REQUEST['previous_page_url'] : '';
 
 if($subscription_id){
     if(!$client_token):
@@ -206,7 +207,7 @@ if($client_token){
                       </div>
                   </div>
                   <div class="mx-auto pt-3">
-                      <button type="submit" id="complete_payment" class="btn btn-secondary btn-ds-secondary mt-3" data-action="complete_payment">Complete Payment</button>
+                      <button type="submit" id="complete_payment" class="btn btn-secondary btn-ds-secondary mt-3" data-action="complete_payment" data-previouspageurl="<?php echo $previous_page_url; ?>">Complete Payment</button>
                   </div>
               </div>
               <div class="row row-fluid">
@@ -367,7 +368,7 @@ if($client_token){
                             </div>
                         </div>
                         <div class="mx-auto">
-                            <button type="submit" id="submit_cc" class="btn btn-secondary btn-ds-secondary" data-action="create_payment_profile"><?php echo $purchaseMessage; ?></button>
+                            <button type="submit" id="submit_cc" class="btn btn-secondary btn-ds-secondary" data-action="create_payment_profile" data-previouspageurl="<?php echo $previous_page_url; ?>"><?php echo $purchaseMessage; ?></button>
                         </div>
                     </div>
                     <div class="row row-fluid">

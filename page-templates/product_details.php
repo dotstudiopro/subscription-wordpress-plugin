@@ -20,6 +20,8 @@ $channels = dsp_get_channels_for_product($product_id);
 
 $main_color = $dsp_theme_options['opt-main-theme-color'];
 
+$previous_page_url = isset($_REQUEST['previous_page_url']) ? $_REQUEST['previous_page_url'] : '/thankyou/';
+
 ?>
 <style type="text/css">
     .main-color-bg {
@@ -43,6 +45,7 @@ $main_color = $dsp_theme_options['opt-main-theme-color'];
     </div>
     <form  action="/credit-card/" id="form_<?php echo $product_id; ?>" method="POST">
         <input type="hidden"  name="product_id" value="<?php echo $product_id; ?>">
+        <input type="hidden"  name="previous_page_url" value="<?php echo $previous_page_url; ?>">
     </form>
     <div class="row no-gutters pt-5 justify-content-md-center">
         <div class='product-detail-channels row main-body-txt'>

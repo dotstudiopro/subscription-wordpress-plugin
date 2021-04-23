@@ -8,14 +8,14 @@
  * that starts the plugin.
  *
  * @link              https://www.dotstudiopro.com
- * @since             1.0.6
+ * @since             1.0.1
  * @package           Dotstudiopro_Subscription
  *
  * @wordpress-plugin
  * Plugin Name:       dotstudioPRO Subscription
  * Plugin URI:        https://www.dotstudiopro.com
  * Description:       This plugin is an addon to the dosstudioPRO API plugin to allow users to manage their subscriptions.
- * Version:           1.1.1
+ * Version:           1.0.5
  * Author:            dotstudioPRO
  * Author URI:        http://www.dotstudiopro.com
  * License:           GPLv3

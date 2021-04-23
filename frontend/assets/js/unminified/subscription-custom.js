@@ -53,6 +53,17 @@ jQuery(document).ready(function() {
             });
         });
 
+         /**
+         * Submit the form of the page on tvod package detail page after selecting the product
+         */
+        $('.tvod_product_select').each(function(index) {
+            $(this).on('click', function(e) {
+                e.preventDefault();
+                var form_id = $(this).data('subscriptionid');
+                $('form#form_' + form_id).submit();
+            });
+        });
+
         /**
          * AJAX action to validate the coupon
          */
@@ -99,6 +110,7 @@ jQuery(document).ready(function() {
                 customOverlay(true);
                 showSnacksBar(true);
                 var action = $(this).data('action');
+                var previous_page_url = $(this).data('previouspageurl');
                 var nonce = $('#nonce').val();
                 var formData = $('#form_payment').serialize();
                 $('#snackbar').html('Sending your request...');
@@ -117,6 +129,7 @@ jQuery(document).ready(function() {
                     var url = $('#form_payment').attr('action');
                     var form = $('<form action="' + url + '" method="post">' +
                         '<input type="hidden" name="thankyou" value="' + nonce + '" />' +
+                        '<input type="hidden" name="previous_page_url" value="' + previous_page_url + '" />' +
                         '</form>');
                     $('body').append(form);
                     form.submit();
@@ -139,6 +152,7 @@ jQuery(document).ready(function() {
             customOverlay(true);
             showSnacksBar(true);
             var action = $(this).data('action');
+            var previous_page_url = $(this).data('previouspageurl');
             var nonce = $('#nonce').val();
             var formData = $('#form_complete_payment').serialize();
             $('#snackbar').html('Sending your request...');
@@ -157,6 +171,7 @@ jQuery(document).ready(function() {
                 var url = $('#form_complete_payment').attr('action');
                 var form = $('<form action="' + url + '" method="post">' +
                     '<input type="hidden" name="thankyou" value="' + nonce + '" />' +
+                    '<input type="hidden" name="previous_page_url" value="' + previous_page_url + '" />' +
                     '</form>');
                 $('body').append(form);
                 form.submit();

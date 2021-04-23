@@ -76,6 +76,9 @@ class Dotstudiopro_Subscription_Admin {
             if ($page_slug == 'package-detail') {
                 $template = $template_class->locate_template('package_detail');
             }
+             if ($page_slug == 'purchase-history') {
+                $template = $template_class->locate_template('purchase_history');
+            }
         endif;
         return $template;
     }
