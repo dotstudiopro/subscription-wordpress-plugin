@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.0.6] - 2021-04-24
+
+### Added
+- Added option for TVOD Products
+
 ## [1.0.5] - 2020-09-09
 
 ### Changed
