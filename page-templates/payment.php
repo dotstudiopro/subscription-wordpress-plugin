@@ -4,7 +4,7 @@ global $client_token, $dsp_theme_options;
 
 $product_id = isset($_REQUEST['product_id']) ? $_REQUEST['product_id'] : '';
 $subscription_id = isset($_REQUEST['subscription_id']) ? $_REQUEST['subscription_id'] : '';
-$previous_page_url = isset($_REQUEST['previous_page_url']) ? $_REQUEST['previous_page_url'] : '';
+$previous_page_url = isset($_REQUEST['previous_page_url']) ? $_REQUEST['previous_page_url'] : '/thankyou/';
 
 if($subscription_id){
     if(!$client_token):
@@ -20,23 +20,33 @@ else{
 if($client_token){
 
     $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
-    $user_products = $dsp_subscription_object->getUserProducts($client_token);
-    $check_for_inactive_subscription = $dsp_subscription_object->getUserProducts($client_token, 'inactive');
+    //$user_products = $dsp_subscription_object->getUserProducts($client_token);
+    $user_products = $dsp_subscription_object->getUserProducts($client_token, 'inactive');
     $template_class = new Subscription_Listing_Template();
 
     $credit_card_info = array();
 
     $user_subscribe_to_svod_product = false;
    
+    // if(!is_wp_error($user_products) && $user_products){
+    //     if(isset($user_products['products']['svod']) && !empty($user_products['products']['svod'][0]['product']['id'])){
+    //         $credit_card_info = !empty($user_products['paymentInfo']) ? $user_products['paymentInfo'] : array();
+    //         $user_subscribe_to_svod_product = true;
+    //     }else if(isset($user_products['products']['tvod']) && !empty($user_products['products']['tvod'][0]['product']['id'])){
+    //         $credit_card_info = !empty($user_products['paymentInfo']) ? $user_products['paymentInfo'] : array();
+    //     }
+    //     else if(!is_wp_error($check_for_inactive_subscription) && $check_for_inactive_subscription){
+    //       $credit_card_info = !empty($check_for_inactive_subscription['paymentInfo']) ? $check_for_inactive_subscription['paymentInfo'] : array();
+    //     }
+    // }
+
     if(!is_wp_error($user_products) && $user_products){
-        if(isset($user_products['products']['svod']) && !empty($user_products['products']['svod'][0]['product']['id'])){
-            $credit_card_info = !empty($user_products['paymentInfo']) ? $user_products['paymentInfo'] : array();
+        $credit_card_info = !empty($user_products['paymentInfo']) ? $user_products['paymentInfo'] : array();
+        foreach ($user_products['products']['svod'] as $svod_products) {
+          if($svod_products['state'] == 'active'){
             $user_subscribe_to_svod_product = true;
-        }else if(isset($user_products['products']['tvod']) && !empty($user_products['products']['tvod'][0]['product']['id'])){
-            $credit_card_info = !empty($user_products['paymentInfo']) ? $user_products['paymentInfo'] : array();
-        }
-        else if(!is_wp_error($check_for_inactive_subscription) && $check_for_inactive_subscription){
-          $credit_card_info = !empty($check_for_inactive_subscription['paymentInfo']) ? $check_for_inactive_subscription['paymentInfo'] : array();
+            break;
+          }
         }
     }
 
@@ -130,7 +140,7 @@ if($client_token){
             ?>
             <div class="credit-block container mt-3 mb-5 bill_info">
               <div class="row row-fluid complete_payment ">
-                  <form  action="/thankyou/" id="form_complete_payment" name="form_complete_payment">
+                  <form  action="<?php echo $previous_page_url;?>" id="form_complete_payment" name="form_complete_payment">
                       <input type="hidden"  name="subscription_id" value="<?php echo $product_charigfy_id; ?>">
                       <input type="hidden" name="nonce" id="nonce" value="<?php echo wp_create_nonce('submit_complete_payment'); ?>">
                   </form>
@@ -219,7 +229,7 @@ if($client_token){
             }else{
             ?>
             <div class="credit-block mb-5 container">
-                <form action="/thankyou/" class="w-100 needs-validation" novalidate name="payment" id="form_payment">
+                <form action="<?php echo $previous_page_url;?>" class="w-100 needs-validation" novalidate name="payment" id="form_payment">
                     <div class="row row-fluid">
                         <div class="form-group credit-group select w-100 ml-3 mr-3">
                             <input type="hidden" name="subscription_id" id="subscription_id" value="<?php echo $product_charigfy_id; ?>">

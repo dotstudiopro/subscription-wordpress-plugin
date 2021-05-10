@@ -7,22 +7,19 @@ $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
 if ($client_token) {
     
     $options = null;
-    $user_subscribe = $dsp_subscription_object->getUserProducts($client_token);
-    $check_for_inactive_subscription = $dsp_subscription_object->getUserProducts($client_token, 'inactive');
+    //$user_subscribe = $dsp_subscription_object->getUserProducts($client_token);
+    $user_subscribe = $dsp_subscription_object->getUserProducts($client_token, 'inactive');
     
-    if ((!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['paymentInfo'])) || (!is_wp_error($check_for_inactive_subscription) && $check_for_inactive_subscription && !empty($check_for_inactive_subscription['paymentInfo']))) {
+    if ((!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['paymentInfo']))) {
         if(isset($user_subscribe['paymentInfo']) && !empty($user_subscribe['paymentInfo'])){
             $cc_info = dsp_parse_cc_info_new($user_subscribe['paymentInfo']);    
-        } else if(isset($check_for_inactive_subscription['paymentInfo']) && !empty($check_for_inactive_subscription['paymentInfo'])){
-            $cc_info = dsp_parse_cc_info_new($check_for_inactive_subscription['paymentInfo']);    
-        }
+        } 
         
         $platform = '';
         if(isset($user_subscribe['platform']) && !empty($user_subscribe['platform'])){
             $platform = $user_subscribe['platform'];
-        } else if(isset($check_for_inactive_subscription['platform']) && !empty($check_for_inactive_subscription['platform'])){
-            $platform = $check_for_inactive_subscription['platform'];
-        }
+        } 
+        $platform = 'web';
         ?>
         <div class="custom-container container pt-5 pb-5">
             <div class="row no-gutters">

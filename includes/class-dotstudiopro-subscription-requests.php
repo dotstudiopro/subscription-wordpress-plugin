@@ -395,7 +395,7 @@ if (class_exists('Dsp_External_Api_Request')) {
             if (!$token)
                 return array();
 
-            $path = '/subscriptions/products-by-channel/' . $channel_id;
+            $path = 'subscriptions/products-by-channel/' . $channel_id;
 
             $headers = array(
                 'content-type'  => 'application/json',

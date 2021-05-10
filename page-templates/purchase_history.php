@@ -9,12 +9,8 @@ endif;
 get_header();
 $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
 
-$user_subscribe = $dsp_subscription_object->getUserProducts($client_token);
+//$user_subscribe = $dsp_subscription_object->getUserProducts($client_token);
 $user_subscribe_all = $dsp_subscription_object->getUserProducts($client_token, 'inactive');
-
-if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['products']['svod'][0]['product']['id'])) {
-    $active_subscription_id = $user_subscribe['products']['svod'][0]['product']['id'];
-}
 
 ?>
 <style type="text/css">
@@ -34,13 +30,21 @@ if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['
 
 		$active_subscription_information = '';
 
-		if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['products']['svod'][0]['product']['id'])) {
+		$active_user_subscription = array();
+		foreach ($user_subscribe_all['products']['svod'] as $svod_products) {
+          if($svod_products['state'] == 'active'){
+            $active_user_subscription = $svod_products;
+            break;
+          }
+        }
 
-			$name = !empty($user_subscribe['products']['svod'][0]['product']['name']) ? $user_subscribe['products']['svod'][0]['product']['name'] : '';
-            $price = !empty($user_subscribe['products']['svod'][0]['product']['price_in_cents']) ? ($user_subscribe['products']['svod'][0]['product']['price_in_cents'] / 100) : '';
+		if (!empty($active_user_subscription)) {
+
+			$name = !empty($active_user_subscription['product']['name']) ? $active_user_subscription['product']['name'] : '';
+            $price = !empty($active_user_subscription['product']['price_in_cents']) ? ($active_user_subscription['product']['price_in_cents'] / 100) : '';
             
-            $interval_unit = !empty($user_subscribe['products']['svod'][0]['product']['interval_unit']) ? $user_subscribe['products']['svod'][0]['product']['interval_unit'] : '';
-            $interval = !empty($user_subscribe['products']['svod'][0]['product']['interval']) ? $user_subscribe['products']['svod'][0]['product']['interval'] : '';
+            $interval_unit = !empty($active_user_subscription['product']['interval_unit']) ? $active_user_subscription['product']['interval_unit'] : '';
+            $interval = !empty($active_user_subscription['product']['interval']) ? $active_user_subscription['product']['interval'] : '';
 
             if ($interval == 12 && $interval_unit == 'month'):
                 $price_period = $price . ' / year';
@@ -52,13 +56,13 @@ if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['
 
             $active_subscription_information = '<h4 class="current_plan_title pb-3 main-color">Current Plan</h4><div class="current_plan">';
 			$active_subscription_information .= '<div class="form-group"><h5 class="main-color">' . $name . ' $' . $price_period . ' (Current)<a href="/packages/" class="ml-4" target="_blank"><i class="fas fa-pencil main-color"></i></a></h5></div>';
-	        if (!empty($user_subscribe['products']['svod'][0]['delayed_cancel_at']))
-	            $active_subscription_information .='<p class="pb-4">Your Subscription Will be Cancelled at ' . date('F j, Y, g:i a T', strtotime($user_subscribe['products']['svod'][0]['delayed_cancel_at'])) . '</p>';
+	        if (!empty($active_user_subscription['delayed_cancel_at']))
+	            $active_subscription_information .='<p class="pb-4">Your Subscription Will be Cancelled at ' . date('F j, Y, g:i a T', strtotime($active_user_subscription['delayed_cancel_at'])) . '</p>';
 	        else{
-	            $active_subscription_information .= '<p class="pb-4">Current period ends at ' . date('F j, Y, g:i a T', strtotime($user_subscribe['products']['svod'][0]['current_period_ends_at'])) . '</p>';
-	            if(isset($user_subscribe['products']['svod'][0]['next_assessment_at']) && !empty($user_subscribe['products']['svod'][0]['next_assessment_at'])){
+	            $active_subscription_information .= '<p class="pb-4">Current period ends at ' . date('F j, Y, g:i a T', strtotime($active_user_subscription['current_period_ends_at'])) . '</p>';
+	            if(isset($active_user_subscription['next_assessment_at']) && !empty($active_user_subscription['next_assessment_at'])){
 	            	$active_subscription_information .= '<div class="form-group"><h5 class="main-color">Next Billing Date</h5></div>';
-	            	$active_subscription_information .= '<p class="">' . date('F j, Y, g:i a T', strtotime($user_subscribe['products']['svod'][0]['next_assessment_at'])) . '</p>';	
+	            	$active_subscription_information .= '<p class="">' . date('F j, Y, g:i a T', strtotime($active_user_subscription['next_assessment_at'])) . '</p>';	
 	            }
 	        }
 	        $active_subscription_information .= '</div>';
@@ -85,22 +89,22 @@ if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['
 	                		<tbody>
 	                			<?php foreach($user_subscribe_all['products']['svod'] as $svod_product):?>
 	                				<tr>
-	                					<td><?php echo date('d/m/Y', strtotime($svod_product['activated_at']));?></td>
+	                					<td><?php echo date('m/d/Y', strtotime($svod_product['activated_at']));?></td>
 	                					<td><?php echo $svod_product['product']['name']; ?></td>
 	                					<?php if (!empty($svod_product['canceled_at']))
 	                							$service_period_end = $svod_product['canceled_at'];
 	                						  else
 	                						  	$service_period_end = $svod_product['current_period_ends_at'];
 	                					?>
-	                					<td><?php echo date('d/m/Y', strtotime($svod_product['activated_at']));?> - <?php echo date('d/m/Y', strtotime($service_period_end)); ?></td>
+	                					<td><?php echo date('m/d/Y', strtotime($svod_product['activated_at']));?> - <?php echo date('m/d/Y', strtotime($service_period_end)); ?></td>
 	                					<td>$<?php echo ($svod_product['product']['price_in_cents'] / 100); ?></td>
 	                				</tr>
 	                			<?php endforeach; ?>
 	                			<?php foreach($user_subscribe_all['products']['tvod'] as $tvod_product):?>
 	                				<tr>
-	                					<td><?php echo date('d/m/Y', strtotime($tvod_product['activated_at']));?></td>
+	                					<td><?php echo date('m/d/Y', strtotime($tvod_product['activated_at']));?></td>
 	                					<td><?php echo $tvod_product['product']['name']; ?></td>
-	                					<td><?php echo date('d/m/Y', strtotime($tvod_product['activated_at']));?> - <?php echo date('d/m/Y', strtotime($tvod_product['expires_at'])); ?></td>
+	                					<td><?php echo date('m/d/Y', strtotime($tvod_product['activated_at']));?> - <?php echo date('m/d/Y', strtotime($tvod_product['expires_at'])); ?></td>
 	                					<td>$<?php echo ($tvod_product['product']['initial_charge_in_cents'] / 100); ?></td>
 	                				</tr>
 	                			<?php endforeach; ?>
