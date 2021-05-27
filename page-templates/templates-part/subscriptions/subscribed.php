@@ -53,13 +53,19 @@ if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['
                 else {
                     if ($platform == 'web') {
                         $update_subscription_information .= '<option value="' . $subscription_id . '">' . $name . ' $' . $price_period . '</option>';
-                        if (empty($user_subscribe['products']['svod'][0]['delayed_cancel_at']))
-                            $cancle_subscription_information = '<button id="cancel_subscription_button" data-title="Cancle Subscription" data-nonce=' . wp_create_nonce('cancle_subscription_plan') . ' data-action="cancle_subscription" class="vc_btn3-color-blue btn btn-danger">CANCEL SUBSCRIPTION</button>';
                     }
                     else {
                         $platform_error ='<p>Your subscription was created through ' . $platform . ' so you will need to manage it on that platform.</p>';
                     }
                 }
+
+                if ($platform == 'web') {
+                    if(empty($user_subscribe['products']['svod'][0]['delayed_cancel_at']))
+                        $cancle_subscription_information = '<button id="cancel_subscription_button" data-title="Cancle Subscription" data-nonce=' . wp_create_nonce('cancle_subscription_plan') . ' data-action="cancle_subscription" class="vc_btn3-color-blue btn btn-danger">CANCEL SUBSCRIPTION</button>';
+                }else {
+                    $platform_error ='<p>Your subscription was created through ' . $platform . ' so you will need to manage it on that platform.</p>';
+                }
+
             endif;
         endforeach;
         ?>
@@ -69,33 +75,33 @@ if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['
                     <div class="active_subscription_information">
                         <?php echo $active_subscription_information; ?>
                     </div>
-                    <?php if ($platform_error == null) { ?>
-                        <div class="update_subscription_information">
-                            <form class="update_subscription_form" action="/upgrade-subscription"  method="POST">
-                                <div class="row">
-                                	<div class="col-sm-4">
-                                  </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <select class="form-control update_subscription_id" name="update_subscription_id">
-                                                <?php echo $update_subscription_information; ?>
-                                            </select>
+                    <?php if ($platform_error == null) {
+                            if(!empty($update_subscription_information)){ ?>
+                                <div class="update_subscription_information">
+                                    <form class="update_subscription_form" action="/upgrade-subscription"  method="POST">
+                                        <div class="row">
+                                            <div class="col-sm-4"></div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <select class="form-control update_subscription_id" name="update_subscription_id">
+                                                        <?php echo $update_subscription_information; ?>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                             
+                                    </form>
                                 </div>
-                            </form>
-                        </div>
-                        <?php if ($cancle_subscription_information != null) { ?>
-                            <div class="cancle_subscription_information text-center">
-                                        <div class="form-group">
-                                            <button data-title="Update Subscription" data-nonce='<?php echo wp_create_nonce('upadate_subscription_plan'); ?>' data-action='update_subscription' id="update_subscription_button" class="btn btn-secondary btn-ds-secondary">UPGRADE</button>
-                                        </div>
-                                    
-                                <?php echo $cancle_subscription_information; ?>
-                            </div>
-                            <?php
-                        }
+                                <?php } if ($cancle_subscription_information != null) { ?>
+                                    <div class="cancle_subscription_information text-center">
+                                            <?php if(!empty($update_subscription_information)){ ?>
+                                                <div class="form-group">
+                                                    <button data-title="Update Subscription" data-nonce='<?php echo wp_create_nonce('upadate_subscription_plan'); ?>' data-action='update_subscription' id="update_subscription_button" class="btn btn-secondary btn-ds-secondary">UPGRADE</button>
+                                                </div>
+                                            <?php } ?>
+                                        <?php echo $cancle_subscription_information; ?>
+                                    </div>
+                                <?php
+                                }
                     } else {
                         ?>
                         <div class="platform_error">

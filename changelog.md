@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.0.8] - 2021-05-27
+
+### Fixed
+- Fixed an error on the package page when there is only one subscription plan
+
 ## [1.0.7] - 2021-05-10
 
 ### Added
