@@ -61,7 +61,7 @@ if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['
 
                 if ($platform == 'web') {
                     if(empty($user_subscribe['products']['svod'][0]['delayed_cancel_at']))
-                        $cancle_subscription_information = '<button id="cancel_subscription_button" data-title="Cancle Subscription" data-nonce=' . wp_create_nonce('cancle_subscription_plan') . ' data-action="cancle_subscription" class="vc_btn3-color-blue btn btn-danger">CANCEL SUBSCRIPTION</button>';
+                        $cancle_subscription_information = '<button id="cancel_subscription_button" data-title="Cancel Subscription" data-nonce=' . wp_create_nonce('cancle_subscription_plan') . ' data-action="cancle_subscription" class="vc_btn3-color-blue btn btn-danger">CANCEL SUBSCRIPTION</button>';
                 }else {
                     $platform_error ='<p>Your subscription was created through ' . $platform . ' so you will need to manage it on that platform.</p>';
                 }

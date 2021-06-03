@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.0.9] - 2021-06-03
+
+### Fixed
+- Fixed an spelling mistake for cancel
+
 ## [1.0.8] - 2021-05-27
 
 ### Fixed
