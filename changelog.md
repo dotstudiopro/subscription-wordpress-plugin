@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.1.0] - 2021-06-24
+
+### Added
+- Added Coupon Code option if already payment profile was created
+
 ## [1.0.9] - 2021-06-03
 
 ### Fixed

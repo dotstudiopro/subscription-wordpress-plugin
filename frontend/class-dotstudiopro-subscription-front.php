@@ -167,7 +167,7 @@ class Dotstudiopro_Subscription_Front {
         global $client_token;
         if ($client_token && wp_verify_nonce($_POST['nonce'], 'submit_complete_payment')) {
             parse_str($_POST['formData'], $formData);
-            $import_subscribe_to = $this->dotstudiopro_subscription->updateSubscription($client_token, $formData['subscription_id']);
+            $import_subscribe_to = $this->dotstudiopro_subscription->updateSubscription($client_token, $formData['subscription_id'], $formData['coupon_code']);
             if (is_wp_error($import_subscribe_to)) {
                 $send_response = array('message' => 'Server Error : ' . $import_subscribe_to->get_error_message());
                 wp_send_json_error($send_response, 403);

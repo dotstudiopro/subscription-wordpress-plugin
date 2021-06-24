@@ -308,7 +308,7 @@ if (class_exists('Dsp_External_Api_Request')) {
          * @param type $subscription_id
          * @return type
          */
-        public function updateSubscription($client_token, $subscription_id) {
+        public function updateSubscription($client_token, $subscription_id, $coupon_code = null) {
 
             $token = $this->api_token_check();
 
@@ -322,7 +322,10 @@ if (class_exists('Dsp_External_Api_Request')) {
                 'x-client-token' => $client_token
             );
 
-            $query = array('platform' => 'web');
+            if(!empty($coupon_code))
+                $query = array('platform' => 'web', 'coupon_code' => $coupon_code);
+            else
+                $query = array('platform' => 'web');
 
             return $this->api_request_post($path, $query, $headers, null);
         }

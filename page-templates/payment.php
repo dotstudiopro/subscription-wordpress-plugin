@@ -140,81 +140,99 @@ if($client_token){
             ?>
             <div class="credit-block container mt-3 mb-5 bill_info">
               <div class="row row-fluid complete_payment ">
-                  <form  action="<?php echo $previous_page_url;?>" id="form_complete_payment" name="form_complete_payment">
+                  <form  action="<?php echo $previous_page_url;?>" class="w-100" id="form_complete_payment" name="form_complete_payment">
                       <input type="hidden"  name="subscription_id" value="<?php echo $product_charigfy_id; ?>">
                       <input type="hidden" name="nonce" id="nonce" value="<?php echo wp_create_nonce('submit_complete_payment'); ?>">
-                  </form>
-              </div>
-              <div class="row row-fluid">
-                  <div class="col-md-6 col-sm-12 pp-pr pt-3">
-                      <div class="wrapper">
-                          <h4 class="mt-3 mb-5">Billing Info<a href="/payment-profile/" class="ml-4" target="_blank"><i class="fas fa-pencil main-color"></i></a></h4>
-                          <div class="form-group credit-group">
-                              <div class="form-group credit-group">
-                                  <label class="credit_card_label_info" for="first_name">First Name</label>
-                                  <span class="billing_value"><?php echo ($credit_card_info['first_name']) ? :"&nbsp;";?></span>
-                              </div>
-                              <div class="form-group credit-group">
-                                  <label class="credit_card_label_info" for="last_name">Last Name</label>
-                                  <span class="billing_value"><?php echo ($credit_card_info['last_name']) ? :"&nbsp;";?></span>
-                              </div>
-                              <div class="form-group credit-group">
-                                  <label class="credit_card_label_info" for="billing_address">Address</label>
-                                  <span class="billing_value"><?php echo ($credit_card_info['billing_address']) ? :"&nbsp;";?></span>
-                              </div>
-                              <div class="form-group credit-group">
-                                  <label class="credit_card_label_info" for="billing_address_2">Address 2</label>
-                                  <span class="billing_value"><?php echo ($credit_card_info['billing_address_2']) ? :"&nbsp;";?></span>
-                              </div>
-                              <div class="form-group credit-group">
-                                  <label class="credit_card_label_info" for="billing_city">City</label>
-                                  <span class="billing_value"><?php echo ($credit_card_info['billing_city']) ? :"&nbsp;";?></span>
-                              </div>
-                              <div class="form-group credit-group">
-                                  <label class="credit_card_label_info" for="billing_zip">Zip Code</label>
-                                  <span class="billing_value"><?php echo ($credit_card_info['billing_zip']) ? :"&nbsp;";?></span>
-                              </div>
-                              <div class="form-group credit-group">
-                                  <label class="credit_card_label_info" for="billing_country">Country</label>
-                                  <span class="billing_value"><?php echo ($credit_card_info['billing_country']) ? :"&nbsp;";?></span>
-                              </div>
-                              <div class="form-group credit-group">
-                                  <label class="credit_card_label_info" for="billing_state">State / Region</label>
-                                  <span class="billing_value"><?php echo ($credit_card_info['billing_state']) ? :"&nbsp;";?></span>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-md-6 col-sm-12 b-info pt-3">
-                      <div class="wrapper">
-                          <h4 class="mt-3 mb-3">Credit Card Info <a href="/payment-profile/" class="ml-4" target="_blank"><i class="fas fa-pencil main-color"></i></a></h4>
-                          <div class="your-card pb-2 mb-3" style="margin: unset;">
-                              <div class="bank-name" title="BestBank"><?php echo strtoupper($credit_card_info['credit_card']['card_type'] . ' Card'); ?></div>
-                              <div class="chip">
-                                  <img src="<?php echo plugins_url() . '/wordpress-subscription-plugin/frontend/assets/images/chip.svg' ?>">
-                              </div>
-                              <div class="data">
-                                  <div class="pan"><?php echo $credit_card_info['masked_card_number']; ?></div>
-                                  <div class="exp-date-wrapper">
-                                      <div class="left-label">EXPIRES END</div>
-                                      <div class="exp-date">
-                                          <div class="upper-labels">MONTH/YEAR</div>
-                                          <div class="date"><?php echo str_pad($credit_card_info['expiration_month'], 2, '0', STR_PAD_LEFT) . '/' . substr($credit_card_info['expiration_year'], 2, 2); ?></div>
+                  
+                      <div class="row row-fluid">
+                          <div class="col-md-6 col-sm-12 pp-pr pt-3">
+                              <div class="wrapper">
+                                  <h4 class="mt-3 mb-3">Billing Info<a href="/payment-profile/" class="ml-4" target="_blank"><i class="fas fa-pencil main-color"></i></a></h4>
+                                  <div class="form-group credit-group">
+                                      <div class="form-group credit-group">
+                                          <label class="credit_card_label_info" for="first_name">First Name</label>
+                                          <span class="billing_value"><?php echo ($credit_card_info['first_name']) ? :"&nbsp;";?></span>
+                                      </div>
+                                      <div class="form-group credit-group">
+                                          <label class="credit_card_label_info" for="last_name">Last Name</label>
+                                          <span class="billing_value"><?php echo ($credit_card_info['last_name']) ? :"&nbsp;";?></span>
+                                      </div>
+                                      <div class="form-group credit-group">
+                                          <label class="credit_card_label_info" for="billing_address">Address</label>
+                                          <span class="billing_value"><?php echo ($credit_card_info['billing_address']) ? :"&nbsp;";?></span>
+                                      </div>
+                                      <div class="form-group credit-group">
+                                          <label class="credit_card_label_info" for="billing_address_2">Address 2</label>
+                                          <span class="billing_value"><?php echo ($credit_card_info['billing_address_2']) ? :"&nbsp;";?></span>
+                                      </div>
+                                      <div class="form-group credit-group">
+                                          <label class="credit_card_label_info" for="billing_city">City</label>
+                                          <span class="billing_value"><?php echo ($credit_card_info['billing_city']) ? :"&nbsp;";?></span>
+                                      </div>
+                                      <div class="form-group credit-group">
+                                          <label class="credit_card_label_info" for="billing_zip">Zip Code</label>
+                                          <span class="billing_value"><?php echo ($credit_card_info['billing_zip']) ? :"&nbsp;";?></span>
+                                      </div>
+                                      <div class="form-group credit-group">
+                                          <label class="credit_card_label_info" for="billing_country">Country</label>
+                                          <span class="billing_value"><?php echo ($credit_card_info['billing_country']) ? :"&nbsp;";?></span>
+                                      </div>
+                                      <div class="form-group credit-group">
+                                          <label class="credit_card_label_info" for="billing_state">State / Region</label>
+                                          <span class="billing_value"><?php echo ($credit_card_info['billing_state']) ? :"&nbsp;";?></span>
                                       </div>
                                   </div>
-                                  <div class="name-on-card"><?php echo $credit_card_info['first_name']. ' ' . $credit_card_info['credit_card']['last_name']; ?></div>
-                              </div>
-                              <div class="lines-down"></div>
-                              <div class="lines-up"></div>
-                          </div>
-                          <div class="card_info">
-                              <h5 class="pt-2 pb-2">CARD NUMBER</h5>
-                              <div class="card_number_info">
-                                  <p class="mr-5 pull-left"><?php echo $credit_card_info['masked_card_number']; ?></p>
-                                  <p><?php echo strtoupper($credit_card_info['card_type']); ?></p>
                               </div>
                           </div>
-                      </div>
+                          <div class="col-md-6 col-sm-12 b-info pt-3">
+                              <div class="wrapper">
+                                  <h4 class="mt-3 mb-3">Credit Card Info <a href="/payment-profile/" class="ml-4" target="_blank"><i class="fas fa-pencil main-color"></i></a></h4>
+                                  <div class="your-card pb-2 mb-3" style="margin: unset;">
+                                      <div class="bank-name" title="BestBank"><?php echo strtoupper($credit_card_info['card_type'] . ' Card'); ?></div>
+                                      <div class="chip">
+                                          <img src="<?php echo plugins_url() . '/wordpress-subscription-plugin/frontend/assets/images/chip.svg' ?>">
+                                      </div>
+                                      <div class="data">
+                                          <div class="pan"><?php echo $credit_card_info['masked_card_number']; ?></div>
+                                          <div class="exp-date-wrapper">
+                                              <div class="left-label">EXPIRES END</div>
+                                              <div class="exp-date">
+                                                  <div class="upper-labels">MONTH/YEAR</div>
+                                                  <div class="date"><?php echo str_pad($credit_card_info['expiration_month'], 2, '0', STR_PAD_LEFT) . '/' . substr($credit_card_info['expiration_year'], 2, 2); ?></div>
+                                              </div>
+                                          </div>
+                                          <div class="name-on-card"><?php echo $credit_card_info['first_name']. ' ' . $credit_card_info['last_name']; ?></div>
+                                      </div>
+                                      <div class="lines-down"></div>
+                                      <div class="lines-up"></div>
+                                  </div>
+                                  <div class="card_info">
+                                      <h5 class="pt-2 pb-2">CARD NUMBER</h5>
+                                      <div class="card_number_info">
+                                          <p class="mr-5 pull-left"><?php echo $credit_card_info['masked_card_number']; ?></p>
+                                          <p><?php echo strtoupper($credit_card_info['card_type']); ?></p>
+                                      </div>
+                                  </div>
+                                  <div class="coupon_code_info pt-3">
+                                      <h5 class="credit_card_label">Coupon Code</h5>
+                                      <div class="row">
+                                          <div class="col-sm-6 sm-mb-3">
+                                              <input type="text" class="form-control credit_card_input" id="coupon_code" name="coupon_code">
+                                          </div>
+                                          <div class="col-sm-6">
+                                              <div id="coupon_wrapper" class="pull-left">
+                                                  <a class="btn btn-secondary btn-ds-secondary" id="validate_coupon" href="#" data-action="validate_couponcode" data-nonce="<?php echo wp_create_nonce('validate_couponcode'); ?>">Validate Coupon</a>
+                                              </div>
+                                              <div class="coupon-responce pull-left p-2" style="display:none"></div>
+                                          </div>
+                                          <div class="coupon-messages-notices m-3">
+
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                    </form>
                   </div>
                   <div class="mx-auto pt-3">
                       <button type="submit" id="complete_payment" class="btn btn-secondary btn-ds-secondary mt-3" data-action="complete_payment" data-previouspageurl="<?php echo $previous_page_url; ?>">Complete Payment</button>
