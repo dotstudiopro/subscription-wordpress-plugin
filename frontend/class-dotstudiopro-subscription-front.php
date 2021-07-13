@@ -124,8 +124,25 @@ class Dotstudiopro_Subscription_Front {
      */
     public function create_payment_profile() {
         global $client_token;
+        global $dsp_theme_options;
         if ($client_token && wp_verify_nonce($_POST['nonce'], 'submit_payment')) {
             parse_str($_POST['formData'], $formData);
+
+            if(isset($formData['g-recaptcha-response'])) {
+                if(empty($formData['g-recaptcha-response'])) {
+                    $send_response = array('message' => 'Robot verification failed, please try again.');
+                    wp_send_json_error($send_response, 403);
+                }
+                // Get verify response data
+                $secretKey = ($dsp_theme_options['opt-captcha-secret-key']) ? $dsp_theme_options['opt-captcha-secret-key'] : '';
+                $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secretKey.'&response='.$formData['g-recaptcha-response']);
+                $responseData = json_decode($verifyResponse);
+                if(!$responseData->success) {
+                    $send_response = array('message' => 'Robot verification failed, please try again.');
+                    wp_send_json_error($send_response, 403);
+                }
+            }
+
             //$response = $this->dotstudiopro_subscription->createPaymentProfileandSubscribe($client_token, $formData);
             $response = $this->dotstudiopro_subscription->createWithPayment($client_token, $formData);
             if (is_wp_error($response)) {
@@ -165,8 +182,25 @@ class Dotstudiopro_Subscription_Front {
      */
     public function complete_payment() {
         global $client_token;
+        global $dsp_theme_options;
         if ($client_token && wp_verify_nonce($_POST['nonce'], 'submit_complete_payment')) {
             parse_str($_POST['formData'], $formData);
+
+            if(isset($formData['g-recaptcha-response'])) {
+                if(empty($formData['g-recaptcha-response'])) {
+                    $send_response = array('message' => 'Robot verification failed, please try again.');
+                    wp_send_json_error($send_response, 403);
+                }
+                // Get verify response data
+                $secretKey = ($dsp_theme_options['opt-captcha-secret-key']) ? $dsp_theme_options['opt-captcha-secret-key'] : '';
+                $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secretKey.'&response='.$formData['g-recaptcha-response']);
+                $responseData = json_decode($verifyResponse);
+                if(!$responseData->success) {
+                    $send_response = array('message' => 'Robot verification failed, please try again.');
+                    wp_send_json_error($send_response, 403);
+                }
+            }
+
             $import_subscribe_to = $this->dotstudiopro_subscription->updateSubscription($client_token, $formData['subscription_id'], $formData['coupon_code']);
             if (is_wp_error($import_subscribe_to)) {
                 $send_response = array('message' => 'Server Error : ' . $import_subscribe_to->get_error_message());
@@ -193,8 +227,25 @@ class Dotstudiopro_Subscription_Front {
      */
     public function update_payment_profile() {
         global $client_token;
+        global $dsp_theme_options;
         if ($client_token && wp_verify_nonce($_POST['nonce'], 'update_payment')) {
             parse_str($_POST['formData'], $formData);
+
+            if(isset($formData['g-recaptcha-response'])) {
+                if(empty($formData['g-recaptcha-response'])) {
+                    $send_response = array('message' => 'Robot verification failed, please try again.');
+                    wp_send_json_error($send_response, 403);
+                }
+                // Get verify response data
+                $secretKey = ($dsp_theme_options['opt-captcha-secret-key']) ? $dsp_theme_options['opt-captcha-secret-key'] : '';
+                $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secretKey.'&response='.$formData['g-recaptcha-response']);
+                $responseData = json_decode($verifyResponse);
+                if(!$responseData->success) {
+                    $send_response = array('message' => 'Robot verification failed, please try again.');
+                    wp_send_json_error($send_response, 403);
+                }
+            }
+
             $response = $this->dotstudiopro_subscription->updatePaymentProfile($client_token, $formData);
             if (is_wp_error($response)) {
                 $send_response = array('message' => 'Server Error : ' . (is_string($err) ? $err : json_encode($err)));

@@ -136,6 +136,9 @@ jQuery(document).ready(function() {
                 });
 
                 submit_form.fail(function(response) {
+                    if($("div.g-recaptcha").length) {
+                        grecaptcha.execute();
+                    }
                     customOverlay(false);
                     showSnacksBar(false);
                     $('.cc-messages-notices').removeClass('success').addClass('error').html('<p class="mb-0">' + response.responseJSON.data.message + '</p>')
@@ -177,6 +180,9 @@ jQuery(document).ready(function() {
                 form.submit();
             });
             submit_form.fail(function(response) {
+                if($("div.g-recaptcha").length) {
+                    grecaptcha.execute();
+                }
                 customOverlay(false);
                 showSnacksBar(false);
                 $('.cc-messages-notices').removeClass('success').addClass('error').html('<p class="mb-0">' + response.responseJSON.data.message + '</p>')
@@ -217,6 +223,9 @@ jQuery(document).ready(function() {
                 });
 
                 submit_form.fail(function(response) {
+                    if($("div.g-recaptcha").length) {
+                        grecaptcha.execute();
+                    }
                     $('#snackbar').html('Something went wrong...');
                     $('.cc-messages-notices').removeClass('success').addClass('error').html('<p class="mb-0">' + response.responseJSON.data.message + '</p>')
                 })

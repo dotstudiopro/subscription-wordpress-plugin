@@ -119,7 +119,7 @@ if($client_token){
             font-family: <?php echo $dsp_theme_options['opt-typography-body']; ?>;
         }
     </style>
-
+    <script src="https://www.google.com/recaptcha/api.js"></script>
     <div class="custom-container container pt-5 pb-5">
         <div class="row no-gutters">
             <h3 class="page-title mb-5 center_title">Make a Payment</h3>
@@ -232,6 +232,7 @@ if($client_token){
                                   </div>
                               </div>
                           </div>
+                          <?php echo do_shortcode("[recaptcha]"); ?>
                     </form>
                   </div>
                   <div class="mx-auto pt-3">
@@ -396,6 +397,7 @@ if($client_token){
                             </div>
                         </div>
                         <div class="mx-auto">
+                            <?php echo do_shortcode("[recaptcha]"); ?>
                             <button type="submit" id="submit_cc" class="btn btn-secondary btn-ds-secondary" data-action="create_payment_profile" data-previouspageurl="<?php echo $previous_page_url; ?>"><?php echo $purchaseMessage; ?></button>
                         </div>
                     </div>
@@ -418,5 +420,13 @@ if($client_token){
 }else{
     wp_redirect('/');
 }
-
+?>
+<script>
+    jQuery(window).load(function() {
+        if(jQuery("div.g-recaptcha").length) {
+            grecaptcha.execute();
+        }
+    });
+</script>
+<?php
 get_footer();

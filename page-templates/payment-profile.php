@@ -21,6 +21,7 @@ if ($client_token) {
         } 
         $platform = 'web';
         ?>
+        <script src="https://www.google.com/recaptcha/api.js"></script>
         <div class="custom-container container pt-5 pb-5">
             <div class="row no-gutters">
                 <h3 class="page-title mb-5 center_title">Manage your payment details</h3>
@@ -181,6 +182,7 @@ if ($client_token) {
                                 </div>
                             </div>
                             <div class="mx-auto">
+                                <?php echo do_shortcode("[recaptcha]"); ?>
                                 <button type="submit" id="update_cc" class="btn btn-secondary btn-ds-secondary mt-3" data-action="update_payment_profile">Update Your Details</button>
                             </div>
                         </div>
@@ -206,4 +208,13 @@ if ($client_token) {
         <?php
     }
 }
+?>
+<script>
+    jQuery(window).load(function() {
+        if(jQuery("div.g-recaptcha").length) {
+            grecaptcha.execute();
+        }
+    });
+</script>
+<?php
 get_footer();
