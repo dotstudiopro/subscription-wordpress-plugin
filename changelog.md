@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.1.1] - 2021-07-20
+
+### Added
+- Added captcha validation in payment pages
+
 ## [1.1.0] - 2021-06-24
 
 ### Added
