@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.1.2] - 2021-08-05
+
+### Fixed
+- Fixed a check that was causing the payment profile to display that a user has no subscriptions if they signed up outside of web.
+
 ## [1.1.1] - 2021-07-20
 
 ### Added
