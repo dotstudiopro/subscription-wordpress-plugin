@@ -10,16 +10,15 @@ if ($client_token) {
     //$user_subscribe = $dsp_subscription_object->getUserProducts($client_token);
     $user_subscribe = $dsp_subscription_object->getUserProducts($client_token, 'inactive');
     
-    if ((!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['paymentInfo']))) {
+    if ((!is_wp_error($user_subscribe) && $user_subscribe)) {
         if(isset($user_subscribe['paymentInfo']) && !empty($user_subscribe['paymentInfo'])){
             $cc_info = dsp_parse_cc_info_new($user_subscribe['paymentInfo']);    
         } 
         
-        $platform = '';
+        $platform = 'web';
         if(isset($user_subscribe['platform']) && !empty($user_subscribe['platform'])){
             $platform = $user_subscribe['platform'];
         } 
-        $platform = 'web';
         ?>
         <script src="https://www.google.com/recaptcha/api.js"></script>
         <div class="custom-container container pt-5 pb-5">
