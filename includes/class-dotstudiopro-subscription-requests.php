@@ -402,10 +402,12 @@ if (class_exists('Dsp_External_Api_Request')) {
 
             $headers = array(
                 'content-type'  => 'application/json',
-                'x-access-token' => $token,
-                'x-client-token' => $client_token
-
+                'x-access-token' => $token
             );
+
+            if (!empty($client_token)) {
+                $headers['x-client-token'] = $client_token;
+            }
             return $this->api_request_get($path, null, $headers);
         }
 
