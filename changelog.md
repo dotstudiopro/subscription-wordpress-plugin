@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.1.3] - 2021-09-07
+
+### Fixed
+- Fixed an issue with the product check that was causing the "More Ways to Watch" TVOD purchase button to not show up on the channel pages.
+
 ## [1.1.2] - 2021-08-05
 
 ### Fixed
