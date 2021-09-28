@@ -432,6 +432,29 @@ if (class_exists('Dsp_External_Api_Request')) {
             return $this->api_request_get($path, null, $headers);
         }
 
+        /**
+         * Get user's purchase history.
+         * @since 1.1.0
+         * @param type $client_token
+         * @return type
+         */
+        public function getUserPurchaseHistory($client_token) {
+
+            $token = $this->api_token_check();
+
+            if (!$token && !$client_token)
+                return array();
+
+            $path = 'subscriptions/purchases';
+
+            $headers = array(
+                'x-access-token' => $token,
+                'x-client-token' => $client_token
+            );
+
+            return $this->api_request_get($path, null, $headers);
+        }
+
     }
 
 }
