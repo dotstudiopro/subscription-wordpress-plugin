@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.1.4] - 2021-09-29
+
+### Fixed
+- Fixed purchase history page changes
+
 ## [1.1.3] - 2021-09-07
 
 ### Fixed
