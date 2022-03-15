@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.1.5] - 2022-03-15
+
+### Fixed
+- Updated package template to display 'total' and 'monthly' subscription amounts properly
+
 ## [1.1.4] - 2021-09-29
 
 ### Fixed
