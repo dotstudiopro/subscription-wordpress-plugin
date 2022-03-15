@@ -25,6 +25,9 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
                     $subscription_id = !empty($subscription['chargify_id']) ? $subscription['chargify_id'] : '';
                     $interval_unit = !empty($subscription['duration']['interval_unit']) ? $subscription['duration']['interval_unit'] : '';
                     $interval = !empty($subscription['duration']['interval']) ? $subscription['duration']['interval'] : '';
+                    $is_most_popular = !empty($subscription['is_most_popular']) ? $subscription['is_most_popular'] : 0;
+                    $description = !empty($subscription['description']) ? $subscription['description'] : '';
+                    $price_display = !empty($subscription['price_display']) ? $subscription['price_display'] : '';
                     $trial_array = '';
                     if ($subscription['trial'] != null) {
                         $trial_array = array(
@@ -35,17 +38,21 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
                     }
                     $price_period = '';
                     $interval_bottom = $interval_unit;
-                    if ($interval == 12 && $interval_unit == 'month') {
-                        $monthly_price = floor(($price * 100) / 12) / 100;
-                        $price_period = $monthly_price . '<span class="period"> /<br>month ' . '</span>';
-                        $interval_bottom = "year";
-                    } elseif ($interval == 1) {
-                        $price_period = $price . '<span class="period"> /<br>' . $interval_unit . '</span>';
+                    if ($price_display == 'total') {
+                        $price_period = $price . '<span class="period"> /<br> year</span>';
+                        $interval_bottom = 'year';
+                    } elseif ($price_display == 'monthly') {
+                        $monthly_price = floor(($price * 100) / $interval) / 100;
+                        $price_period = $monthly_price . '<span class="period"> /<br> month</span>';
                     } else {
-                        $price_period = $price . '<span class="period"> /<br>' . $interval . ' ' . $interval_unit . '</span>';
+                        if ($interval == 12 && $interval_unit == 'month') {
+                            $monthly_price = floor(($price * 100) / 12) / 100;
+                            $price_period = $monthly_price . '<span class="period"> /<br> month</span>';
+                            $interval_bottom = 'year';
+                        } else {
+                            $price_period = $price . '<span class="period"> /<br> ' . $interval_unit . '</span>';
+                        }
                     }
-                    $button = !$client_token ? 'login-link' : 'select_plan';
-                    $url = !$client_token ?  wp_login_url( get_permalink() ) : '#';
                     ?>
                     <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 pr-3 pb-3 sameSize">
                         <form  action="/package-detail/" id="form_<?php echo $subscription_id; ?>" method="POST">
@@ -74,11 +81,7 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
                                 endif;
                                 ?>
                                 <p>$<?php echo $price; ?> billed <?php
-                                    if($interval != 1){
-                                        echo ' every '.$interval. ' ' .$interval_bottom;
-                                    }else{
-                                        echo ($interval_bottom == 'day' ? 'daily' : $interval_bottom . 'ly');
-                                    }
+                                    echo ($interval_bottom == 'day' ? 'daily' : $interval_bottom . 'ly');
                                     echo (empty($trial_array) ? ' after subscription' : ' after trial period')
                                     ?> 
                                 </p>
