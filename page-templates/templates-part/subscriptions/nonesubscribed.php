@@ -4,12 +4,18 @@ get_header();
 global $client_token;
 
 $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
+$dotstudio_api = new Dsp_External_Api_Request();
 $subscriptions = $dsp_subscription_object->getCompanyProductSummary();
 $check_for_inactive_subscription = $dsp_subscription_object->getUserProducts($client_token, 'inactive');
+$account_deleted = false;
+$get_account_deletion_date = $dotstudio_api->get_user_account_deletion_date($client_token);
+if(!is_wp_error($get_account_deletion_date) && isset($get_account_deletion_date['success']) && $get_account_deletion_date['success'] == 1){
+    $account_deleted = true;
+}
 
 if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
     ?>
-    <div class="custom-container container pt-5 pb-5">
+    <div class="custom-container container pt-5 pb-5 package-detail-container">
         <div class="row no-gutters">
             <h3 class="page-title center_title">PLEASE SELECT YOUR PLAN</h3>
         </div>
@@ -53,6 +59,11 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
                             $price_period = $price . '<span class="period"> /<br> ' . $interval_unit . '</span>';
                         }
                     }
+
+                    if(!$account_deleted){
+                        $button = !$client_token ? 'login-link' : 'select_plan';
+                        $url = !$client_token ?  wp_login_url( get_permalink() ) : '#';
+                    }
                     ?>
                     <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 pr-3 pb-3 sameSize">
                         <form  action="/package-detail/" id="form_<?php echo $subscription_id; ?>" method="POST">
@@ -68,6 +79,9 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
                                 <h5 class="display-4 mx-auto"><span class="currency">$</span><?php echo $price_period ?></h5>
                                 <?php
                                 if (!empty($trial_array)):
+                                    if($trial_array['interval'] > 1){
+                                        $trial_array['interval_unit'] = $trial_array['interval_unit'] .'s';
+                                    }
                                     ?>
                                     <a href="<?php echo $url; ?>" class="mt-2 mb-2 btn btn-secondary btn-ds-secondary w-100 btn-lg <?php echo $button; ?>" data-subscriptionid="<?php echo $subscription_id; ?>">Try Free for <?php echo $trial_array['interval'] . ' ' . $trial_array['interval_unit'] ?></a>
                                     <?php if (!empty($trial_array['trial_price'])): ?>
@@ -116,4 +130,26 @@ else {
     </div>
     <?php
 }
+
+if($account_deleted){ ?>
+    <div class="package_account_deletion_message">
+    <h4 >Your account has been permanently disabled and you can not recover your account. At this time, if you would like a subscription please contact support</h4>
+    </div>
+    <style type="text/css">
+        .package_account_deletion_message{
+            z-index: 9;
+            margin: 20px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            color: white;
+            transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+        }
+        .package-detail-container{
+            opacity: 0.2;
+            pointer-events: none;
+        }
+    </style>
+<?php }
 get_footer();
