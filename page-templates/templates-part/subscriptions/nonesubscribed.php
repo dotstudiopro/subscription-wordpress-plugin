@@ -147,7 +147,7 @@ if($account_deleted){ ?>
             -ms-transform: translate(-50%,-50%);
         }
         .package-detail-container{
-            opacity: 0.2;
+            opacity: 0.1;
             pointer-events: none;
         }
     </style>
