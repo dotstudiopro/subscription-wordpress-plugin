@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2022-03-15
+
+### Added
+- Added functionality for account deletion
+- Added account deletion details and button to the "non-subscribed" template
+
+### Changed
+- Updated display of trial intervals on "non-subscribed" template
+
 ## [1.1.5] - 2022-03-15
 
 ### Fixed
