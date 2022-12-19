@@ -2,7 +2,7 @@ name: Run gulp tasks
 
 # Controls when the action will run.
 on:
-  push:
+  pull_request:
     # On which branch
     branches: ["master"]
     # On which files

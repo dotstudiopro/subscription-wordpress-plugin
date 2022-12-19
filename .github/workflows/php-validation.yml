@@ -2,7 +2,7 @@ name: WPCS check
 
 # Controls when the action will run.
 on:
-  push:
+  pull_request:
     # On which branch
     branches: ["staging"]
 
