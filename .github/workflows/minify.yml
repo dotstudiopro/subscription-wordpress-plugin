@@ -1,0 +1,39 @@
+name: Run gulp tasks
+
+# Controls when the action will run.
+on:
+  push:
+    # On which branch
+    branches: ["master"]
+    # On which files
+    # paths: ["scripts/scripts.js", "styles/styles.scss"]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # Job name
+  build:
+    # Runner name
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      # Sets up Python (for node-sass)
+      - uses: actions/setup-python@v4
+      # Sets up node
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm ci
+      - run: gulp css
+      - run: gulp sass
+      - run: gulp js
+      - uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --cache-control max-age=604800 --exclude '.git/*' --exclude '.github/*' --exclude '*css-dev/*' --exclude '*sass/*' --exclude '*.php' --exclude '*ugly-js*' --exclude '*unminified/*'
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          SOURCE_DIR: 'frontend/assets'
+          DEST_DIR: 'wordpress-assets/main-subscription-plugin'
