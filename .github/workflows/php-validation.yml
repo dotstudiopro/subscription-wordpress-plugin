@@ -5,7 +5,7 @@ on:
     branches: ['staging']
 
 jobs:
-  laravel-pint:
+  phplint:
     runs-on: ubuntu-latest
 
     steps:
