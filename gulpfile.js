@@ -1,5 +1,5 @@
 const gulp = require('gulp'),
-	sass = require('gulp-sass'),
+	sass = require('gulp-sass')(require('sass')),
 	sourcemaps = require('gulp-sourcemaps'),
 	minifyjs = require('gulp-minify'),
 	minifycss = require('gulp-clean-css'),
@@ -56,7 +56,7 @@ gulp.task('css', function () {
 				}
 			});
 			resolve("Done");
-		} catch(e) {
+		} catch (e) {
 			reject(e.message);
 		}
 	});
@@ -76,12 +76,12 @@ gulp.task('js', function () {
 			});
 			gulp.src(assets + '/js/unminified/*.js')
 				.pipe(minifyjs({
-		        ext:{
-		        	src: '-dsp-unminified.js',
-		          min:'.min.js'
-		        },
-		        ignoreFiles: ['-min.js']
-		    }))
+					ext: {
+						src: '-dsp-unminified.js',
+						min: '.min.js'
+					},
+					ignoreFiles: ['-min.js']
+				}))
 				.pipe(gulp.dest(assets + '/js'))
 				.on('end', () => {
 					// Remove the unminified versions that cleanCSS creates
@@ -94,7 +94,7 @@ gulp.task('js', function () {
 					});
 					resolve("Done");
 				});
-		} catch(e) {
+		} catch (e) {
 			reject(e.message);
 		}
 	});
