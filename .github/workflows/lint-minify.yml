@@ -74,4 +74,4 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           SOURCE_DIR: ${{ env.LOCAL_ASSETS }}
           DEST_DIR: ${{ needs.version_check.outputs.wp_assets }}
-        # if: github.base_ref == 'master'
+        if: github.base_ref == 'master'
