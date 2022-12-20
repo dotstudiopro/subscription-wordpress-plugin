@@ -8,8 +8,15 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  phplint:
+      runs-on: ubuntu-latest
+
+      steps:
+        - uses: actions/checkout@v3
+        - uses: stoicbuddha/PHP-Lint@master
   # Job name
   version_check:
+    needs: [phplint]
     # Runner name
     runs-on: ubuntu-latest
 
@@ -38,6 +45,7 @@ jobs:
       - run: gulp css
       - run: gulp sass
       - run: gulp js
+      - run: echo "v$WP_VERSION"
       # Tag creator
       - uses: rickstaa/action-create-tag@v1
         with:
