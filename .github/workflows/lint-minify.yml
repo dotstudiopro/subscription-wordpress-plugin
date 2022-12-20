@@ -22,10 +22,11 @@ jobs:
 
     steps:
       - name: Get plugin/theme version script
+        id: getversion
         shell: bash
-        run: echo "WP_VERSION=$(curl https://media-aws-dotstudiopro-com.s3.us-west-1.amazonaws.com/wordpress-assets/wp_version.sh | bash)" >> $GITHUB_ENV
+        run: echo "WP_VERSION=$(curl https://media-aws-dotstudiopro-com.s3.us-west-1.amazonaws.com/wordpress-assets/wp_version.sh | bash)" >> $GITHUB_OUTPUT
     outputs:
-      wp_version: ${{ env.WP_VERSION }}
+      wp_version: ${{ steps.getversion.outputs.WP_VERSION }}
   # Job name
   build-sync:
     needs: [version_check]
