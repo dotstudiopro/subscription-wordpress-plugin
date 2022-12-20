@@ -34,7 +34,7 @@ jobs:
         with:
           tag: ${{ env.WP_VERSION }}
           message: ${{ env.WP_VERSION }}
-        if: github.base_ref == 'master'
+        # if: github.base_ref == 'master'
       - uses: jakejarvis/s3-sync-action@master
         with:
           args: --acl public-read --cache-control max-age=604800 --exclude '.git/*' --exclude '.github/*' --exclude '*css-dev/*' --exclude '*sass/*' --exclude '*.php' --exclude '*ugly-js*' --exclude '*unminified/*'
