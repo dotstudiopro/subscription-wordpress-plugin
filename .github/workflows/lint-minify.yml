@@ -62,5 +62,5 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           SOURCE_DIR: 'frontend/assets'
-          DEST_DIR: 'wordpress-assets/main-subscription-plugin'
-        if: github.base_ref == 'master'
+          DEST_DIR: format('{0}/{1}', 'wordpress-assets/main-subscription-plugin', needs.version_check.outputs.wp_version)
+        # if: github.base_ref == 'master'
