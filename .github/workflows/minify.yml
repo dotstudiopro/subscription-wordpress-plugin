@@ -14,6 +14,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Get plugin/theme version script
+        shell: bash
+        run: echo "WP_VERSION=$(curl https://media-aws-dotstudiopro-com.s3.us-west-1.amazonaws.com/wordpress-assets/wp_version.sh | bash)" >> $GITHUB_ENV
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       # Sets up Python (for node-sass)
@@ -26,6 +29,12 @@ jobs:
       - run: gulp css
       - run: gulp sass
       - run: gulp js
+      # Tag creator
+      - uses: rickstaa/action-create-tag@v1
+        with:
+          tag: ${{ env.WP_VERSION }}
+          message: ${{ env.WP_VERSION }}
+        if: github.base_ref == 'master'
       - uses: jakejarvis/s3-sync-action@master
         with:
           args: --acl public-read --cache-control max-age=604800 --exclude '.git/*' --exclude '.github/*' --exclude '*css-dev/*' --exclude '*sass/*' --exclude '*.php' --exclude '*ugly-js*' --exclude '*unminified/*'
