@@ -73,13 +73,13 @@ jobs:
           SOURCE_DIR: 'frontend/assets'
           DEST_DIR: ${{ needs.version_check.outputs.wp_assets }}
         if: github.base_ref == 'master'
-      - uses: hkusu/s3-upload-action@v2
+      - uses: zdurham/s3-upload-github-action@master
         with:
-          aws-bucket: ${{ secrets.AWS_S3_BUCKET }}
-          aws-region: ${{ secrets.AWS_S3_REGION }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          file-path: ${{ format('{0}.{1}', needs.version_check.outputs.wp_version, 'zip') }}
-          destination-dir: ${{ format('{0}/{1}', 'wordpress-assets/main-subscription-plugin', steps.getversion.outputs.WP_VERSION) }}
-          public: true
+        args: --acl public-read
+        env:
+          S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          FILE: ${{ format('{0}.{1}', needs.version_check.outputs.wp_version, 'zip') }}
+          S3_KEY: ${{ needs.version_check.outputs.wp_assets }}
         # if: github.base_ref == 'master'
