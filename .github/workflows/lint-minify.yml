@@ -36,7 +36,8 @@ jobs:
     needs: version_check
     # Runner name
     runs-on: ubuntu-latest
-
+    env:
+      LOCAL_ASSETS: 'frontend/assets'
     steps:
       - name: Install zip
         uses: montudor/action-zip@v1
@@ -63,6 +64,7 @@ jobs:
         if: github.base_ref == 'master'
       - name: Zip output
         run: zip -r ${{ format('{0}.{1}', needs.version_check.outputs.wp_version, 'zip') }} ./ -x *.git* -x *DEPLOY_README.md*
+      - run: cp ${{ format('{0}.{1}', needs.version_check.outputs.wp_version, 'zip') }} ${{env.LOCAL_ASSETS}}
       - uses: jakejarvis/s3-sync-action@master
         with:
           args: --acl public-read --cache-control max-age=604800 --exclude '.git/*' --exclude '.github/*' --exclude '*css-dev/*' --exclude '*sass/*' --exclude '*.php' --exclude '*ugly-js*' --exclude '*unminified/*'
@@ -70,16 +72,6 @@ jobs:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          SOURCE_DIR: 'frontend/assets'
+          SOURCE_DIR: ${{ env.LOCAL_ASSETS }}
           DEST_DIR: ${{ needs.version_check.outputs.wp_assets }}
-        if: github.base_ref == 'master'
-      - uses: zdurham/s3-upload-github-action@master
-        with:
-          args: --acl public-read
-        env:
-          S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          FILE: ${{ format('{0}.{1}', needs.version_check.outputs.wp_version, 'zip') }}
-          S3_KEY: ${{ needs.version_check.outputs.wp_assets }}
         # if: github.base_ref == 'master'
