@@ -9,11 +9,12 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   phplint:
-      runs-on: ubuntu-latest
+    if: ${{ false }}
+    runs-on: ubuntu-latest
 
-      steps:
-        - uses: actions/checkout@v3
-        - uses: stoicbuddha/PHP-Lint@master
+    steps:
+      - uses: actions/checkout@v3
+      - uses: stoicbuddha/PHP-Lint@master
   # Job name
   version_check:
     needs: phplint
@@ -25,7 +26,7 @@ jobs:
         id: getversion
         shell: bash
         run: echo "WP_VERSION=$(curl https://media-aws-dotstudiopro-com.s3.us-west-1.amazonaws.com/wordpress-assets/wp_version.sh | bash)" >> $GITHUB_OUTPUT
-      - run: ls
+      - run: ls ./
       - name: Dump steps context
         run: echo "$JOB_CONTEXT"
         env:
