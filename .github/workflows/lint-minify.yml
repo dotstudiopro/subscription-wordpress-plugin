@@ -26,7 +26,7 @@ jobs:
         id: getversion
         shell: bash
         run: echo "WP_VERSION=$(curl https://media-aws-dotstudiopro-com.s3.us-west-1.amazonaws.com/wordpress-assets/wp_version.sh | bash)" >> $GITHUB_OUTPUT
-      - run: ls ./
+      - run: curl -vvv https://media-aws-dotstudiopro-com.s3.us-west-1.amazonaws.com/wordpress-assets/wp_version.sh
       - name: Dump steps context
         run: echo "$JOB_CONTEXT"
         env:
