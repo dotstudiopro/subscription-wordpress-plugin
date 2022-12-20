@@ -30,6 +30,7 @@ jobs:
         run: echo "WP_VERSION=$(curl https://media-aws-dotstudiopro-com.s3.us-west-1.amazonaws.com/wordpress-assets/wp_version.sh | bash)" >> $GITHUB_OUTPUT
     outputs:
       wp_version: ${{ steps.getversion.outputs.WP_VERSION }}
+      wp_assets: format('{0}/{1}', 'wordpress-assets/main-subscription-plugin', steps.getversion.outputs.WP_VERSION)
   # Job name
   build-sync:
     needs: version_check
@@ -63,5 +64,5 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           SOURCE_DIR: 'frontend/assets'
-          DEST_DIR: format('{0}/{1}', 'wordpress-assets/main-subscription-plugin', needs.version_check.outputs.wp_version)
+          DEST_DIR: ${{ needs.version_check.outputs.wp_assets }}
         # if: github.base_ref == 'master'
