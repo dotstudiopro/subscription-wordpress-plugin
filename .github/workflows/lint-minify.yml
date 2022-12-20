@@ -16,7 +16,7 @@ jobs:
         - uses: stoicbuddha/PHP-Lint@master
   # Job name
   version_check:
-    needs: [phplint]
+    needs: phplint
     # Runner name
     runs-on: ubuntu-latest
 
@@ -29,11 +29,19 @@ jobs:
       wp_version: ${{ steps.getversion.outputs.WP_VERSION }}
   # Job name
   build-sync:
-    needs: [version_check]
+    needs: version_check
     # Runner name
     runs-on: ubuntu-latest
 
     steps:
+      - name: Dump steps context
+        run: echo "$JOB_CONTEXT"
+        env:
+          JOB_CONTEXT: ${{ toJson(steps) }}
+      - name: Dump needs context
+        run: echo "$JOB_CONTEXT"
+        env:
+          JOB_CONTEXT: ${{ toJson(needs) }}
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       # Sets up Python (for node-sass)
@@ -46,7 +54,6 @@ jobs:
       - run: gulp css
       - run: gulp sass
       - run: gulp js
-      - run: echo "v$WP_VERSION"
       # Tag creator
       - uses: rickstaa/action-create-tag@v1
         with:
