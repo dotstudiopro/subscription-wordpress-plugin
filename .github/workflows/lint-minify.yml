@@ -30,7 +30,7 @@ jobs:
         run: echo "WP_VERSION=$(curl https://media-aws-dotstudiopro-com.s3.us-west-1.amazonaws.com/wordpress-assets/wp_version.sh | bash)" >> $GITHUB_OUTPUT
     outputs:
       wp_version: ${{ steps.getversion.outputs.WP_VERSION }}
-      wp_assets: format('{0}/{1}', 'wordpress-assets/main-subscription-plugin', steps.getversion.outputs.WP_VERSION)
+      wp_assets: ${{ format('{0}/{1}', 'wordpress-assets/main-subscription-plugin', steps.getversion.outputs.WP_VERSION) }}
   # Job name
   build-sync:
     needs: version_check
