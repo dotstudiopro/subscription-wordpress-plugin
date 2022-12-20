@@ -16,7 +16,7 @@ jobs:
       - uses: stoicbuddha/PHP-Lint@master
   # Job name
   version_check:
-    # needs: phplint
+    needs: phplint
     # Runner name
     runs-on: ubuntu-latest
 
