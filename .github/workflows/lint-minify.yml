@@ -81,4 +81,5 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           file-path: ${{ format('{0}.{1}', needs.version_check.outputs.wp_version, 'zip') }}
           destination-dir: ${{ format('{0}/{1}', 'wordpress-assets/main-subscription-plugin', steps.getversion.outputs.WP_VERSION) }}
+          public: true
         # if: github.base_ref == 'master'
