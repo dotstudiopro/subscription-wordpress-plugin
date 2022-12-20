@@ -25,6 +25,7 @@ jobs:
         id: getversion
         shell: bash
         run: echo "WP_VERSION=$(curl https://media-aws-dotstudiopro-com.s3.us-west-1.amazonaws.com/wordpress-assets/wp_version.sh | bash)" >> $GITHUB_OUTPUT
+      - run: "echo $(curl https://media-aws-dotstudiopro-com.s3.us-west-1.amazonaws.com/wordpress-assets/wp_version.sh | bash)"
       - name: Dump steps context
         run: echo "$JOB_CONTEXT"
         env:
@@ -33,6 +34,7 @@ jobs:
       wp_version: ${{ steps.getversion.outputs.WP_VERSION }}
   # Job name
   build-sync:
+    if: ${{ false }}
     needs: version_check
     # Runner name
     runs-on: ubuntu-latest
