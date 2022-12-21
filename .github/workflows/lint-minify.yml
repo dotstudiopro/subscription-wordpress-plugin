@@ -6,16 +6,15 @@ on:
     # On which branch
     branches: ['staging', 'master']
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+#  A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   automergelabel:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - uses: actions-ecosystem/action-add-labels@v1
         with:
           labels: automerge
-        if: github.ref_name == 'staging' && github.base_ref == 'master'
+        if: github.head_ref == 'staging' && github.base_ref == 'master'
   phplint:
     needs: automergelabel
     runs-on: ubuntu-latest
@@ -69,7 +68,7 @@ jobs:
         with:
           tag: ${{ needs.version_check.outputs.wp_version }}
           message: ${{ needs.version_check.outputs.wp_version }}
-        if: github.ref_name == 'staging' && github.base_ref == 'master'
+        if: github.head_ref == 'staging' && github.base_ref == 'master'
       - name: Zip output
         run: zip -r ${{ format('{0}.{1}', needs.version_check.outputs.wp_version, 'zip') }} ./ -x *.git* -x *DEPLOY_README.md*
       - run: cp ${{ format('{0}.{1}', needs.version_check.outputs.wp_version, 'zip') }} ${{env.LOCAL_ASSETS}}
@@ -82,4 +81,4 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           SOURCE_DIR: ${{ env.LOCAL_ASSETS }}
           DEST_DIR: ${{ needs.version_check.outputs.wp_assets }}
-        if: github.ref_name == 'staging' && github.base_ref == 'master'
+        if: github.head_ref == 'staging' && github.base_ref == 'master'
