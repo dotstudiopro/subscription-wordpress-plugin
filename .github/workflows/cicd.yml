@@ -2,7 +2,6 @@ name: Continuous Integration
 
 on:
    workflow_run:
-    workflows: ["Run gulp tasks"]
     branches: [master]
     types: 
       - completed
