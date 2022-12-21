@@ -18,7 +18,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MERGE_REMOVE_LABELS: "automerge"
     # Only allow automerging from staging into master
-    if: github.ref_name == 'staging' && github.base_ref == 'master'
+    if: github.event.workflow_run.pull_requests[0].base.ref == 'master' && github.event.workflow_run.pull_requests[0].head.ref == 'staging'
   automergedlabel:
     needs: merge-me
     runs-on: ubuntu-latest
@@ -28,4 +28,4 @@ jobs:
         with:
           labels: automerged
     # No auto-merge outside of staging into master means no label
-    if: github.ref_name == 'staging' && github.base_ref == 'master'
+    if: github.event.workflow_run.pull_requests[0].base.ref == 'master' && github.event.workflow_run.pull_requests[0].head.ref == 'staging'
