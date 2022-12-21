@@ -15,7 +15,7 @@ jobs:
       - uses: actions-ecosystem/action-add-labels@v1
         with:
           labels: automerge
-    if: github.head_ref == 'staging' && github.base_ref == 'master'
+        if: github.head_ref == 'staging' && github.base_ref == 'master'
   phplint:
     needs: automergelabel
     runs-on: ubuntu-latest
