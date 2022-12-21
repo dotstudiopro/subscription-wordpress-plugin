@@ -1,0 +1,31 @@
+name: Continuous Integration
+#
+on:
+   workflow_run:
+    workflows: [LintGulp]
+    types:
+      - completed
+
+jobs:
+  merge-me:
+    name: Merge me!
+    runs-on: ubuntu-latest
+    steps:
+      - id: automerge
+        name: automerge
+        uses: "pascalgn/automerge-action@v0.15.5"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MERGE_REMOVE_LABELS: "automerge"
+    # Only allow automerging from staging into master
+    if: github.ref_name == 'staging' && github.base_ref == 'master'
+  automergedlabel:
+    needs: merge-me
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: automerged
+    # No auto-merge outside of staging into master means no label
+    if: github.ref_name == 'staging' && github.base_ref == 'master'
