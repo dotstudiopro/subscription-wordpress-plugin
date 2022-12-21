@@ -56,11 +56,11 @@ jobs:
       - run: gulp sass
       - run: gulp js
       # Tag creator
-      - uses: rickstaa/action-create-tag@v1
-        with:
-          tag: ${{ needs.version_check.outputs.wp_version }}
-          message: ${{ needs.version_check.outputs.wp_version }}
-        if: github.base_ref == 'master'
+      # - uses: rickstaa/action-create-tag@v1
+      #   with:
+      #     tag: ${{ needs.version_check.outputs.wp_version }}
+      #     message: ${{ needs.version_check.outputs.wp_version }}
+      #   if: github.base_ref == 'master'
       - name: Zip output
         run: zip -r ${{ format('{0}.{1}', needs.version_check.outputs.wp_version, 'zip') }} ./ -x *.git* -x *DEPLOY_README.md*
       - run: cp ${{ format('{0}.{1}', needs.version_check.outputs.wp_version, 'zip') }} ${{env.LOCAL_ASSETS}}
