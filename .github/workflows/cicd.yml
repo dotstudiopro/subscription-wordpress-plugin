@@ -11,19 +11,9 @@ jobs:
     name: Merge me!
     runs-on: ubuntu-latest
     steps:
-      - name: Merge me!
-        uses: ridedott/merge-me-action@v2
-        with:
-          #  Depending on branch protection rules, a  manually populated
-          # `GITHUB_TOKEN_WORKAROUND` secret with permissions to push to
-          # a protected branch must be used. This secret can have an arbitrary
-          # name, as an example, this repository uses `DOTTBOTT_TOKEN`.
-          #
-          # When using a custom token, it is recommended to leave the following
-          # comment for other developers to be aware of the reasoning behind it:
-          #
-          # This must be used as GitHub Actions token does not support pushing
-          # to protected branches.
-          GITHUB_LOGIN: ${{ secrets.WORKFLOW_SECRET_LOGIN}}
-          GITHUB_TOKEN: ${{ secrets.WORKFLOW_SECRET_TOKEN }}
-    timeout-minutes: 5
+      - id: automerge
+        name: automerge
+        uses: "pascalgn/automerge-action@v0.15.5"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LOG: "TRACE"
