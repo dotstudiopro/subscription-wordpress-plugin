@@ -2,8 +2,7 @@ name: Continuous Integration
 
 on:
    workflow_run:
-    workflows: 
-      - LintGulp
+    workflows: [LintGulp]
     branches: [master]
     types: 
       - completed
