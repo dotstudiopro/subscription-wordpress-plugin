@@ -1,4 +1,4 @@
-name: Run gulp tasks
+name: LintGulp
 
 # Controls when the action will run.
 on:
