@@ -1,6 +1,6 @@
 <?php
 
-global $client_token, $dsp_theme_options;
+global $client_token, $dsp_theme_options, $assets_dir;
 
 $product_id = isset($_REQUEST['product_id']) ? $_REQUEST['product_id'] : '';
 $subscription_id = isset($_REQUEST['subscription_id']) ? $_REQUEST['subscription_id'] : '';
@@ -190,7 +190,8 @@ if($client_token){
                                   <div class="your-card pb-2 mb-3" style="margin: unset;">
                                       <div class="bank-name" title="BestBank"><?php echo strtoupper($credit_card_info['card_type'] . ' Card'); ?></div>
                                       <div class="chip">
-                                          <img src="<?php echo plugins_url() . '/wordpress-subscription-plugin/frontend/assets/images/chip.svg' ?>">
+                                          <!-- <img src="<?php //echo plugins_url() . '/wordpress-subscription-plugin/frontend/assets/images/chip.svg' ?>"> -->
+                                          <img src="<?php echo $assets_dir . 'images/chip.svg' ?>">
                                       </div>
                                       <div class="data">
                                           <div class="pan"><?php echo $credit_card_info['masked_card_number']; ?></div>

@@ -1,6 +1,6 @@
-var success_img = customVars.basedir + '/frontend/assets/images/true.png';
-var loader_gif = customVars.basedir + '/frontend/assets/images/loading.gif';
-var error_img = customVars.basedir + '/frontend/assets/images/false.png';
+var success_img = customVars.assets_dir + 'images/true.png';
+var loader_gif = customVars.assets_dir + 'images/loading.gif';
+var error_img = customVars.assets_dir + 'images/false.png';
 var url = customVars.ajaxurl;
 
 jQuery(document).ready(function() {

@@ -1,6 +1,6 @@
 <?php
 
-global $client_token, $dsp_theme_options;
+global $client_token, $dsp_theme_options, $assets_dir;
 
 if(!$client_token):
     wp_redirect('/');
@@ -79,11 +79,11 @@ $user_purchase_history = $dsp_subscription_object->getUserPurchaseHistory($clien
 										<td><?php echo date('m/d/Y', strtotime($product['created_at']));?></td>
 										<td><?php echo $product['product_name']; ?></td>
 										<td><?php echo date('m/d/Y', strtotime($product['period_start']));?> - <?php echo date('m/d/Y', strtotime($product['period_end'])); ?></td>
-										<td><?php if(isset($product['platform']) && ($product['platform'] == 'web' || $product['platform'] == 'desktop_web' || $product['platform'] == 'mobile_web')): ?><img alt="Credit Card" title="Credit Card" src="<?php echo plugins_url() . '/wordpress-subscription-plugin/frontend/assets/images/web.svg' ?>" width="34" height="24" border="0" />&nbsp;&nbsp;<?php echo substr($product['masked_card_number'],-9); ?>
-											<?php elseif(isset($product['platform']) && ($product['platform'] == 'apple' || $product['platform'] == 'apple_tv' || $product['platform'] == 'ios')): ?><img alt="Apple TV" title="Apple TV" src="<?php echo plugins_url() . '/wordpress-subscription-plugin/frontend/assets/images/appletv.png' ?>" width="26" border="0" />&nbsp;&nbsp;In-App purchase
-											<?php elseif(isset($product['platform']) && ($product['platform'] == 'android' || $product['platform'] == 'android_tv')): ?><img alt="Android TV" title="Android TV" src="<?php echo plugins_url() . '/wordpress-subscription-plugin/frontend/assets/images/android.png' ?>" width="26" border="0" />&nbsp;&nbsp;In-App purchase
-											<?php elseif(isset($product['platform']) && ($product['platform'] == 'fire_tv' || $product['platform'] == 'fire')): ?><img alt="Fire TV" title="Fire TV" src="<?php echo plugins_url() . '/wordpress-subscription-plugin/frontend/assets/images/firetv.png' ?>" width="26" border="0" />&nbsp;&nbsp;In-App purchase
-											<?php elseif(isset($product['platform']) && ($product['platform'] == 'roku_tv' || $product['platform'] == 'roku')): ?><img alt="Roku TV" title="Roku TV" src="<?php echo plugins_url() . '/wordpress-subscription-plugin/frontend/assets/images/rokutv.png' ?>" width="26" border="0" />&nbsp;&nbsp;In-App purchase
+										<td><?php if(isset($product['platform']) && ($product['platform'] == 'web' || $product['platform'] == 'desktop_web' || $product['platform'] == 'mobile_web')): ?><img alt="Credit Card" title="Credit Card" src="<?php echo $assets_dir . 'images/web.svg' ?>" width="34" height="24" border="0" />&nbsp;&nbsp;<?php echo substr($product['masked_card_number'],-9); ?>
+											<?php elseif(isset($product['platform']) && ($product['platform'] == 'apple' || $product['platform'] == 'apple_tv' || $product['platform'] == 'ios')): ?><img alt="Apple TV" title="Apple TV" src="<?php echo $assets_dir . 'images/appletv.png' ?>" width="26" border="0" />&nbsp;&nbsp;In-App purchase
+											<?php elseif(isset($product['platform']) && ($product['platform'] == 'android' || $product['platform'] == 'android_tv')): ?><img alt="Android TV" title="Android TV" src="<?php echo $assets_dir . 'images/android.png' ?>" width="26" border="0" />&nbsp;&nbsp;In-App purchase
+											<?php elseif(isset($product['platform']) && ($product['platform'] == 'fire_tv' || $product['platform'] == 'fire')): ?><img alt="Fire TV" title="Fire TV" src="<?php echo $assets_dir . 'images/firetv.png' ?>" width="26" border="0" />&nbsp;&nbsp;In-App purchase
+											<?php elseif(isset($product['platform']) && ($product['platform'] == 'roku_tv' || $product['platform'] == 'roku')): ?><img alt="Roku TV" title="Roku TV" src="<?php echo $assets_dir . 'images/rokutv.png' ?>" width="26" border="0" />&nbsp;&nbsp;In-App purchase
 											<?php endif; ?>
 										</td>
 										<td><?php echo ($product['payment_amount']); ?></td>

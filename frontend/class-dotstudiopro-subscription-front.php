@@ -40,7 +40,11 @@ class Dotstudiopro_Subscription_Front {
         $this->name = $name;
         $this->version = $version;
         $this->dotstudiopro_subscription = new Dotstudiopro_Subscription_Request();
-        $this->assets_dir = plugin_dir_url(__DIR__) . "frontend/assets/";
+        global $assets_dir;
+        $assets_dir = $this->assets_dir = "https://wordpress-assets.dotstudiopro.com/main-subscription-plugin/v".$this->version."/";
+        if (defined('DOTSTUDIOPRO_DEV')) {
+            $this->assets_dir = plugin_dir_url(__DIR__) . "frontend/assets/";
+        }
         $this->cachebuster = date("YmdHi", filemtime( plugin_dir_path(__FILE__) . 'assets/css/subscription.min.css'));
     }
 
@@ -65,7 +69,7 @@ class Dotstudiopro_Subscription_Front {
         wp_enqueue_script('subscription-custom', $this->assets_dir . 'js/subscription-custom.min.js', array('jquery-confirm', 'jquery.match.height'), false, true);
         wp_enqueue_script('countries', $this->assets_dir . 'js/countries.min.js', array(), $this->cachebuster, true);
         wp_enqueue_script('jquery.creditCardValidator', $this->assets_dir . 'js/jquery.creditCardValidator.min.js', array(), $this->cachebuster, true);
-        wp_localize_script('subscription-custom', 'customVars', array('basedir' => plugin_dir_url(__DIR__), 'ajaxurl' => admin_url('admin-ajax.php')));
+        wp_localize_script('subscription-custom', 'customVars', array('basedir' => plugin_dir_url(__DIR__), 'assets_dir' => $this->assets_dir, 'ajaxurl' => admin_url('admin-ajax.php')));
     }
 
     /**

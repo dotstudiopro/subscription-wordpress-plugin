@@ -1,6 +1,6 @@
 <?php
 get_header();
-global $client_token;
+global $client_token, $assets_dir;
 
 $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
 
@@ -100,7 +100,8 @@ if ($client_token) {
                                     <div class="your-card pb-2 mb-3">
                                         <div class="bank-name" title="BestBank"><?php echo strtoupper($cc_info->card_type . ' Card'); ?></div>
                                         <div class="chip">
-                                            <img src="<?php echo plugins_url() . '/wordpress-subscription-plugin/frontend/assets/images/chip.svg' ?>">
+                                            <!-- <img src="<?php //echo plugins_url() . '/wordpress-subscription-plugin/frontend/assets/images/chip.svg' ?>"> -->
+                                            <img src="<?php echo $assets_dir . 'images/chip.svg' ?>">
                                         </div>
                                         <div class="data">
                                             <div class="pan"><?php echo $cc_info->card_number; ?></div>
