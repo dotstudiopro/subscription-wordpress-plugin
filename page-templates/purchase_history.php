@@ -89,9 +89,10 @@ $user_purchase_history = $dsp_subscription_object->getUserPurchaseHistory($clien
 										<td><?php echo ($product['payment_amount']); ?></td>
 										<td><?php if(isset($product['product_type']) && $product['product_type'] == 'svod'): ?>		<a href="javascript:;" class="select_plan" data-subscriptionid="<?php echo $product['dsp_product_id']; ?>" style="color: inherit;"><i class="fa fa-eye" style="font-size: 15px;"></i>
 											</a>
-											<form action="/package-detail/" id="form_<?php echo $product['dsp_product_id']; ?>" method="POST"><input type="hidden" name="subscription_id" value="<?php echo $product['dsp_product_id']; ?>">
+											<form action="/package-detail/" id="form_<?php echo $product['dsp_product_id']; ?>" method="POST"><input type="hidden" name="subscription_id" value="<?php echo wp_hash($product['dsp_product_id']); ?>">
+											<input type="hidden" name="nonce" id="nonce" value="<?php echo wp_create_nonce('pack_detail'); ?>">
 											</form>
-											<?php elseif(isset($product['product_type']) && $product['product_type'] == 'tvod'): ?><a href="/product-details/<?php echo $product['dsp_product_id']; ?>" style="color: inherit;"><i class="fa fa-eye" style="font-size: 15px;"></i></a>
+											<?php elseif(isset($product['product_type']) && $product['product_type'] == 'tvod'): ?><a href="/product-details/<?php echo wp_hash($product['dsp_product_id']); ?>" style="color: inherit;"><i class="fa fa-eye" style="font-size: 15px;"></i></a>
 											<?php endif; ?>
 										</td>
 									</tr>

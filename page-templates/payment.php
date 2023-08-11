@@ -17,7 +17,34 @@ else{
     endif;
 }
 
-if($client_token){
+$dsp_subscription_object = new Dotstudiopro_Subscription_Request();
+$subscriptions = $dsp_subscription_object->getCompanyProductSummary();
+
+if(!is_wp_error($subscriptions) && !empty($subscriptions['data'])){
+    foreach($subscriptions['data'] as $key => $subscription){
+        $subscriptions['data'][$key]['hash_value'] = wp_hash($subscription['_id']);
+    }
+
+    if($subscription_id){
+        $subscription_exists = array_search($subscription_id, array_column($subscriptions['data'], 'hash_value'));
+        if(gettype($subscription_exists) == 'integer')
+            $subscription_id = $subscriptions['data'][$subscription_exists]['_id'];
+        else
+            wp_redirect('/');
+    }
+
+    if($product_id){
+
+        $product_exists = array_search($product_id, array_column($subscriptions['data'], 'hash_value'));
+        if(gettype($product_exists) == 'integer')
+            $product_id = $subscriptions['data'][$product_exists]['_id'];
+        else
+            wp_redirect('/');
+    }
+}
+
+
+if($client_token && wp_verify_nonce($_POST['nonce'], 'credit_card_page')){
 
     $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
     //$user_products = $dsp_subscription_object->getUserProducts($client_token);
