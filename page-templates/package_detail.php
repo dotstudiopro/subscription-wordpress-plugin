@@ -6,9 +6,20 @@ global $client_token, $dsp_theme_options;
 
 $subscription_id = isset($_REQUEST['subscription_id']) ? $_REQUEST['subscription_id'] : '';
 
+$dsp_subscription_object = new Dotstudiopro_Subscription_Request();
+$subscriptions = $dsp_subscription_object->getCompanyProductSummary();
 
+if(!is_wp_error($subscriptions) && !empty($subscriptions['data'])){
+    foreach($subscriptions['data'] as $key => $subscription){
+        $subscriptions['data'][$key]['hash_value'] = wp_hash($subscription['_id']);
+    }
+}
 
-if($subscription_id){
+$subscription_exists = array_search($subscription_id, array_column($subscriptions['data'], 'hash_value'));
+
+if($subscription_id && wp_verify_nonce($_POST['nonce'], 'pack_detail') && gettype($subscription_exists) == 'integer'){
+
+    $subscription_id = $subscriptions['data'][$subscription_exists]['_id'];
 
     $product = dsp_get_vod_product_by_id($subscription_id);
 
@@ -63,7 +74,8 @@ if($subscription_id){
             </div>
         </div>
         <form  action="/credit-card/" id="form_<?php echo $subscription_id; ?>" method="POST">
-            <input type="hidden"  name="subscription_id" value="<?php echo $subscription_id; ?>">
+            <input type="hidden"  name="subscription_id" value="<?php echo wp_hash($subscription_id); ?>">
+            <input type="hidden" name="nonce" id="nonce" value="<?php echo wp_create_nonce('credit_card_page'); ?>">
         </form>
 
         <div class="package-detail">

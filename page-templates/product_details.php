@@ -4,7 +4,24 @@ get_header();
 
 global $client_token, $dsp_theme_options;
 
+$dsp_subscription_object = new Dotstudiopro_Subscription_Request();
+$subscriptions = $dsp_subscription_object->getCompanyProductSummary();
+
 $product_id = get_query_var( 'product_id');
+
+if(!is_wp_error($subscriptions) && !empty($subscriptions['data'])){
+    foreach($subscriptions['data'] as $key => $subscription){
+        $subscriptions['data'][$key]['hash_value'] = wp_hash($subscription['_id']);
+    }
+
+    if($product_id){
+        $product_exists = array_search($product_id, array_column($subscriptions['data'], 'hash_value'));
+        if(gettype($product_exists) == 'integer')
+            $product_id = $subscriptions['data'][$product_exists]['_id'];
+        else
+            wp_redirect('/');
+    }
+}
 
 $product = dsp_get_vod_product_by_id($product_id);
 
@@ -44,8 +61,9 @@ $previous_page_url = isset($_REQUEST['previous_page_url']) ? $_REQUEST['previous
         </div>
     </div>
     <form  action="/credit-card/" id="form_<?php echo $product_id; ?>" method="POST">
-        <input type="hidden"  name="product_id" value="<?php echo $product_id; ?>">
+        <input type="hidden"  name="product_id" value="<?php echo wp_hash($product_id); ?>">
         <input type="hidden"  name="previous_page_url" value="<?php echo $previous_page_url; ?>">
+        <input type="hidden" name="nonce" id="nonce" value="<?php echo wp_create_nonce('credit_card_page'); ?>">
     </form>
     <div class="row no-gutters pt-5 justify-content-md-center">
         <div class='product-detail-channels row main-body-txt'>

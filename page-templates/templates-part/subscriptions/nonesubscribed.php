@@ -67,7 +67,8 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions['data'])) {
                     ?>
                     <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 pr-3 pb-3 sameSize">
                         <form  action="/package-detail/" id="form_<?php echo $subscription_id; ?>" method="POST">
-                            <input type="hidden"  name="subscription_id" value="<?php echo $dsp_subscription_id; ?>">
+                            <input type="hidden" name="subscription_id" value="<?php echo wp_hash($dsp_subscription_id); ?>">
+                            <input type="hidden" name="nonce" id="nonce" value="<?php echo wp_create_nonce('pack_detail'); ?>">
                         </form>
                         <div class="card text-xs-center">
                             <div class="card-header">
