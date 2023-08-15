@@ -46,7 +46,7 @@ jobs:
       # Sets up Python (for node-sass)
       - name: Install Python
         uses: actions/setup-python@v2
-      - name: Move files to theme folder for zipping
+      - name: Move files to plugin folder for zipping
         run: cp -r ./ ../main-subscription-plugin
       - name: Zip output
         run: ND=$(pwd) && cd ../ && zip -r ${{ format('{0}.{1}', needs.version_check.outputs.wp_version, 'zip') }} ./main-subscription-plugin -x *.git* -x *DEPLOY_README.md* && cd $ND
