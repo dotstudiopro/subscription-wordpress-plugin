@@ -39,7 +39,7 @@ if (!is_wp_error($subscriptions) && !empty($subscriptions) && is_array($subscrip
                     $url = empty($client_token) ?  wp_login_url( home_url( add_query_arg( array(), $wp->request ) ) ) : '#' ;
                     ?>
                     <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 pr-3 pb-3 sameSize">
-                        <form  action="<?php echo home_url( '/product-details/' . $subscription['_id'] ); ?>" id="form_<?php echo $subscription_id; ?>" method="POST">
+                        <form  action="<?php echo home_url( '/product-details/' . wp_hash($subscription['_id']) ); ?>" id="form_<?php echo $subscription_id; ?>" method="POST">
                             <input type="hidden"  name="previous_page_url" value="<?php echo $previous_page_url; ?>">
                         </form>
                         <div class="card text-xs-center">
