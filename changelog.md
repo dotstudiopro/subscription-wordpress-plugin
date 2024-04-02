@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.2] - 2024-04-02
+
+### Fixed
+
+- Fixed default image CDN url on product details template
+
 ## [1.2.1] - 2023-08-15
 
 ### Fixed
