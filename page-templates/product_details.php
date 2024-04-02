@@ -73,7 +73,7 @@ $previous_page_url = isset($_REQUEST['previous_page_url']) ? $_REQUEST['previous
                 $channel_directors = array_filter(!empty($channel['directors']) ? $channel['directors'] : []);
                 $channel_actors = array_filter(!empty($channel['actors']) ? $channel['actors'] : []);
 
-                $channel_image = "https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1";
+                $channel_image = "https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1";
                 if (!empty($channel['spotlight_poster'])) {
                     $channel_image = $channel['spotlight_poster'];
                 } else if (!empty($channel['poster'])) {
