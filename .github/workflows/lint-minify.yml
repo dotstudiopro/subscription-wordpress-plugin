@@ -1,4 +1,4 @@
-name: LintGulp
+name: Run gulp tasks
 
 # Controls when the action will run.
 on:
@@ -6,17 +6,9 @@ on:
     # On which branch
     branches: ['staging', 'master']
 
-#  A workflow run is made up of one or more jobs that can run sequentially or in parallel
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  automergelabel:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions-ecosystem/action-add-labels@v1
-        with:
-          labels: automerge
-        if: github.head_ref == 'staging' && github.base_ref == 'master'
   phplint:
-    needs: automergelabel
     runs-on: ubuntu-latest
 
     steps:
@@ -37,14 +29,14 @@ jobs:
         run: echo "WP_VERSION=$(curl https://media-aws-dotstudiopro-com.s3.us-west-1.amazonaws.com/wordpress-assets/wp_version.sh | bash)" >> $GITHUB_OUTPUT
     outputs:
       wp_version: ${{ steps.getversion.outputs.WP_VERSION }}
-      wp_assets: ${{ format('{0}/{1}', 'wordpress-assets/main-subscription-plugin', steps.getversion.outputs.WP_VERSION) }}
+      wp_assets: ${{ format('{0}/{1}', 'wordpress-assets/main-plugin', steps.getversion.outputs.WP_VERSION) }}
   # Job name
   build-sync:
     needs: version_check
     # Runner name
     runs-on: ubuntu-latest
     env:
-      LOCAL_ASSETS: 'frontend/assets'
+      LOCAL_ASSETS: 'assets'
     steps:
       - name: Install zip
         uses: montudor/action-zip@v1
@@ -54,31 +46,28 @@ jobs:
       # Sets up Python (for node-sass)
       - name: Install Python
         uses: actions/setup-python@v2
-      # Sets up node
-      - name: Install Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - run: npm ci
-      - run: gulp css
-      - run: gulp sass
-      - run: gulp js
-      # Tag creator
-      - uses: rickstaa/action-create-tag@v1
-        with:
-          tag: ${{ needs.version_check.outputs.wp_version }}
-          message: ${{ needs.version_check.outputs.wp_version }}
-        if: github.head_ref == 'staging' && github.base_ref == 'master'
+      - name: Move files to plugin folder for zipping
+        run: cp -r ./ ../main-subscription-plugin
       - name: Zip output
-        run: zip -r ${{ format('{0}.{1}', needs.version_check.outputs.wp_version, 'zip') }} ./ -x *.git* -x *DEPLOY_README.md*
-      - run: cp ${{ format('{0}.{1}', needs.version_check.outputs.wp_version, 'zip') }} ${{env.LOCAL_ASSETS}}
+        run: ND=$(pwd) && cd ../ && zip -r ${{ format('{0}.{1}', needs.version_check.outputs.wp_version, 'zip') }} ./main-subscription-plugin -x *.git* -x *DEPLOY_README.md* && cd $ND
+      - name: Create asset folder
+        run: mkdir -p $LOCAL_ASSETS
+      - name: Copy zipped output to assets folder for upload
+        run: cp ../${{ format('{0}.{1}', needs.version_check.outputs.wp_version, 'zip') }} ${{env.LOCAL_ASSETS}}
       - uses: jakejarvis/s3-sync-action@master
         with:
-          args: --acl public-read --cache-control max-age=604800 --exclude '.git/*' --exclude '.github/*' --exclude '*css-dev/*' --exclude '*sass/*' --exclude '*.php' --exclude '*ugly-js*' --exclude '*unminified/*'
+          args: --acl public-read --cache-control max-age=604800 --exclude '.git/*' --exclude '.github/*' --exclude '*css-dev/*' --exclude '*sass/*' --exclude '*.php' --exclude '*ugly-js*' --exclude '*unminified/*' --exclude '*node_modules/*'
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           SOURCE_DIR: ${{ env.LOCAL_ASSETS }}
           DEST_DIR: ${{ needs.version_check.outputs.wp_assets }}
-        if: github.head_ref == 'staging' && github.base_ref == 'master'
+        if: github.base_ref == 'master'
+        # Tag creator
+      - name: Create tag
+        uses: rickstaa/action-create-tag@v1
+        with:
+          tag: ${{ needs.version_check.outputs.wp_version }}
+          message: ${{ needs.version_check.outputs.wp_version }}
+        if: github.base_ref == 'master'
